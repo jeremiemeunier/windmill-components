@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/windmill-navigation",
-  "version": "1.0.1",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -16,7 +16,12 @@
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pub": "rollup -c --bundleConfigAsCjs && npm publish"
+    "pub": "tsup && npm publish",
+    "build": "tsup"
+  },
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
   },
   "publishConfig": {
     "@jeremiemeunier:registry": "https://npm.pkg.github.com"
@@ -43,6 +48,7 @@
     "scss": "^0.2.4",
     "simplebar-react": "^3.2.5",
     "tslib": "^2.6.2",
+    "tsup": "^8.4.0",
     "typed-scss-modules": "^8.0.1",
     "typescript": "^5.4.5"
   },

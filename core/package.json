@@ -44,5 +44,8 @@
     "tslib": "^2.6.2",
     "typed-scss-modules": "^8.0.1",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "tsup": "^8.4.0"
   }
 }

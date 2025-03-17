@@ -1,9 +1,6 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { Loader } from "@jeremiemeunier/windmill-core";
 import { TimerProps, ToastProps } from "./Toast.types";
-import "./Toast.scss";
 
 export const Timer: React.FC<TimerProps> = ({ duration }) => {
   const [timer, setTimer] = useState(duration || 120);
@@ -13,6 +10,7 @@ export const Timer: React.FC<TimerProps> = ({ duration }) => {
       const timeout = setTimeout(() => {
         setTimer(timer - 1);
       }, 1000);
+      return () => clearTimeout(timeout);
     }
   }, [timer]);
 
