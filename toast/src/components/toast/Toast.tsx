@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Loader } from "@jeremiemeunier/windmill-core";
 import { TimerProps, ToastProps } from "./Toast.types";
