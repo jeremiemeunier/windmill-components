@@ -15,7 +15,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <InputBlock error={error} className={className}>
-      <div className={`teaui form-checkbox`}>
+      <div className={`infusedui-checkbox`}>
         <input
           type="checkbox"
           name={id}

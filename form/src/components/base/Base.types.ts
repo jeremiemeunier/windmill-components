@@ -10,21 +10,21 @@ export interface BaseBlockProps {
 
 export interface InputBlockProps {
   children: React.ReactNode;
-  error: string | boolean;
+  error: any | boolean;
   maxLength?: number;
   className?: string;
 }
 
 export interface RadioCheckboxBlockProps {
   children: React.ReactNode;
-  error: string;
+  error: any;
   gridSize: number;
   className?: string;
 }
 
 export interface SelectBlockProps {
   children: React.ReactNode;
-  error: string;
+  error: any;
   className?: string;
 }
 

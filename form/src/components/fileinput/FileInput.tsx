@@ -24,7 +24,7 @@ const FileInput: React.FC<FileInputProps> = ({
       required={required}
     >
       <InputBlock error={error} className={className}>
-        <div className={`teaui form-file ${className}`}>
+        <div className={`infusedui-file-input ${className}`}>
           <input
             type="file"
             id={id}

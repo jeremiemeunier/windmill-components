@@ -55,7 +55,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
       <InputBlock error={error} className={className}>
-        <div className={`teaui autocomplete-root-input`}>
+        <div className={`infusedui-autocomplete-root-input`}>
           <input
             disabled={locked ? locked : false}
             name={id}
@@ -63,7 +63,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength && maxLength}
             placeholder={placeHolder ? placeHolder : ""}
-            className="teaui-autocomplete-root-filter"
+            className="infusedui-autocomplete-root-filter"
             value={inputLabel}
             onChange={(event) => {
               setInputLabel(event.target.value);
@@ -96,11 +96,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="teaui form-autocomplete-list-root"
-              id="teaui_autocomplete_root_list"
+              className="infusedui-autocomplete-list-root"
+              id="infusedui_autocomplete_root_list"
             >
               <SimpleBar style={{ maxHeight: "240px" }}>
-                <div className="teaui form-autocomplete-list">
+                <div className="infusedui-autocomplete-list">
                   <AnimatePresence>
                     {filteredData.map((option) => {
                       return (
@@ -113,7 +113,14 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                           }}
                           key={option.value}
                         >
-                          <span>{option.label}</span>
+                          <p className="infusedui as-ma0 as-pa0">
+                            {option.label}
+                          </p>
+                          {option.details && (
+                            <p className="infusedui as-ma0 as-pa0 text labeled">
+                              {option.details}
+                            </p>
+                          )}
                         </div>
                       );
                     })}

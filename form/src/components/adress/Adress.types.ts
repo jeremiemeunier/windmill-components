@@ -24,9 +24,9 @@ export interface AdressItems {
 }
 
 export interface AdressProps {
-  content: string;
+  content: any;
   setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: string;
+  error: any;
   data: AdressItems[] | [];
   label?: string;
   locked?: boolean;

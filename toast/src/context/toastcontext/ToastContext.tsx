@@ -1,6 +1,4 @@
-"use client";
-
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -8,8 +6,25 @@ import React, {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ContextProps, ToastObject } from "./ToastContext.types";
+import { ContextProps } from "./ToastContext.types";
 import Toast from "../../components/toast/Toast";
+
+interface ToastObject {
+  content: string;
+  type: "positive" | "negative" | "neutral" | null;
+  id?: number;
+  timer?: number;
+  duration?: number;
+  persistent?: boolean;
+  title?: string;
+  format?: {
+    icon?: "left" | "right" | "both";
+  };
+  position?: "tl" | "tr" | "bl" | "br" | "cl" | "cr";
+  icon?: string | string[];
+  loading?: boolean;
+  timed?: number;
+}
 
 const defaultPush: (toast: ToastObject) => ToastObject = (toast: ToastObject) =>
   toast;
@@ -71,11 +86,17 @@ export const Toasts = () => {
     }
 
     const toast = { ...props, id, timer };
-    setToasts((v) => [...v, toast]);
+
+    setToasts((v) => {
+      v.forEach((t) => clearTimeout(t.timer));
+      return [toast];
+    });
+
     return toast;
   };
 
   clearToastRef.current = (toast) => {
+    clearTimeout(toast.timer);
     setToasts((v) => v.filter((t) => t !== toast));
   };
 
@@ -85,8 +106,8 @@ export const Toasts = () => {
   };
 
   return (
-    <div className="jeremiemeunier toast-root">
-      <AnimatePresence>
+    <div className="infusedui toast-root">
+      <AnimatePresence mode="wait">
         {toasts.map((toast: ToastObject) => (
           <motion.div
             onClick={() => {

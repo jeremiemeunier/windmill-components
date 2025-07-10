@@ -47,7 +47,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   return (
     <BaseBlock id="" label={label} size={size}>
       <InputBlock error={error} className={className}>
-        <div className={`teaui form-drag-n-drop ${className}`}>
+        <div className={`infusedui-drag-n-drop ${className}`}>
           <FileUploader
             handleChange={handleChange}
             name="file"
@@ -55,7 +55,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
             hoverTitle={"Déposer ici"}
             multiple={multipleUpload ? true : false}
           >
-            <div className="teaui form-drop-zone">
+            <div className="infusedui-drop-zone">
               <p>
                 {`${
                   multipleUpload

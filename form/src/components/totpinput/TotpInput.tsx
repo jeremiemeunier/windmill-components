@@ -1,7 +1,6 @@
 import { TotpInputProps } from "./TotpInput.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 import { useId, useRef, useState } from "react";
-import "./TotpInput.scss";
 
 const TotpInput: React.FC<TotpInputProps> = ({
   label,
@@ -48,7 +47,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
       required={required ? true : false}
     >
       <div
-        className={`jeremiemeunier-totp-root ${
+        className={`infusedui-totp-root ${
           error ? "state-negative" : ""
         } ${className}`}
       >
@@ -56,7 +55,9 @@ const TotpInput: React.FC<TotpInputProps> = ({
           {Array.from({ length: totpSize }, (_, key) => (
             <InputBlock key={key} error={error ? true : false}>
               <input
-                ref={(element) => (inputsRef.current[key] = element)}
+                ref={(element) => {
+                  inputsRef.current[key] = element;
+                }}
                 value={values[key]}
                 autoFocus={key === 0 ? true : false}
                 maxLength={1}
@@ -70,7 +71,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
             </InputBlock>
           ))}
         </div>
-        {error && <p className="teaui form-message">{error}</p>}
+        {error && <p className="infusedui-message">{error}</p>}
       </div>
     </BaseBlock>
   );

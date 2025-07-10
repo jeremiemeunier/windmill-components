@@ -9,8 +9,8 @@ const Form: React.FC<FormProps> = ({
   return (
     <form
       onSubmit={handler}
-      encType={encType ? encType : ""}
-      className={`teaui form ${className}`}
+      encType={encType && encType}
+      className={`infusedui-form ${className}`}
     >
       {children}
     </form>

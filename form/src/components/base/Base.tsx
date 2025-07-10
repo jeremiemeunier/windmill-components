@@ -15,13 +15,14 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
 }) => {
   return (
     <div
-      className={`teaui form-container ${size ? `gwc-${size}` : ""} ${
+      className={`infusedui-form-container ${size ? `gwc-${size}` : ""} ${
         label ? "template-label" : "template-default"
       }`}
     >
       {label ? (
         <label htmlFor={id}>
-          {label} {required && <span className="teaui required">Requis</span>}
+          {label}{" "}
+          {required && <span className="infusedui-required">Requis</span>}
         </label>
       ) : (
         ""
@@ -40,13 +41,13 @@ export const InputBlock: React.FC<InputBlockProps> = ({
 }) => {
   return (
     <div
-      className={`teaui form-input ${error ? "state-negative" : ""} ${
-        maxLength ? "schema-max-length" : ""
+      className={`infusedui-input ${error ? "state-negative" : ""} ${
+        maxLength ? "template-max-length" : ""
       } ${className}`}
     >
       {children}
       {error && typeof error === "string" && (
-        <p className="teaui form-message">{error}</p>
+        <p className="infusedui-message">{error}</p>
       )}
     </div>
   );
@@ -59,15 +60,15 @@ export const RadioCheckboxBlock: React.FC<RadioCheckboxBlockProps> = ({
   className,
 }) => {
   return (
-    <div className={`teaui form-container ${className}`}>
+    <div className={`infusedui-container ${className}`}>
       <div
-        className={`teaui form-radio-grid ${
+        className={`infusedui-radio-grid ${
           error ? "state-negative" : ""
-        } grid-init row-gap-size-8 column-gap-size-8 template-${gridSize}col`}
+        } grid rgs-8 cgs-8 tc-${gridSize}`}
       >
         {children}
       </div>
-      {error && <p className="teaui form-message">{error}</p>}
+      {error && <p className="infusedui-message">{error}</p>}
     </div>
   );
 };
@@ -79,13 +80,13 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
 }) => {
   return (
     <div
-      className={`teaui form-input form-select ${
+      className={`infusedui-input infusedui-select ${
         error ? "state-negative" : ""
       } ${className}`}
     >
       {children}
       <i className="icon teaui-icon-chevron-down"></i>
-      {error ? <p className="teaui form-message">{error}</p> : ""}
+      {error ? <p className="infusedui-message">{error}</p> : ""}
     </div>
   );
 };

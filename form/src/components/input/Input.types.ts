@@ -1,12 +1,14 @@
+import { HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute } from "react";
+
 export interface InputProps {
   content: any;
   setContent: React.Dispatch<React.SetStateAction<any>>;
-  error: string;
+  error: any;
   label?: string;
   size?: number;
   readOnly?: boolean;
   tagline?: React.ReactNode;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   maxLength?: number;
   placeHolder?: string;
   locked?: boolean;
@@ -15,5 +17,9 @@ export interface InputProps {
   required?: boolean;
   name?: string;
   autofocus?: boolean;
+  autoComplete?: HTMLInputAutoCompleteAttribute;
   className?: string;
+  min?: number;
+  max?: number;
+  step?: number;
 }

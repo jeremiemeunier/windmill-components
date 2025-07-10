@@ -19,7 +19,11 @@ const Input: React.FC<InputProps> = ({
   required,
   name,
   autofocus,
+  autoComplete,
   className,
+  min,
+  max,
+  step,
 }) => {
   const id = useId();
   const [actualContentSize, setActualContentSize] = useState(
@@ -55,6 +59,10 @@ const Input: React.FC<InputProps> = ({
           maxLength={maxLength && maxLength}
           placeholder={placeHolder ? placeHolder : ""}
           autoFocus={autofocus ? true : false}
+          min={min && min}
+          max={max && max}
+          step={step && step}
+          autoComplete={autoComplete && autoComplete}
           onChange={(event) => {
             setContent(event.target.value);
 
@@ -72,7 +80,7 @@ const Input: React.FC<InputProps> = ({
           }}
         />
         {maxLength && (
-          <span className="form-max-length">
+          <span className="infusedui-max-length">
             {actualContentSize} / {maxLength}
           </span>
         )}

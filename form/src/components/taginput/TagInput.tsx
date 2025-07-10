@@ -58,21 +58,21 @@ const Input: React.FC<TagInputProps> = ({
           onBlur={handleOut}
           onKeyUp={handleKey}
         />
+        <div className={`infusedui-tag-root ${className}`}>
+          {content.map((tag, index) => (
+            <span
+              className="infusedui-tag"
+              title="Remove from list"
+              key={index}
+              onClick={() => {
+                setContent(content.filter((v) => v !== tag));
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </InputBlock>
-      <div className={`jeremiemeunier-tag-root ${className}`}>
-        {content.map((tag, index) => (
-          <span
-            className="jeremiemeunier-tag"
-            title="Remove from list"
-            key={index}
-            onClick={() => {
-              setContent(content.filter((v) => v !== tag));
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
     </BaseBlock>
   );
 };

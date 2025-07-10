@@ -1,6 +1,6 @@
 export interface TotpInputProps {
   setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: string;
+  error: any;
   label?: string;
   size?: number;
   locked?: boolean;

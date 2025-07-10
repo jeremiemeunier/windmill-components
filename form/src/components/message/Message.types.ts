@@ -1,5 +1,5 @@
 export interface MessageContentTypes {
-  type: "negative" | "positive" | "warning" | "main";
+  type: "negative" | "positive" | "neutral" | "main" | "default";
   content: string;
   format?: "icon" | "icon-cta" | "cta";
   icon?: string;

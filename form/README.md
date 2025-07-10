@@ -1,18 +1,45 @@
 # @jeremiemeunier/form
 
-## All components
+Collection de composants React permettant de construire rapidement des formulaires.
 
-- [`<Select>`](#select)
-- [`<Input>`](#input)
-- [`<FileInput>`](#fileinput)
-- [`<Password>`](#password)
-- [`<TextArea>`](#textarea)
-- [`<Checkbox>`](#checkbox)
-- [`<Submit>`](#submit)
+## Intégration dans un projet React
+
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet contenant&nbsp;:
+   ```
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
+2. Installez ensuite la librairie et ses dépendances&nbsp;:
+   ```bash
+   npm install @jeremiemeunier/core @jeremiemeunier/form
+   ```
+3. Importez les composants nécessaires&nbsp;:
+   ```tsx
+   import { Input, Select, Submit } from "@jeremiemeunier/form";
+   ```
+
+> Le package est déjà compilé et publié, aucune étape de build n'est requise.
+
+## Composants disponibles
+
+- [`<Adress>`](#adress)
 - [`<AutoComplete>`](#autocomplete)
-- [`<Message>`](#message)
-- [`<Radio>`](#radio)
+- [`<Checkbox>`](#checkbox)
+- [`<CheckboxSlider>`](#checkboxslider)
 - [`<DatePicker>`](#datepicker)
+- [`<DragAndDrop>`](#draganddrop)
+- [`<FileInput>`](#fileinput)
+- [`<Form>`](#form)
+- [`<Group>`](#group)
+- [`<Input>`](#input)
+- [`<Message>`](#message)
+- [`<Password>`](#password)
+- [`<Progress>`](#progress)
+- [`<Radio>`](#radio)
+- [`<Select>`](#select)
+- [`<Submit>`](#submit)
+- [`<TagInput>`](#taginput)
+- [`<TextArea>`](#textarea)
+- [`<TotpInput>`](#totpinput)
 
 ## Props settings
 
@@ -26,7 +53,7 @@
 | `readOnly`    | optional | Boolean       |         | all            |
 | `tagline`     | optional | Object        |         | all            |
 | `otherAction` | optional | Object        |         | `Submit`       |
-| `type`        | optional | Noolean       | `text`  | all            |
+| `type`        | optional | String        | `text`  | all            |
 | `maxLength`   | optional | Integer       |         | all            |
 | `placeHolder` | optional | String        |         | all            |
 | `locked`      | optional | Boolean       |         | all            |
@@ -99,7 +126,7 @@ For `type` props see [`<input>` : The Input (Form Input) element](https://develo
 
 ### FileInput
 
-You must use a `FormData` and `enctype="multipart/formdata` with use this components.
+Vous devez utiliser un `FormData` et ajouter `enctype="multipart/form-data"` lors de l'utilisation de ce composant.
 
 ```jsx
 const [content, setContent] = useState("");

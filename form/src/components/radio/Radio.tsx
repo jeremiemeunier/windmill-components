@@ -25,8 +25,10 @@ const Radio: React.FC<RadioProps> = ({
         {values.map((value: RadioValues, key) => (
           <div
             key={key}
-            className={`teaui ${
-              viewBox ? "form-radio" : "form-radio-no-check"
+            className={`${
+              viewBox
+                ? "infusedui-template-radio"
+                : "infusedui-template-radio-no-check"
             } ${className}`}
           >
             <input

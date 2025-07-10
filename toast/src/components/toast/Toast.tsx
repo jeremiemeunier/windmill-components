@@ -1,8 +1,7 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
-import { Loader } from "@jeremiemeunier/windmill-core";
+import { Loader } from "@jeremiemeunier/core";
 import { TimerProps, ToastProps } from "./Toast.types";
+import "./Toast.scss";
 
 export const Timer: React.FC<TimerProps> = ({ duration }) => {
   const [timer, setTimer] = useState(duration || 120);
@@ -12,7 +11,6 @@ export const Timer: React.FC<TimerProps> = ({ duration }) => {
       const timeout = setTimeout(() => {
         setTimer(timer - 1);
       }, 1000);
-      return () => clearTimeout(timeout);
     }
   }, [timer]);
 
@@ -26,7 +24,7 @@ export const Timer: React.FC<TimerProps> = ({ duration }) => {
   };
 
   return (
-    <span className="jeremiemeunier tag stroke color-main text format-number timer">
+    <span className="infusedui tag stroke color-main text format-number timer">
       {formattedTime(timer)}
     </span>
   );
@@ -45,7 +43,7 @@ const Toast: React.FC<ToastProps> = ({
   return (
     content && (
       <div
-        className={`jeremiemeunier-toast-root color-${type} ${
+        className={`infusedui-toast-root color-${type} ${
           position ? position : "bl"
         }`}
       >

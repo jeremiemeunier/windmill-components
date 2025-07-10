@@ -3,12 +3,11 @@ export interface ModalProps {
 }
 
 export interface CloseProps {
-  setModalVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  refreshing?: boolean;
+  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
   refreshHandler?: () => void;
 }
 
-export interface TitleProps {
+export interface HeaderProps {
   children: React.ReactNode;
 }
 
@@ -17,6 +16,7 @@ export interface ModalContainerProps {
   size?: "small" | "medium" | "large" | "fullscreen" | "sl" | "sm" | "sf";
   template?: "menu" | undefined;
   direction?: "top" | "bottom";
+  maxHeight?: string;
 }
 
 export interface BodyProps {
@@ -29,7 +29,7 @@ export interface NavigationProps {
 
 export interface NavigationItemProps {
   label: string;
-  setModalPage: React.Dispatch<React.SetStateAction<string | number>>;
+  setPage: React.Dispatch<React.SetStateAction<string | number>>;
   isActive: boolean;
-  id: string | number;
+  pageId: string | number;
 }

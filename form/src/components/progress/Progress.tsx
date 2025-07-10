@@ -1,10 +1,10 @@
 import { ProgressProps } from "./Progress.types";
 
-const Progress: React.FC<ProgressProps> = ({ value, max, min }) => {
+const Progress: React.FC<ProgressProps> = ({ value, max }) => {
   return (
-    <div className="jeremiemeunier-progress">
+    <div className="infusedui-progress-root">
       <div
-        className="jeremiemeunier-value"
+        className="infusedui-value"
         style={{ width: `calc(${value && max && (value / max) * 100}%` }}
       ></div>
     </div>

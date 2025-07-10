@@ -10,7 +10,7 @@ export interface RadioProps {
   values: RadioValues[];
   content: string | number;
   setContent: React.Dispatch<React.SetStateAction<string | number>>;
-  error: string;
+  error: any;
   label?: string;
   size?: number;
   className?: string;

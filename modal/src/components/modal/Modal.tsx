@@ -8,13 +8,13 @@ import {
   ModalProps,
   NavigationItemProps,
   NavigationProps,
-  TitleProps,
+  HeaderProps,
 } from "./Modal.types";
 
 const Modal: React.FC<ModalProps> & {
   Background: React.FC<CloseProps>;
   Body: React.FC<BodyProps>;
-  Title: React.FC<TitleProps>;
+  Header: React.FC<HeaderProps>;
   Close: React.FC<CloseProps>;
   MenuLeft: React.FC<ModalContainerProps>;
   MenuRight: React.FC<ModalContainerProps>;
@@ -24,98 +24,98 @@ const Modal: React.FC<ModalProps> & {
   };
   Pages: React.FC<BodyProps>;
 } = ({ children }) => {
-  return <motion.div className="teaui modal">{children}</motion.div>;
+  return (
+    <motion.div className="infusedui-modal modal-root">{children}</motion.div>
+  );
 };
 
 const Background: React.FC<CloseProps> = ({
-  setModalVisibility,
-  refreshing,
+  setVisibility,
   refreshHandler,
 }) => {
   const closeHandler = () => {
-    setModalVisibility(false);
+    setVisibility(false);
 
-    if (refreshing && refreshHandler) {
+    if (refreshHandler) {
       refreshHandler();
     }
   };
 
   return (
     <motion.div
-      className="teaui modal-background style-grid"
+      className="infusedui-modal modal-background"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ transition: 0.4, ease: "easeOut" }}
+      transition={{ transition: 0.3, ease: "easeOut" }}
       onClick={closeHandler}
     ></motion.div>
   );
 };
 Modal.Background = Background;
 
-const Title: React.FC<TitleProps> = ({ children }) => {
-  return (
-    <div className="teaui modal-header mtn48 ms-mtn48 xs-mtn48">{children}</div>
-  );
+const Header: React.FC<HeaderProps> = ({ children }) => {
+  return <div className="infusedui-modal modal-header">{children}</div>;
 };
-Modal.Title = Title;
+Modal.Header = Header;
 
-const Close: React.FC<CloseProps> = ({
-  setModalVisibility,
-  refreshing,
-  refreshHandler,
-}) => {
+const Close: React.FC<CloseProps> = ({ setVisibility, refreshHandler }) => {
   const closeHandler = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.preventDefault();
-    setModalVisibility(false);
+    evt.preventDefault();
+    setVisibility(false);
 
-    if (refreshing && refreshHandler) {
+    if (refreshHandler) {
       refreshHandler();
     }
   };
 
   return (
-    <button
-      className="teaui cta level-tertiary format-icon-only size-large sl modal-close"
-      onClick={closeHandler}
-    >
+    <button className="infusedui-modal modal-close" onClick={closeHandler}>
       <i className="icon teaui-icon-cross"></i>
     </button>
   );
 };
 Modal.Close = Close;
 
-const MenuLeft: React.FC<ModalContainerProps> = ({ children, size }) => {
+const MenuLeft: React.FC<ModalContainerProps> = ({
+  children,
+  size,
+  maxHeight = "100vh",
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`teaui modal-container format-menu position-left ${
+      className={`infusedui-modal modal-container format-menu position-left ${
         size ? `size-${size} ${size}` : ""
       }`}
     >
-      <SimpleBar style={{ maxHeight: "100vh" }}>{children}</SimpleBar>
+      <SimpleBar style={{ maxHeight: maxHeight }}>{children}</SimpleBar>
     </motion.div>
   );
 };
 Modal.MenuLeft = MenuLeft;
 
-const MenuRight: React.FC<ModalContainerProps> = ({ children, size }) => {
+const MenuRight: React.FC<ModalContainerProps> = ({
+  children,
+  size,
+  maxHeight = "100vh",
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`teaui modal-container format-menu position-right ${
+      className={`infusedui-modal modal-container format-menu position-right ${
         size ? `size-${size} ${size}` : ""
       }`}
     >
-      <SimpleBar style={{ maxHeight: "100vh" }}>{children}</SimpleBar>
+      <SimpleBar style={{ maxHeight: maxHeight }}>{children}</SimpleBar>
     </motion.div>
   );
 };
@@ -126,16 +126,18 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
   size,
   template,
   direction = "top",
+  maxHeight = "90vh",
 }) => {
-  const returnMaxSizeScroll = () => {
-    if (size === "fullscreen") {
-      return "calc(100vh - 32px)";
+  const returnMaxHeightScroll = () => {
+    if (maxHeight) return maxHeight;
+    else {
+      if (size === "fullscreen") {
+        return "calc(100vh - 32px)";
+      }
+      if (template === "menu") {
+        return "100vh";
+      }
     }
-    if (template === "menu") {
-      return "100vh";
-    }
-
-    return "90vh";
   };
 
   return (
@@ -144,9 +146,11 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: direction === "top" ? -100 : 100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`teaui modal-container ${size ? `size-${size} ${size}` : ""}`}
+      className={`infusedui-modal modal-container ${
+        size ? `size-${size} ${size}` : ""
+      }`}
     >
-      <SimpleBar style={{ maxHeight: returnMaxSizeScroll() }}>
+      <SimpleBar style={{ maxHeight: returnMaxHeightScroll() }}>
         {children}
       </SimpleBar>
     </motion.div>
@@ -155,34 +159,28 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
 Modal.ModalCenter = ModalCenter;
 
 const Body: React.FC<BodyProps> = ({ children }) => {
-  return (
-    <div className="teaui modal-content pa16 ms-pa16 xs-pa16">{children}</div>
-  );
+  return <div className="infusedui-modal modal-content">{children}</div>;
 };
 Modal.Body = Body;
 
 const Navigation: React.FC<NavigationProps> & {
   Item: React.FC<NavigationItemProps>;
 } = ({ children }) => {
-  return (
-    <div className="teaui pa16 ms-pa16 xs-pa16">
-      <nav className="teaui tab-nav tab-size-full">{children}</nav>
-    </div>
-  );
+  return <nav className="infusedui-modal modal-nav">{children}</nav>;
 };
 Modal.Navigation = Navigation;
 
 const NavigationItem: React.FC<NavigationItemProps> = ({
   label,
-  setModalPage,
+  setPage,
   isActive,
-  id,
+  pageId,
 }) => {
   return (
     <button
-      onClick={(event) => {
-        event.preventDefault();
-        setModalPage(id);
+      onClick={(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        evt.preventDefault();
+        setPage(pageId);
       }}
       className={isActive ? "active" : ""}
     >
@@ -193,7 +191,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
 Navigation.Item = NavigationItem;
 
 const Pages: React.FC<BodyProps> = ({ children }) => {
-  return <AnimatePresence>{children}</AnimatePresence>;
+  return <AnimatePresence mode="wait">{children}</AnimatePresence>;
 };
 Modal.Pages = Pages;
 

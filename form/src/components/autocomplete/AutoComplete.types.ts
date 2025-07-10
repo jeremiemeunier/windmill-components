@@ -1,12 +1,13 @@
 export interface DataItems {
   label: string;
   value: string;
+  details?: string;
 }
 
 export interface AutoCompleteProps {
-  content: string;
+  content: any;
   setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: string;
+  error: any;
   data: DataItems[];
   label?: string;
   locked?: boolean;

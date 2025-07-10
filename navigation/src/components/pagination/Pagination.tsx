@@ -2,7 +2,7 @@ import React from "react";
 import { PaginationProps } from "./Pagination.types";
 
 const Pagination: React.FC<PaginationProps> = ({
-  pages = 0,
+  pages = 1,
   page,
   setPage,
   sticky,
@@ -21,7 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({
             event.preventDefault();
             setPage(page - 1);
           }}
-          disabled={page - 1 < 0 ? true : false}
+          disabled={page - 1 < 1 ? true : false}
           className="teaui cta level-secondary format-icon-only"
           title="Page précédente"
         >
@@ -39,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({
             >
               {(() => {
                 const options: React.ReactNode[] = [];
-                for (let i = 0; i <= pages; i++) {
+                for (let i = 1; i <= pages; i++) {
                   options.push(
                     <option key={i} value={i}>
                       {i}
