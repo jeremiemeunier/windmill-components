@@ -1,0 +1,47 @@
+.infusedui-loader {
+  width: 24px;
+  height: 24px;
+
+  svg {
+    width: 24px;
+    aspect-ratio: 1/1;
+    transform-origin: center;
+    animation: rotate4 2s linear infinite;
+
+    [data-width] {
+      width: calc(attr(data-width) * 1px);
+    }
+  }
+
+  circle {
+    fill: none;
+    stroke: #000000;
+    stroke-width: 5;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
+  }
+
+  @keyframes rotate4 {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dash4 {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 90, 200;
+      stroke-dashoffset: -35px;
+    }
+
+    100% {
+      stroke-dashoffset: -125px;
+    }
+  }
+}
