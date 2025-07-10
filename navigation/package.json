@@ -1,0 +1,49 @@
+{
+  "name": "@jeremiemeunier/navigation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremiemeunier/windmill-components.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "pub": "tsup && npm publish",
+    "build": "tsup"
+  },
+  "publishConfig": {
+    "@jeremiemeunier:registry": "https://npm.pkg.github.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "esbuild-sass-plugin": "^3.3.1",
+    "eslint": "^9.26.0",
+    "lit-element": "^4.2.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@jeremiemeunier/core": "^2.5.0",
+    "framer-motion": "^12.16.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "sass": "^1.89.2",
+    "scss": "^0.2.4",
+    "simplebar-react": "^3.3.1"
+  }
+}
