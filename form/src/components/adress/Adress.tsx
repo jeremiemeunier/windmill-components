@@ -27,7 +27,7 @@ const Adress: React.FC<AdressProps> = ({
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
       <InputBlock error={error} className={className}>
-        <div className={`infusedui-autocomplete-root-input`}>
+        <div className={`windmillui-autocomplete-root-input`}>
           <input
             disabled={locked ? locked : false}
             name={id}
@@ -35,7 +35,7 @@ const Adress: React.FC<AdressProps> = ({
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength && maxLength}
             placeholder={placeHolder ? placeHolder : ""}
-            className="infusedui-autocomplete-root-filter"
+            className="windmillui-autocomplete-root-filter"
             value={content}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
@@ -56,8 +56,8 @@ const Adress: React.FC<AdressProps> = ({
             }}
             className={`icon ${
               listVisibility
-                ? "teaui-icon-chevron-up"
-                : "teaui-icon-chevron-down"
+                ? "windmill-icon-chevron-up"
+                : "windmill-icon-chevron-down"
             }`}
           ></i>
         </div>
@@ -67,11 +67,11 @@ const Adress: React.FC<AdressProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="infusedui-autocomplete-list-root"
-              id="infusedui_autocomplete_root_list"
+              className="windmillui-autocomplete-list-root"
+              id="windmillui_autocomplete_root_list"
             >
               <SimpleBar style={{ maxHeight: "240px" }}>
-                <div className="infusedui-autocomplete-list">
+                <div className="windmillui-autocomplete-list">
                   <AnimatePresence>
                     {data.map((option) => {
                       return (

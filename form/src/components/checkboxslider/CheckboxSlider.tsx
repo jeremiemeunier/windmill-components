@@ -14,7 +14,7 @@ const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
   const id = useId();
 
   return (
-    <div className={`infusedui-slider ${loading ? "state-loader" : ""}`}>
+    <div className={`windmillui-slider ${loading ? "state-loader" : ""}`}>
       <input
         type="checkbox"
         name={id}

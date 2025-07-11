@@ -271,7 +271,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
       <InputBlock error={error} className={className}>
-        <div className={`teaui dateTimepicker-root-input`}>
+        <div className={`windmillui dateTimepicker-root-input`}>
           <input
             disabled={locked ? locked : false}
             name={id}
@@ -300,12 +300,12 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="teaui dateTimepicker-calendar-root"
+              className="windmillui dateTimepicker-calendar-root"
             >
               <div>
-                <div className="teaui jeremiemeunier datePickerCalendar dateTimepicker-calendar-month">
+                <div className="windmillui jeremiemeunier datePickerCalendar dateTimepicker-calendar-month">
                   <button onClick={prevMonth}>
-                    <i className="icon teaui-icon-carret-left"></i>
+                    <i className="icon windmill-icon-carret-left"></i>
                   </button>
                   <div>
                     {!disabledTodayButton &&
@@ -329,7 +329,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
                         </button>
                       )}
                     <select
-                      className="teaui margin-8-right"
+                      className="windmillui margin-8-right"
                       value={activeMonth}
                       onChange={(
                         event: React.ChangeEvent<HTMLSelectElement>
@@ -361,11 +361,11 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
                     </select>
                   </div>
                   <button onClick={nextMonth}>
-                    <i className="icon teaui-icon-carret-right"></i>
+                    <i className="icon windmill-icon-carret-right"></i>
                   </button>
                 </div>
-                <div className="teaui dateTimepicker-calendar-days">
-                  <div className="teaui dateTimepicker-day-label">
+                <div className="windmillui dateTimepicker-calendar-days">
+                  <div className="windmillui dateTimepicker-day-label">
                     <span>L</span>
                     <span>M</span>
                     <span>M</span>

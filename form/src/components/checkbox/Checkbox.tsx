@@ -15,7 +15,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <InputBlock error={error} className={className}>
-      <div className={`infusedui-checkbox`}>
+      <div className={`windmillui-checkbox`}>
         <input
           type="checkbox"
           name={id}

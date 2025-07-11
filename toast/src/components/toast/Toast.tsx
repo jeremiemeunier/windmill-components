@@ -24,7 +24,7 @@ export const Timer: React.FC<TimerProps> = ({ duration }) => {
   };
 
   return (
-    <span className="infusedui tag stroke color-main text format-number timer">
+    <span className="windmillui tag stroke color-main text format-number timer">
       {formattedTime(timer)}
     </span>
   );
@@ -43,7 +43,7 @@ const Toast: React.FC<ToastProps> = ({
   return (
     content && (
       <div
-        className={`infusedui-toast-root color-${type} ${
+        className={`windmillui-toast-root color-${type} ${
           position ? position : "bl"
         }`}
       >
@@ -57,7 +57,7 @@ const Toast: React.FC<ToastProps> = ({
               : ""
           }`}
         >
-          {icon && <i className={`icon teaui-icon-${icon}`}></i>}
+          {icon && <i className={`icon windmill-icon-${icon}`}></i>}
           {timed && <Timer duration={timed} />}
           {loading && <Loader />}
           <div className="content">

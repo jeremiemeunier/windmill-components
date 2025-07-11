@@ -1,6 +1,6 @@
 # @jeremiemeunier/hooks
 
-A small collection of React hooks used across InfusedUI projects.
+A small collection of React hooks used across windmillui projects.
 
 ## Installation
 

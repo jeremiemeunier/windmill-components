@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> & {
   Pages: React.FC<BodyProps>;
 } = ({ children }) => {
   return (
-    <motion.div className="infusedui-modal modal-root">{children}</motion.div>
+    <motion.div className="windmillui-modal modal-root">{children}</motion.div>
   );
 };
 
@@ -43,7 +43,7 @@ const Background: React.FC<CloseProps> = ({
 
   return (
     <motion.div
-      className="infusedui-modal modal-background"
+      className="windmillui-modal modal-background"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -55,7 +55,7 @@ const Background: React.FC<CloseProps> = ({
 Modal.Background = Background;
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
-  return <div className="infusedui-modal modal-header">{children}</div>;
+  return <div className="windmillui-modal modal-header">{children}</div>;
 };
 Modal.Header = Header;
 
@@ -72,8 +72,8 @@ const Close: React.FC<CloseProps> = ({ setVisibility, refreshHandler }) => {
   };
 
   return (
-    <button className="infusedui-modal modal-close" onClick={closeHandler}>
-      <i className="icon teaui-icon-cross"></i>
+    <button className="windmillui-modal modal-close" onClick={closeHandler}>
+      <i className="icon windmill-icon-cross"></i>
     </button>
   );
 };
@@ -90,7 +90,7 @@ const MenuLeft: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`infusedui-modal modal-container format-menu position-left ${
+      className={`windmillui-modal modal-container format-menu position-left ${
         size ? `size-${size} ${size}` : ""
       }`}
     >
@@ -111,7 +111,7 @@ const MenuRight: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`infusedui-modal modal-container format-menu position-right ${
+      className={`windmillui-modal modal-container format-menu position-right ${
         size ? `size-${size} ${size}` : ""
       }`}
     >
@@ -146,7 +146,7 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: direction === "top" ? -100 : 100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`infusedui-modal modal-container ${
+      className={`windmillui-modal modal-container ${
         size ? `size-${size} ${size}` : ""
       }`}
     >
@@ -159,14 +159,14 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
 Modal.ModalCenter = ModalCenter;
 
 const Body: React.FC<BodyProps> = ({ children }) => {
-  return <div className="infusedui-modal modal-content">{children}</div>;
+  return <div className="windmillui-modal modal-content">{children}</div>;
 };
 Modal.Body = Body;
 
 const Navigation: React.FC<NavigationProps> & {
   Item: React.FC<NavigationItemProps>;
 } = ({ children }) => {
-  return <nav className="infusedui-modal modal-nav">{children}</nav>;
+  return <nav className="windmillui-modal modal-nav">{children}</nav>;
 };
 Modal.Navigation = Navigation;
 

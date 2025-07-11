@@ -27,8 +27,8 @@ const Radio: React.FC<RadioProps> = ({
             key={key}
             className={`${
               viewBox
-                ? "infusedui-template-radio"
-                : "infusedui-template-radio-no-check"
+                ? "windmillui-template-radio"
+                : "windmillui-template-radio-no-check"
             } ${className}`}
           >
             <input

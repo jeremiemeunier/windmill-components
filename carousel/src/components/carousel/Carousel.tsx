@@ -50,34 +50,34 @@ const Carousel: React.FC<CarouselTypes> = ({
   };
 
   return (
-    <div className={`teaui carousel-container ${className}`}>
+    <div className={`windmillui carousel-container ${className}`}>
       <div className="carousel-wrapper">
         <div
-          className={`teaui carousel-root items-${slidesNumber}`}
+          className={`windmillui carousel-root items-${slidesNumber}`}
           ref={carouselRef}
         >
           {slides.map((slide, key) => (
-            <div key={key} className="teaui carousel-slide">
+            <div key={key} className="windmillui carousel-slide">
               {slide}
             </div>
           ))}
         </div>
       </div>
 
-      <div className="teaui carousel-nav">
+      <div className="windmillui carousel-nav">
         <button
           onClick={movePage}
           disabled={currentPage === 0 ? true : false}
-          className="teaui carousel-nav-button carousel-nav-button-prev"
+          className="windmillui carousel-nav-button carousel-nav-button-prev"
         >
-          <i className="icon teaui-icon-arrow-left"></i>
+          <i className="icon windmill-icon-arrow-left"></i>
         </button>
         <button
           onClick={movePage}
           disabled={currentPage === pages - 1 ? true : false}
-          className="teaui carousel-nav-button carousel-nav-button-next"
+          className="windmillui carousel-nav-button carousel-nav-button-next"
         >
-          <i className="icon teaui-icon-arrow-right"></i>
+          <i className="icon windmill-icon-arrow-right"></i>
         </button>
       </div>
     </div>

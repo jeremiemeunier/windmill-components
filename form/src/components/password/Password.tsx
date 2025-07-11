@@ -32,7 +32,7 @@ const Password: React.FC<PasswordProps> = ({
     <BaseBlock id={id} label={label} tagline={tagline} size={size}>
       <InputBlock error={error} className={className}>
         <div
-          className={`infusedui-password ${className}`}
+          className={`windmillui-password ${className}`}
           onMouseLeave={() => {
             setPasswordVisibility(false);
           }}
@@ -48,7 +48,7 @@ const Password: React.FC<PasswordProps> = ({
             readOnly={readOnly ? readOnly : false}
           />
           <button
-            className="infusedui-password-switch"
+            className="windmillui-password-switch"
             onClick={(event) => {
               event.preventDefault();
               setPasswordVisibility(!passwordVisibility);
@@ -64,38 +64,38 @@ const Password: React.FC<PasswordProps> = ({
           </button>
         </div>
         {isNew ? (
-          <p className="infusedui-message s-sm">
+          <p className="windmillui-message s-sm">
             Votre mot de passe doit respecter ces critères :
             <br />
             <span>
               {passwordVerifSize >= 8 ? (
-                <i className="icon color-positive s-xs teaui-icon-check-circle-fill"></i>
+                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
-                <i className="icon color-negative s-xs teaui-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
               )}
               Faire au moins 8 caractères
             </span>
             <span>
               {uppercaseRegex.test(content) ? (
-                <i className="icon color-positive s-xs teaui-icon-check-circle-fill"></i>
+                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
-                <i className="icon color-negative s-xs teaui-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
               )}
               Avoir au moins une lettre majuscule
             </span>
             <span>
               {numberRegex.test(content) ? (
-                <i className="icon color-positive s-xs teaui-icon-check-circle-fill"></i>
+                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
-                <i className="icon color-negative s-xs teaui-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
               )}
               Avoir au moins 1 chiffre
             </span>
             <span>
               {specialRegex.test(content) ? (
-                <i className="icon color-positive s-xs teaui-icon-check-circle-fill"></i>
+                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
-                <i className="icon color-negative s-xs teaui-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
               )}
               Avoir au moins un caractère spécial
             </span>

@@ -47,7 +47,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
       required={required ? true : false}
     >
       <div
-        className={`infusedui-totp-root ${
+        className={`windmillui-totp-root ${
           error ? "state-negative" : ""
         } ${className}`}
       >
@@ -71,7 +71,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
             </InputBlock>
           ))}
         </div>
-        {error && <p className="infusedui-message">{error}</p>}
+        {error && <p className="windmillui-message">{error}</p>}
       </div>
     </BaseBlock>
   );

@@ -47,7 +47,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   return (
     <BaseBlock id="" label={label} size={size}>
       <InputBlock error={error} className={className}>
-        <div className={`infusedui-drag-n-drop ${className}`}>
+        <div className={`windmillui-drag-n-drop ${className}`}>
           <FileUploader
             handleChange={handleChange}
             name="file"
@@ -55,7 +55,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
             hoverTitle={"Déposer ici"}
             multiple={multipleUpload ? true : false}
           >
-            <div className="infusedui-drop-zone">
+            <div className="windmillui-drop-zone">
               <p>
                 {`${
                   multipleUpload
@@ -64,7 +64,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
                 } ici (${authorizedFiles.join(", ")})`}
               </p>
               <p>ou</p>
-              <button className="teaui cta level-secondary">
+              <button className="windmillui cta level-secondary">
                 {multipleUpload
                   ? "Choisir un ou plusieurs fichier(s)"
                   : "Choisir un fichier"}

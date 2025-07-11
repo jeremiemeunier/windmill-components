@@ -10,7 +10,7 @@ const Message: React.FC<MessageProps> = ({ data, className }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`infusedui-message-root ${className} ${
+            className={`windmillui-message-root ${className} ${
               data.type ? `color-${data.type}` : ""
             } ${data.format ? `template-${data.format}` : ""}`}
           >

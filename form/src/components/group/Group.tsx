@@ -5,8 +5,8 @@ const Group: React.FC<GroupProps> = ({ size, children, className }) => {
     <div
       className={
         size
-          ? `infusedui-group ${className} tc-${size}`
-          : `infusedui-group ${className}`
+          ? `windmillui-group ${className} tc-${size}`
+          : `windmillui-group ${className}`
       }
     >
       {children}
