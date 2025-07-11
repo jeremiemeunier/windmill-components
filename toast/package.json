@@ -42,7 +42,7 @@
     "lit-element": "^4.2.0",
     "tslib": "^2.6.2",
     "tsup": "^8.4.0",
-    "typed-scss-modules": "^8.0.1",
+    "typed-scss-modules": "^8.1.1",
     "typescript": "^5.4.5"
   }
 }
