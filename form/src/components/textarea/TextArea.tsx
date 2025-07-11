@@ -59,7 +59,7 @@ const TextArea: React.FC<TextAreaProps> = ({
           }}
         ></textarea>
         {maxLength && (
-          <span className="infusedui-max-length">
+          <span className="windmillui-max-length">
             {actualContentSize} / {maxLength}
           </span>
         )}

@@ -80,7 +80,7 @@ const Input: React.FC<InputProps> = ({
           }}
         />
         {maxLength && (
-          <span className="infusedui-max-length">
+          <span className="windmillui-max-length">
             {actualContentSize} / {maxLength}
           </span>
         )}

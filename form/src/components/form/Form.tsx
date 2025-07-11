@@ -10,7 +10,7 @@ const Form: React.FC<FormProps> = ({
     <form
       onSubmit={handler}
       encType={encType && encType}
-      className={`infusedui-form ${className}`}
+      className={`windmillui-form ${className}`}
     >
       {children}
     </form>

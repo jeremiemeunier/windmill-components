@@ -15,14 +15,14 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
 }) => {
   return (
     <div
-      className={`infusedui-form-container ${size ? `gwc-${size}` : ""} ${
+      className={`windmillui-form-container ${size ? `gwc-${size}` : ""} ${
         label ? "template-label" : "template-default"
       }`}
     >
       {label ? (
         <label htmlFor={id}>
           {label}{" "}
-          {required && <span className="infusedui-required">Requis</span>}
+          {required && <span className="windmillui-required">Requis</span>}
         </label>
       ) : (
         ""
@@ -41,13 +41,13 @@ export const InputBlock: React.FC<InputBlockProps> = ({
 }) => {
   return (
     <div
-      className={`infusedui-input ${error ? "state-negative" : ""} ${
+      className={`windmillui-input ${error ? "state-negative" : ""} ${
         maxLength ? "template-max-length" : ""
       } ${className}`}
     >
       {children}
       {error && typeof error === "string" && (
-        <p className="infusedui-message">{error}</p>
+        <p className="windmillui-message">{error}</p>
       )}
     </div>
   );
@@ -60,15 +60,15 @@ export const RadioCheckboxBlock: React.FC<RadioCheckboxBlockProps> = ({
   className,
 }) => {
   return (
-    <div className={`infusedui-container ${className}`}>
+    <div className={`windmillui-container ${className}`}>
       <div
-        className={`infusedui-radio-grid ${
+        className={`windmillui-radio-grid ${
           error ? "state-negative" : ""
         } grid rgs-8 cgs-8 tc-${gridSize}`}
       >
         {children}
       </div>
-      {error && <p className="infusedui-message">{error}</p>}
+      {error && <p className="windmillui-message">{error}</p>}
     </div>
   );
 };
@@ -80,13 +80,13 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
 }) => {
   return (
     <div
-      className={`infusedui-input infusedui-select ${
+      className={`windmillui-input windmillui-select ${
         error ? "state-negative" : ""
       } ${className}`}
     >
       {children}
-      <i className="icon teaui-icon-chevron-down"></i>
-      {error ? <p className="infusedui-message">{error}</p> : ""}
+      <i className="icon windmill-icon-chevron-down"></i>
+      {error ? <p className="windmillui-message">{error}</p> : ""}
     </div>
   );
 };

@@ -55,7 +55,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
       <InputBlock error={error} className={className}>
-        <div className={`infusedui-autocomplete-root-input`}>
+        <div className={`windmillui-autocomplete-root-input`}>
           <input
             disabled={locked ? locked : false}
             name={id}
@@ -63,7 +63,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength && maxLength}
             placeholder={placeHolder ? placeHolder : ""}
-            className="infusedui-autocomplete-root-filter"
+            className="windmillui-autocomplete-root-filter"
             value={inputLabel}
             onChange={(event) => {
               setInputLabel(event.target.value);
@@ -85,8 +85,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
             }}
             className={`icon ${
               listVisibility
-                ? "teaui-icon-chevron-up"
-                : "teaui-icon-chevron-down"
+                ? "windmill-icon-chevron-up"
+                : "windmill-icon-chevron-down"
             }`}
           ></i>
         </div>
@@ -96,11 +96,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="infusedui-autocomplete-list-root"
-              id="infusedui_autocomplete_root_list"
+              className="windmillui-autocomplete-list-root"
+              id="windmillui_autocomplete_root_list"
             >
               <SimpleBar style={{ maxHeight: "240px" }}>
-                <div className="infusedui-autocomplete-list">
+                <div className="windmillui-autocomplete-list">
                   <AnimatePresence>
                     {filteredData.map((option) => {
                       return (
@@ -113,11 +113,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                           }}
                           key={option.value}
                         >
-                          <p className="infusedui as-ma0 as-pa0">
+                          <p className="windmillui as-ma0 as-pa0">
                             {option.label}
                           </p>
                           {option.details && (
-                            <p className="infusedui as-ma0 as-pa0 text labeled">
+                            <p className="windmillui as-ma0 as-pa0 text labeled">
                               {option.details}
                             </p>
                           )}

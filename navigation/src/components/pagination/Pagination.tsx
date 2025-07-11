@@ -9,27 +9,27 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   return (
     <div
-      className={`teaui pagination ${
+      className={`windmillui pagination ${
         sticky
           ? `position-sticky top-${sticky} ms-top-${sticky} xs-top-${sticky}`
           : ""
       }`}
     >
-      <div className="teaui cta-container format-group">
+      <div className="windmillui cta-container format-group">
         <button
           onClick={(event) => {
             event.preventDefault();
             setPage(page - 1);
           }}
           disabled={page - 1 < 1 ? true : false}
-          className="teaui cta level-secondary format-icon-only"
+          className="windmillui cta level-secondary format-icon-only"
           title="Page précédente"
         >
-          <i className="icon teaui-icon-chevron-left"></i>
+          <i className="icon windmill-icon-chevron-left"></i>
         </button>
 
         {pages ? (
-          <div className="teaui pagination-select">
+          <div className="windmillui pagination-select">
             <select
               value={page}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,7 +49,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 return options;
               })()}
             </select>
-            <i className="icon teaui-icon-carret-down"></i>
+            <i className="icon windmill-icon-carret-down"></i>
           </div>
         ) : null}
 
@@ -59,10 +59,10 @@ const Pagination: React.FC<PaginationProps> = ({
             setPage(page + 1);
           }}
           disabled={page + 1 > pages ? true : false}
-          className="teaui cta level-secondary format-icon-only"
+          className="windmillui cta level-secondary format-icon-only"
           title="Page suivante"
         >
-          <i className="icon teaui-icon-chevron-right"></i>
+          <i className="icon windmill-icon-chevron-right"></i>
         </button>
       </div>
     </div>

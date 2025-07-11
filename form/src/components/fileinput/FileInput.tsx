@@ -24,7 +24,7 @@ const FileInput: React.FC<FileInputProps> = ({
       required={required}
     >
       <InputBlock error={error} className={className}>
-        <div className={`infusedui-file-input ${className}`}>
+        <div className={`windmillui-file-input ${className}`}>
           <input
             type="file"
             id={id}
@@ -36,7 +36,7 @@ const FileInput: React.FC<FileInputProps> = ({
             }}
             accept={accept ? accept.join(", ") : ""}
           />
-          <label className="teaui cta level-secondary" htmlFor={id}>
+          <label className="windmillui cta level-secondary" htmlFor={id}>
             Choisir un fichier
           </label>
           <span>

@@ -285,7 +285,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
       <InputBlock error={error} className={className}>
-        <div className={`infusedui-datepicker-root-input`}>
+        <div className={`windmillui-datepicker-root-input`}>
           <input
             disabled={locked ? locked : false}
             name={id}
@@ -317,11 +317,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="infusedui-datepicker-calendar-root"
+              className="windmillui-datepicker-calendar-root"
             >
-              <div className="infusedui-datepicker-calendar-month">
+              <div className="windmillui-datepicker-calendar-month">
                 <button onClick={prevMonth}>
-                  <i className="icon teaui-icon-carret-left"></i>
+                  <i className="icon windmill-icon-carret-left"></i>
                 </button>
                 <div>
                   {!disabledTodayButton &&
@@ -370,11 +370,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                   </select>
                 </div>
                 <button onClick={nextMonth}>
-                  <i className="icon teaui-icon-carret-right"></i>
+                  <i className="icon windmill-icon-carret-right"></i>
                 </button>
               </div>
-              <div className="infusedui-datepicker-calendar-days">
-                <div className="infusedui-datepicker-day-label">
+              <div className="windmillui-datepicker-calendar-days">
+                <div className="windmillui-datepicker-day-label">
                   <span>L</span>
                   <span>M</span>
                   <span>M</span>

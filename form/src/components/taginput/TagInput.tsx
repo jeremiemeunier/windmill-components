@@ -58,10 +58,10 @@ const Input: React.FC<TagInputProps> = ({
           onBlur={handleOut}
           onKeyUp={handleKey}
         />
-        <div className={`infusedui-tag-root ${className}`}>
+        <div className={`windmillui-tag-root ${className}`}>
           {content.map((tag, index) => (
             <span
-              className="infusedui-tag"
+              className="windmillui-tag"
               title="Remove from list"
               key={index}
               onClick={() => {
