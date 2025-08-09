@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/cursor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Custom cursor component that frames links on hover",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,7 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/jeremiemeunier/windmill-components.git"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.cjs"
@@ -25,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jeremiemeunier/core": "^2.5.0",
+    "@jeremiemeunier/core": "^1.0.0",
     "react": "^19.1.0"
   },
   "devDependencies": {

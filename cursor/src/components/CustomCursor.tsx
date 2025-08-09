@@ -1,72 +1,193 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { CustomCursorProps } from "./CustomCursor.types";
 
-const CustomCursor: React.FC = () => {
-  const cursorRef = useRef<HTMLDivElement>(null);
+const isTouchDevice = () =>
+  typeof window !== "undefined" &&
+  ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
+const CustomCursor: React.FC<CustomCursorProps> = ({
+  targets = "a, button, [data-cursor-target]",
+  padding = 6,
+  borderWidth = 2,
+  borderColor = "black",
+  radius = 6,
+  idleSize = 18,
+  smoothness = { movement: 0.25, resize: 0.25 },
+  zIndex = 9999,
+  disableOnTouch = true,
+  className,
+}) => {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+
+  // Dernier mouse pos (réfs pour éviter re-render)
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
+
+  // État “cadre actif” (màj seulement quand on entre/sort d’une cible)
+  const [activeRect, setActiveRect] = useState<DOMRect | null>(null);
+
+  // Positions/tailles animées (interne)
+  const anim = useRef({
+    x: 0,
+    y: 0,
+    w: idleSize,
+    h: idleSize,
+  });
+
+  // Guard SSR / touch
+  const disabled =
+    typeof window === "undefined" || (disableOnTouch && isTouchDevice());
+
+  // Mets à jour le rect actif au survol
   useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor) return;
+    if (disabled) return;
 
-    let linkHovered = false;
-
-    const move = (e: MouseEvent) => {
-      if (linkHovered) return;
-      cursor.style.left = e.clientX + "px";
-      cursor.style.top = e.clientY + "px";
+    const onOver = (e: MouseEvent) => {
+      const t = e.target as Element | null;
+      if (!t) return;
+      const matched = t.closest(targets);
+      if (matched) {
+        const rect = (matched as HTMLElement).getBoundingClientRect();
+        setActiveRect(rect);
+      }
     };
 
-    const over = (e: MouseEvent) => {
-      const link = (e.target as HTMLElement).closest("a");
-      if (!link) return;
-      linkHovered = true;
-      const rect = link.getBoundingClientRect();
-      cursor.style.left = rect.left - 4 + "px";
-      cursor.style.top = rect.top - 4 + "px";
-      cursor.style.width = rect.width + 8 + "px";
-      cursor.style.height = rect.height + 8 + "px";
-      cursor.style.borderRadius = "4px";
-      cursor.style.transform = "translate(0, 0)";
+    const onOut = (e: MouseEvent) => {
+      const t = e.target as Element | null;
+      if (!t) return;
+      const matched = t.closest(targets);
+      if (matched) {
+        // On ne vérifie pas `relatedTarget` -> simple: on reset
+        setActiveRect(null);
+      }
     };
 
-    const out = (e: MouseEvent) => {
-      const link = (e.target as HTMLElement).closest("a");
-      if (!link) return;
-      linkHovered = false;
-      cursor.style.width = "12px";
-      cursor.style.height = "12px";
-      cursor.style.borderRadius = "50%";
-      cursor.style.transform = "translate(-50%, -50%)";
-    };
-
-    document.addEventListener("mousemove", move);
-    document.addEventListener("mouseover", over);
-    document.addEventListener("mouseout", out);
-
+    window.addEventListener("mouseover", onOver);
+    window.addEventListener("mouseout", onOut);
     return () => {
-      document.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseover", over);
-      document.removeEventListener("mouseout", out);
+      window.removeEventListener("mouseover", onOver);
+      window.removeEventListener("mouseout", onOut);
     };
-  }, []);
+  }, [targets, disabled]);
+
+  // Suivi souris (sans re-render)
+  useEffect(() => {
+    if (disabled) return;
+
+    const onMove = (e: MouseEvent) => {
+      mouseX.current = e.clientX;
+      mouseY.current = e.clientY;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [disabled]);
+
+  // Boucle rAF pour animer position/tailles
+  useEffect(() => {
+    if (disabled) return;
+
+    let raf = 0;
+    const moveLerp = smoothness.movement ?? 0.25;
+    const sizeLerp = smoothness.resize ?? 0.25;
+
+    const tick = () => {
+      const frame = frameRef.current;
+      const dot = dotRef.current;
+
+      // Cible: centre + taille
+      let targetX: number;
+      let targetY: number;
+      let targetW: number;
+      let targetH: number;
+
+      if (activeRect) {
+        targetW = activeRect.width + padding * 2;
+        targetH = activeRect.height + padding * 2;
+        targetX = activeRect.left + activeRect.width / 2;
+        targetY = activeRect.top + activeRect.height / 2;
+      } else {
+        targetW = idleSize;
+        targetH = idleSize;
+        targetX = mouseX.current;
+        targetY = mouseY.current;
+      }
+
+      // Interpolation
+      anim.current.x += (targetX - anim.current.x) * moveLerp;
+      anim.current.y += (targetY - anim.current.y) * moveLerp;
+      anim.current.w += (targetW - anim.current.w) * sizeLerp;
+      anim.current.h += (targetH - anim.current.h) * sizeLerp;
+
+      // Applique styles
+      if (frame) {
+        frame.style.transform = `translate(${
+          anim.current.x - anim.current.w / 2
+        }px, ${anim.current.y - anim.current.h / 2}px)`;
+        frame.style.width = `${anim.current.w}px`;
+        frame.style.height = `${anim.current.h}px`;
+        frame.style.borderRadius = activeRect ? `${radius}px` : "50%";
+        frame.style.opacity = "1";
+      }
+      if (dot) {
+        // Le petit point n'est visible qu'en mode idle
+        dot.style.transform = `translate(${mouseX.current - idleSize / 2}px, ${
+          mouseY.current - idleSize / 2
+        }px)`;
+        dot.style.opacity = activeRect ? "0" : "1";
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [activeRect, idleSize, padding, radius, smoothness, disabled]);
+
+  // Styles inline pour éviter d’imposer un CSS global
+  if (disabled) return null;
 
   return (
     <div
-      ref={cursorRef}
+      ref={rootRef}
+      className={className}
       style={{
         position: "fixed",
-        left: 0,
-        top: 0,
-        width: 12,
-        height: 12,
-        border: "2px solid black",
-        borderRadius: "50%",
+        inset: 0,
         pointerEvents: "none",
-        transform: "translate(-50%, -50%)",
-        transition:
-          "width 0.2s, height 0.2s, border-radius 0.2s, left 0.1s, top 0.1s",
-        zIndex: 9999,
+        zIndex,
       }}
-    />
+      aria-hidden
+    >
+      {/* point idle */}
+      <div
+        ref={dotRef}
+        style={{
+          position: "fixed",
+          width: idleSize,
+          height: idleSize,
+          borderRadius: "50%",
+          border: `${borderWidth}px solid ${borderColor}`,
+          transform: "translate(-9999px, -9999px)",
+          transition: "opacity 120ms ease",
+          willChange: "transform, opacity",
+        }}
+      />
+      {/* cadre animé */}
+      <div
+        ref={frameRef}
+        style={{
+          position: "fixed",
+          width: idleSize,
+          height: idleSize,
+          border: `${borderWidth}px solid ${borderColor}`,
+          transform: "translate(-9999px, -9999px)",
+          transition: "opacity 120ms ease",
+          willChange: "transform, width, height, border-radius, opacity",
+        }}
+      />
+    </div>
   );
 };
 
