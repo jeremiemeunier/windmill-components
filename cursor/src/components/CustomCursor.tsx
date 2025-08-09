@@ -158,7 +158,7 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
         pointerEvents: "none",
         zIndex,
       }}
-      aria-hidden
+      aria-hidden="true"
     >
       {/* point idle */}
       <div
