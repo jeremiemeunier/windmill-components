@@ -1,0 +1,38 @@
+{
+  "name": "@jeremiemeunier/cursor",
+  "version": "1.0.0",
+  "description": "Custom cursor component that frames links on hover",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremiemeunier/windmill-components.git"
+  },
+  "files": ["dist"],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "pub": "tsup && npm publish",
+    "build": "tsup"
+  },
+  "publishConfig": {
+    "@jeremiemeunier:registry": "https://npm.pkg.github.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jeremiemeunier/core": "^2.5.0",
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.4",
+    "esbuild-sass-plugin": "^3.3.1",
+    "eslint": "^9.26.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  }
+}
