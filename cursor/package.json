@@ -1,7 +1,7 @@
 {
-  "name": "@jeremiemeunier/drawer",
-  "version": "1.0.1",
-  "description": "",
+  "name": "@jeremiemeunier/cursor",
+  "version": "1.0.2",
+  "description": "Custom cursor component that frames links on hover",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
   ],
   "exports": {
     "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    "require": "./dist/index.js"
   },
   "scripts": {
     "pub": "tsup && npm publish",
@@ -27,22 +27,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "framer-motion": "^12.16.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "sass": "^1.89.2",
-    "scss": "^0.2.4",
-    "simplebar-react": "^3.3.1"
+    "@jeremiemeunier/core": "^1.0.0",
+    "react": "^19.1.0"
   },
   "devDependencies": {
-    "@types/react": "^19.1.6",
-    "tslib": "^2.6.2",
-    "tsup": "^8.5.0",
-    "typed-scss-modules": "^8.1.1",
-    "typescript": "^5.4.5",
+    "@types/react": "^19.1.4",
     "esbuild-sass-plugin": "^3.3.1",
     "eslint": "^9.26.0",
-    "lit-element": "^4.2.0"
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
   }
 }
