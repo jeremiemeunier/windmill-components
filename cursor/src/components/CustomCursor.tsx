@@ -182,7 +182,7 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
           width: idleSize,
           height: idleSize,
           border: `${borderWidth}px solid ${borderColor}`,
-          transform: "translate(-9999px, -9999px)",
+          opacity: 0,
           transition: "opacity 120ms ease",
           willChange: "transform, width, height, border-radius, opacity",
         }}
