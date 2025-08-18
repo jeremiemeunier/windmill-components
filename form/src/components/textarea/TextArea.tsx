@@ -16,6 +16,7 @@ const TextArea: React.FC<TextAreaProps> = ({
   rows,
   className,
   resizable,
+  dataIsLoading,
 }) => {
   const id = useId();
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -38,7 +39,11 @@ const TextArea: React.FC<TextAreaProps> = ({
 
   return (
     <BaseBlock id={id} label={label} tagline={tagline} size={size}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <textarea
           ref={ref}
           disabled={locked ? locked : false}

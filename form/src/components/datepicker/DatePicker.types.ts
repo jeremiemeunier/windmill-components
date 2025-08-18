@@ -29,4 +29,5 @@ export interface DatePickerProps {
   disabled?: DisabledOption[];
   className?: string;
   disabledTodayButton?: boolean;
+  dataIsLoading?: boolean;
 }

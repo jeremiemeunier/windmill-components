@@ -24,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   min,
   max,
   step,
+  dataIsLoading,
 }) => {
   const id = useId();
   const [actualContentSize, setActualContentSize] = useState(
@@ -48,6 +49,7 @@ const Input: React.FC<InputProps> = ({
         error={error || internError}
         maxLength={maxLength}
         className={className}
+        dataIsLoading={dataIsLoading}
       >
         <input
           disabled={locked ? true : false}

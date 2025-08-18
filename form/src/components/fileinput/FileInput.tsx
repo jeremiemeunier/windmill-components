@@ -11,6 +11,7 @@ const FileInput: React.FC<FileInputProps> = ({
   required,
   accept = [],
   className,
+  dataIsLoading,
 }) => {
   const id = useId();
   const [fileSelectedLabel, setFileSelectedLabel] = useState("");
@@ -23,7 +24,11 @@ const FileInput: React.FC<FileInputProps> = ({
       tagline={tagline}
       required={required}
     >
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <div className={`windmillui-file-input ${className}`}>
           <input
             type="file"

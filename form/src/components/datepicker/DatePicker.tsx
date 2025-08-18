@@ -17,6 +17,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   disabled,
   className,
   disabledTodayButton = false,
+  dataIsLoading,
 }) => {
   const id = useId();
   const calendar = new Calendar();
@@ -284,7 +285,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <div className={`windmillui-datepicker-root-input`}>
           <input
             disabled={locked ? locked : false}

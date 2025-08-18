@@ -12,6 +12,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   multipleUpload,
   error,
   className,
+  dataIsLoading,
 }) => {
   const [files, setFiles] = useState<File[] | null>(null);
   const [fileLabel, setFileLabel] = useState("");
@@ -46,7 +47,11 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
 
   return (
     <BaseBlock id="" label={label} size={size}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <div className={`windmillui-drag-n-drop ${className}`}>
           <FileUploader
             handleChange={handleChange}

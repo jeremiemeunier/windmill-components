@@ -22,4 +22,5 @@ export interface InputProps {
   min?: number;
   max?: number;
   step?: number;
+  dataIsLoading?: boolean;
 }

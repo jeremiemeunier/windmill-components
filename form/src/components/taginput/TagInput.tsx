@@ -17,6 +17,7 @@ const Input: React.FC<TagInputProps> = ({
   autofocus,
   separator = [","],
   className,
+  dataIsLoading,
 }) => {
   const id = useId();
 
@@ -47,7 +48,7 @@ const Input: React.FC<TagInputProps> = ({
       tagline={tagline}
       required={required ? true : false}
     >
-      <InputBlock error={error}>
+      <InputBlock error={error} dataIsLoading={dataIsLoading}>
         <input
           disabled={locked ? true : false}
           name={name ? name : id}

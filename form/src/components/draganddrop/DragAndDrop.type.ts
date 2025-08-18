@@ -7,4 +7,5 @@ export interface DragAndDropProps {
   authorizedFiles: string[];
   multipleUpload?: boolean;
   className?: string;
+  dataIsLoading?: boolean;
 }
