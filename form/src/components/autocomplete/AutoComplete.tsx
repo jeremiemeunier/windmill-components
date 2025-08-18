@@ -18,6 +18,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   data,
   required,
   className,
+  dataIsLoading,
 }) => {
   const id = useId();
 
@@ -54,7 +55,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <div className={`windmillui-autocomplete-root-input`}>
           <input
             disabled={locked ? locked : false}

@@ -13,6 +13,7 @@ export interface InputBlockProps {
   error: any | boolean;
   maxLength?: number;
   className?: string;
+  dataIsLoading?: boolean;
 }
 
 export interface RadioCheckboxBlockProps {
@@ -26,6 +27,7 @@ export interface SelectBlockProps {
   children: React.ReactNode;
   error: any;
   className?: string;
+  dataIsLoading?: boolean;
 }
 
 export interface LoaderProps {
