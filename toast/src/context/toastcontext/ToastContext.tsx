@@ -6,25 +6,8 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ContextProps } from "./ToastContext.types";
+import { ContextProps, ToastObject } from "./ToastContext.types";
 import Toast from "../../components/toast/Toast";
-
-interface ToastObject {
-  content: string;
-  type: "positive" | "negative" | "neutral" | null;
-  id?: number;
-  timer?: number;
-  duration?: number;
-  persistent?: boolean;
-  title?: string;
-  format?: {
-    icon?: "left" | "right" | "both";
-  };
-  position?: "tl" | "tr" | "bl" | "br" | "cl" | "cr";
-  icon?: string | string[];
-  loading?: boolean;
-  timed?: number;
-}
 
 const defaultPush: (toast: ToastObject) => ToastObject = (toast: ToastObject) =>
   toast;

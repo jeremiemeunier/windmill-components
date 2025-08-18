@@ -17,4 +17,5 @@ export interface AutoCompleteProps {
   placeHolder?: string;
   required?: boolean;
   className?: string;
+  dataIsLoading: boolean;
 }

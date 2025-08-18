@@ -47,7 +47,7 @@ const Background: React.FC<CloseProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ transition: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       onClick={closeHandler}
     ></motion.div>
   );
