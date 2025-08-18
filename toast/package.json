@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/toast",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -27,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jeremiemeunier/core": "^1.0.0",
+    "@jeremiemeunier/core": "^1.1.0",
     "framer-motion": "^12.16.0",
     "react": "^19.1.0",
     "react-router-dom": "^7.6.2",
