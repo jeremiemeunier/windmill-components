@@ -53,7 +53,7 @@ export const InputBlock: React.FC<InputBlockProps> = ({
     if (dataIsLoading) str.push("state-loading");
     if (maxLength) str.push("template-max-length");
 
-    return className ? str.join(" ") + className : str.join(" ");
+    return className ? str.join(" ") + " " + className : str.join(" ");
   };
 
   return (
@@ -102,7 +102,7 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
     if (error) str.push("state-negative");
     if (dataIsLoading) str.push("state-loading");
 
-    return className ? str.join(" ") + className : str.join(" ");
+    return className ? str.join(" ") + " " + className : str.join(" ");
   };
 
   return (
