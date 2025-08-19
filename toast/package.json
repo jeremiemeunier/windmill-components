@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/toast",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -19,7 +19,8 @@
   },
   "scripts": {
     "pub": "tsup && npm publish",
-    "tsup": "tsup"
+    "tsup": "tsup",
+    "lint": "eslint ."
   },
   "publishConfig": {
     "@jeremiemeunier:registry": "https://npm.pkg.github.com"
@@ -28,21 +29,21 @@
   "license": "ISC",
   "dependencies": {
     "@jeremiemeunier/core": "^1.1.0",
-    "framer-motion": "^12.16.0",
-    "react": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "sass": "^1.89.1",
-    "scss": "^0.2.4"
+    "framer-motion": "^12.23.12",
+    "react": "^19.1.1",
+    "react-router-dom": "^7.8.1"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.31",
-    "@types/react": "^18.3.3",
+    "@swc/core": "^1.13.3",
+    "@types/react": "^19.1.10",
     "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^9.26.0",
-    "lit-element": "^4.2.0",
-    "tslib": "^2.6.2",
-    "tsup": "^8.4.0",
+    "eslint": "^9.33.0",
+    "lit-element": "^4.2.1",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.0",
     "typed-scss-modules": "^8.1.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.2",
+    "sass": "^1.90.0",
+    "scss": "^0.2.4"
   }
 }

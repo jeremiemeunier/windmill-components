@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/cursor",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Custom cursor component that frames links on hover",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -19,7 +19,8 @@
   },
   "scripts": {
     "pub": "tsup && npm publish",
-    "build": "tsup"
+    "build": "tsup",
+    "lint": "eslint ."
   },
   "publishConfig": {
     "@jeremiemeunier:registry": "https://npm.pkg.github.com"
@@ -28,13 +29,13 @@
   "license": "ISC",
   "dependencies": {
     "@jeremiemeunier/core": "^1.1.0",
-    "react": "^19.1.0"
+    "react": "^19.1.1"
   },
   "devDependencies": {
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.10",
     "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^9.26.0",
-    "tsup": "^8.4.0",
+    "eslint": "^9.33.0",
+    "tsup": "^8.5.0",
     "typescript": "^5.8.3"
   }
 }
