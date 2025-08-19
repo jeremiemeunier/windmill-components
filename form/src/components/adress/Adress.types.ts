@@ -36,4 +36,5 @@ export interface AdressProps {
   placeHolder?: string;
   required?: boolean;
   className?: string;
+  dataIsLoading?: boolean;
 }

@@ -107,7 +107,11 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
 
   return (
     <div className={classNameBuilder()}>
-      {children}
+      {dataIsLoading ? (
+        <div className="windmillui-input-placeholder"></div>
+      ) : (
+        children
+      )}
       <i className="icon windmill-icon-chevron-down"></i>
       {error ? <p className="windmillui-message">{error}</p> : ""}
     </div>

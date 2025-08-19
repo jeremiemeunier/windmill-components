@@ -8,4 +8,5 @@ export interface SelectProps {
   locked?: boolean;
   className?: string;
   name?: string;
+  dataIsLoading?: boolean;
 }

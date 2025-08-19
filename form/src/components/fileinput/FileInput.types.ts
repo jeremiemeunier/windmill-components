@@ -7,4 +7,5 @@ export interface FileInputProps {
   tagline?: React.ReactNode;
   required?: boolean;
   className?: string;
+  dataIsLoading?: boolean;
 }

@@ -12,12 +12,17 @@ const Select: React.FC<SelectProps> = ({
   locked,
   className,
   name,
+  dataIsLoading,
 }) => {
   const id = useId();
 
   return (
     <BaseBlock id={id} label={label} size={size}>
-      <SelectBlock error={error} className={className}>
+      <SelectBlock
+        error={error}
+        className={className}
+        dataIsLoading={dataIsLoading}
+      >
         <select
           value={content}
           name={name ? name : id}

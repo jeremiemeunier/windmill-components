@@ -13,4 +13,5 @@ export interface TagInputProps {
   name?: string;
   autofocus?: boolean;
   className?: string;
+  dataIsLoading?: boolean;
 }

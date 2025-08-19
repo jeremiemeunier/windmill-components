@@ -10,11 +10,16 @@ const Checkbox: React.FC<CheckboxProps> = ({
   setContent,
   locked,
   className,
+  dataIsLoading,
 }) => {
   const id = useId();
 
   return (
-    <InputBlock error={error} className={className}>
+    <InputBlock
+      error={error}
+      className={className}
+      dataIsLoading={dataIsLoading}
+    >
       <div className={`windmillui-checkbox`}>
         <input
           type="checkbox"

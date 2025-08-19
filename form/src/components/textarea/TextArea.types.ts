@@ -12,4 +12,5 @@ export interface TextAreaProps {
   rows?: number;
   className?: string;
   resizable?: boolean;
+  dataIsLoading?: boolean;
 }
