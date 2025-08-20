@@ -1,17 +1,48 @@
 # @jeremiemeunier/navigation
 
-To add `@jeremiemeunier` to you project you need to create a `.npmrc` file at the same folder base of you `package.json` with this line :
+Helpers for managing navigation state and pagination in React apps.
+
+## Installation
+
+Create a `.npmrc` file at the root of your project so npm can access the GitHub registry:
 
 ```npmrc
 @jeremiemeunier:registry=https://npm.pkg.github.com
 ```
 
-## Package
+Then install the package:
 
-`@jeremiemeunier/navigation` provide to you 2 element and 1 hook with 2 functions :
+```bash
+npm install @jeremiemeunier/navigation
+```
 
-- provider: `<NavigationProvider>`
+## Usage
+
+Wrap your application with the `NavigationProvider` to expose navigation state:
 
 ```tsx
-<NavigationProvider>{/* Some other things of your apps */}</NavigationProvider>
+import { NavigationProvider, NavigationContext } from "@jeremiemeunier/navigation";
+
+<NavigationProvider>{/* your app */}</NavigationProvider>;
 ```
+
+Access and update the context with React's `useContext`:
+
+```tsx
+const { appActualPage, setAppActualPage } = useContext(NavigationContext);
+```
+
+### Pagination component
+
+The package also includes a `Pagination` component to switch between pages:
+
+```tsx
+import { Pagination } from "@jeremiemeunier/navigation";
+
+const [page, setPage] = useState(1);
+
+<Pagination pages={10} page={page} setPage={setPage} />;
+```
+
+`Pagination` accepts an optional `sticky` prop to keep the component fixed while scrolling.
+
