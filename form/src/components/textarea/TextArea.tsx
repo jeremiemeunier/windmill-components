@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { TextAreaProps } from "./TextArea.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 

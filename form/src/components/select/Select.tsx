@@ -1,6 +1,6 @@
 import { SelectProps } from "./Select.types";
 import { BaseBlock, SelectBlock } from "../base/Base";
-import { useId } from "react";
+import React, { useId } from "react";
 
 const Select: React.FC<SelectProps> = ({
   label,

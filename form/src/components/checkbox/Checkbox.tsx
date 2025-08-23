@@ -1,4 +1,4 @@
-import { useId } from "react";
+import React, { useId } from "react";
 import { InputBlock } from "../base/Base";
 import { CheckboxProps } from "./Checkbox.types";
 

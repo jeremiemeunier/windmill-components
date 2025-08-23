@@ -1,4 +1,4 @@
-import { useId } from "react";
+import React, { useId } from "react";
 import { CheckboxSliderProps } from "./CheckboxSlider.types";
 
 const CheckboxSlider: React.FC<CheckboxSliderProps> = ({

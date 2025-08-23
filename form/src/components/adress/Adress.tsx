@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import React, { useId, useState } from "react";
 import { BaseBlock, InputBlock } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";
 import SimpleBar from "simplebar-react";

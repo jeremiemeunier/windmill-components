@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import { ContextProps, ProviderProps } from "./NavigationContext.types";
 
 export const NavigationContext = createContext<ProviderProps>({

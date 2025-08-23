@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleGaugeTypes } from "./CircleGauge.types";
 
 const CircleGauge: React.FC<CircleGaugeTypes> = ({ progress }) => {

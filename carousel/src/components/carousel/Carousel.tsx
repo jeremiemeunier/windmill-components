@@ -3,7 +3,7 @@
  * @param slides an array of HTMLElement slides
  */
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CarouselTypes } from "./Carousel.types";
 
 const Carousel: React.FC<CarouselTypes> = ({

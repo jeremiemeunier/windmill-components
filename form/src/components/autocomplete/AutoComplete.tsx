@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { AutoCompleteProps, DataItems } from "./AutoComplete.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";

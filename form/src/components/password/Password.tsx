@@ -1,5 +1,5 @@
 import { PasswordProps } from "./Password.types";
-import { useId, useState } from "react";
+import React, { useId, useState } from "react";
 import { BaseBlock, InputBlock } from "../base/Base";
 
 const Password: React.FC<PasswordProps> = ({

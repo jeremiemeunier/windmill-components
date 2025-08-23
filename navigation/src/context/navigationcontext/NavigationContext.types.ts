@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import React, { SetStateAction } from "react";
 
 export interface ContextProps {
   children: React.ReactNode;
