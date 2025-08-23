@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragAndDropProps } from "./DragAndDrop.type";
 import { FileUploader } from "react-drag-drop-files";
 import { BaseBlock, InputBlock } from "../base/Base";

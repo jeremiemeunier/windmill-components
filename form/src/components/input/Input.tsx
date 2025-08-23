@@ -1,6 +1,6 @@
 import { InputProps } from "./Input.types";
 import { BaseBlock, InputBlock } from "../base/Base";
-import { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 
 const Input: React.FC<InputProps> = ({
   label,

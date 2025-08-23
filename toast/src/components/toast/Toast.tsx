@@ -57,7 +57,7 @@ const Toast: React.FC<ToastProps> = ({
               : ""
           }`}
         >
-          {icon && <i className={`icon windmill-icon-${icon}`}></i>}
+          {icon && <i className={`icon ${icon}`}></i>}
           {timed && <Timer duration={timed} />}
           {loading && <Loader />}
           <div className="content">

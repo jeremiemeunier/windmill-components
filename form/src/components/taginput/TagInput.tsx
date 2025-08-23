@@ -1,5 +1,5 @@
 import { BaseBlock, InputBlock } from "../base/Base";
-import { useEffect, useId, useState } from "react";
+import React, { useId } from "react";
 import { TagInputProps } from "./TagInput.types";
 
 const Input: React.FC<TagInputProps> = ({

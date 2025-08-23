@@ -1,4 +1,7 @@
-import { HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute } from "react";
+import React, {
+  HTMLInputAutoCompleteAttribute,
+  HTMLInputTypeAttribute,
+} from "react";
 
 export interface InputProps {
   content: any;

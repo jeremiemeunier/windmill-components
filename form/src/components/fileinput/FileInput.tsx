@@ -1,6 +1,6 @@
 import { FileInputProps } from "./FileInput.types";
 import { BaseBlock, InputBlock } from "../base/Base";
-import { useId, useState } from "react";
+import React, { useId, useState } from "react";
 
 const FileInput: React.FC<FileInputProps> = ({
   label,
