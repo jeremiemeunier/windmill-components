@@ -14,31 +14,31 @@ const EditorPrinter: ({
 }) => ReactNode = ({ type, className, content, author }) => {
   if (type === "h2") {
     return (
-      <h2 className={`teaui text ${className?.join(" ")}`}>
+      <h2 className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </h2>
     );
   } else if (type === "h3") {
     return (
-      <h3 className={`teaui text ${className?.join(" ")}`}>
+      <h3 className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </h3>
     );
   } else if (type === "h4") {
     return (
-      <h4 className={`teaui text ${className?.join(" ")}`}>
+      <h4 className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </h4>
     );
   } else if (type === "h5") {
     return (
-      <h5 className={`teaui text ${className?.join(" ")}`}>
+      <h5 className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </h5>
     );
   } else if (type === "h6") {
     return (
-      <h6 className={`teaui text ${className?.join(" ")}`}>
+      <h6 className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </h6>
     );
@@ -53,7 +53,7 @@ const EditorPrinter: ({
     return <img src={content as string} alt="" />;
   } else {
     return (
-      <p className={`teaui text ${className?.join(" ")}`}>
+      <p className={`windmillui text ${className?.join(" ")}`}>
         {content as string}
       </p>
     );
