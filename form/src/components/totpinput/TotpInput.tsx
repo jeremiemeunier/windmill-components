@@ -47,9 +47,9 @@ const TotpInput: React.FC<TotpInputProps> = ({
     index: number,
     event: React.ClipboardEvent<HTMLInputElement>
   ) => {
+    event.preventDefault();
     const pasteData = event.clipboardData.getData("text");
     if (pasteData) {
-      event.preventDefault();
       inputHandler(index, pasteData.trim());
     }
   };
