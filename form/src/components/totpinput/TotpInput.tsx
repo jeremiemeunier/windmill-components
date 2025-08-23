@@ -1,6 +1,6 @@
+import React, { useId, useRef, useState } from "react";
 import { TotpInputProps } from "./TotpInput.types";
 import { BaseBlock, InputBlock } from "../base/Base";
-import { useId, useRef, useState } from "react";
 
 const TotpInput: React.FC<TotpInputProps> = ({
   label,
@@ -17,16 +17,40 @@ const TotpInput: React.FC<TotpInputProps> = ({
   const id = useId();
 
   const inputHandler = (index: number, value: string) => {
-    if (/[^0-9]/.test(value)) return;
-
+    const cleanValue = value.replace(/[^0-9]/g, "");
     const newValues = [...values];
-    newValues[index] = value;
+
+    if (cleanValue.length > 1) {
+      const digits = cleanValue.slice(0, totpSize - index).split("");
+      digits.forEach((digit, i) => {
+        newValues[index + i] = digit;
+      });
+      setValues(newValues);
+      setContent(newValues.join(""));
+      const nextIndex = index + digits.length;
+      if (nextIndex < totpSize) {
+        inputsRef.current[nextIndex]?.focus();
+      }
+      return;
+    }
+
+    newValues[index] = cleanValue;
     setValues(newValues);
     setContent(newValues.join(""));
 
-    // Auto-focus next input if available
-    if (value && index < totpSize - 1) {
+    if (cleanValue && index < totpSize - 1) {
       inputsRef.current[index + 1]?.focus();
+    }
+  };
+
+  const handlePaste = (
+    index: number,
+    event: React.ClipboardEvent<HTMLInputElement>
+  ) => {
+    const pasteData = event.clipboardData.getData("text");
+    if (pasteData) {
+      event.preventDefault();
+      inputHandler(index, pasteData.trim());
     }
   };
 
@@ -64,9 +88,11 @@ const TotpInput: React.FC<TotpInputProps> = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   inputHandler(key, event.target.value)
                 }
+                inputMode="numeric"
                 autoComplete="one-time-code"
                 readOnly={locked ? locked : false}
                 onKeyDown={(event) => handleKeyDown(key, event)}
+                onPaste={(event) => handlePaste(key, event)}
               />
             </InputBlock>
           ))}
