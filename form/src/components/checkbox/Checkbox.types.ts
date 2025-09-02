@@ -7,4 +7,5 @@ export interface CheckboxProps {
   locked?: boolean;
   className?: string;
   dataIsLoading?: boolean;
+  noCheckbox?: boolean;
 }

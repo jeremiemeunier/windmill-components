@@ -11,8 +11,35 @@ const Checkbox: React.FC<CheckboxProps> = ({
   locked,
   className,
   dataIsLoading,
+  noCheckbox,
 }) => {
   const id = useId();
+
+  if (noCheckbox)
+    return (
+      <div
+        className={
+          noCheckbox ? `windmillui-checkbox-no-check` : `windmillui-checkbox`
+        }
+      >
+        <input
+          type="checkbox"
+          name={id}
+          id={id}
+          value={value}
+          onChange={(event) => {
+            if (value) {
+              setContent(event.target.value);
+            } else {
+              setContent(event.target.checked);
+            }
+          }}
+          checked={content ? true : false}
+          disabled={locked ? locked : false}
+        />
+        <label htmlFor={id}>{children}</label>
+      </div>
+    );
 
   return (
     <InputBlock
