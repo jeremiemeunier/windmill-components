@@ -6,6 +6,7 @@ const Pagination: React.FC<PaginationProps> = ({
   page,
   setPage,
   sticky,
+  noSelect,
 }) => {
   return (
     <div
@@ -28,7 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <i className="icon windmill-icon-chevron-left"></i>
         </button>
 
-        {pages ? (
+        {pages && !noSelect ? (
           <div className="windmillui pagination-select">
             <select
               value={page}
@@ -36,6 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 const target = event.target as HTMLSelectElement;
                 setPage(parseInt(target.value));
               }}
+              disabled={pages === 1 ? true : false}
             >
               {(() => {
                 const options: React.ReactNode[] = [];
