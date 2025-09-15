@@ -89,7 +89,7 @@ export const Toasts = () => {
   };
 
   return (
-    <div className="windmillui toast-root">
+    <motion.div layout className="windmillui toast-root">
       <AnimatePresence mode="wait">
         {toasts.map((toast: ToastObject) => (
           <motion.div
@@ -105,7 +105,7 @@ export const Toasts = () => {
           </motion.div>
         ))}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
