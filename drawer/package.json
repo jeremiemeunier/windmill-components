@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/drawer",
-  "version": "1.2.6",
+  "version": "1.3.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
