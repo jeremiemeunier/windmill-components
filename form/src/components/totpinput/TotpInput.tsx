@@ -4,8 +4,8 @@ import { BaseBlock, InputBlock } from "../base/Base";
 
 const TotpInput: React.FC<TotpInputProps> = ({
   label,
+  content,
   setContent,
-  error,
   size,
   locked,
   required,
@@ -26,7 +26,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
         newValues[index + i] = digit;
       });
       setValues(newValues);
-      setContent(newValues.join(""));
+      setContent((p) => ({ ...p, value: newValues.join("") }));
       const nextIndex = index + digits.length;
       if (nextIndex < totpSize) {
         inputsRef.current[nextIndex]?.focus();
@@ -36,7 +36,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
     newValues[index] = cleanValue;
     setValues(newValues);
-    setContent(newValues.join(""));
+    setContent((p) => ({ ...p, value: newValues.join("") }));
 
     if (cleanValue && index < totpSize - 1) {
       inputsRef.current[index + 1]?.focus();
@@ -64,20 +64,15 @@ const TotpInput: React.FC<TotpInputProps> = ({
   };
 
   return (
-    <BaseBlock
-      id={id}
-      label={label}
-      size={size}
-      required={required ? true : false}
-    >
+    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
       <div
         className={`windmillui-totp-root ${
-          error ? "state-negative" : ""
+          content.error ? "state-negative" : ""
         } ${className}`}
       >
         <div className="totp-fields">
           {Array.from({ length: totpSize }, (_, key) => (
-            <InputBlock key={key} error={error ? true : false}>
+            <InputBlock key={key} error={content.error ?? false}>
               <input
                 ref={(element) => {
                   inputsRef.current[key] = element;
@@ -97,7 +92,9 @@ const TotpInput: React.FC<TotpInputProps> = ({
             </InputBlock>
           ))}
         </div>
-        {error && <p className="windmillui-message">{error}</p>}
+        {content.error && (
+          <p className="windmillui-message">{content.message}</p>
+        )}
       </div>
     </BaseBlock>
   );

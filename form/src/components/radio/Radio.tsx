@@ -10,7 +10,6 @@ const Radio: React.FC<RadioProps> = ({
   values,
   content,
   setContent,
-  error,
   className,
 }) => {
   const id = useId();
@@ -20,7 +19,7 @@ const Radio: React.FC<RadioProps> = ({
       <RadioCheckboxBlock
         className={className}
         gridSize={gridSize}
-        error={error}
+        error={content.error && content.message}
       >
         {values.map((value: RadioValues, key) => (
           <div
@@ -34,10 +33,10 @@ const Radio: React.FC<RadioProps> = ({
             <input
               type="radio"
               id={value.id}
-              onChange={(event) => {
-                setContent(event.target.value);
+              onChange={(evt) => {
+                setContent((p) => ({ ...p, value: evt.target.value }));
               }}
-              checked={content === value.id ? true : false}
+              checked={content.value === value.id ? true : false}
               disabled={value?.disabled ? value.disabled : false}
               value={value.id}
               name={id}

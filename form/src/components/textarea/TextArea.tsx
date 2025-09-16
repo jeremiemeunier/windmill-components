@@ -7,12 +7,11 @@ const TextArea: React.FC<TextAreaProps> = ({
   content,
   setContent,
   maxLength,
-  error,
   size,
   tagline,
   readOnly,
   placeHolder,
-  locked,
+  disabled,
   rows,
   className,
   resizable,
@@ -34,29 +33,29 @@ const TextArea: React.FC<TextAreaProps> = ({
 
   useEffect(() => {
     resize();
-    setActualContentSize(content.length);
+    setActualContentSize(content.value.length);
   }, [content]);
 
   return (
     <BaseBlock id={id} label={label} tagline={tagline} size={size}>
       <InputBlock
-        error={error}
+        error={content.error && content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <textarea
           ref={ref}
-          disabled={locked ? locked : false}
+          disabled={disabled ? disabled : false}
           id={id}
           name={id}
-          value={content}
+          value={content.value}
           readOnly={readOnly ? readOnly : false}
           maxLength={maxLength && maxLength}
           placeholder={placeHolder ? placeHolder : ""}
           rows={rows}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             const target = event.target as HTMLTextAreaElement;
-            setContent(target.value);
+            setContent((p) => ({ ...p, value: target.value }));
           }}
           onKeyUp={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
             const target = event.target as HTMLTextAreaElement;

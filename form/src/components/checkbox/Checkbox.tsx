@@ -4,11 +4,10 @@ import { CheckboxProps } from "./Checkbox.types";
 
 const Checkbox: React.FC<CheckboxProps> = ({
   children,
-  error,
   value,
   content,
   setContent,
-  locked,
+  disabled,
   className,
   dataIsLoading,
   noCheckbox,
@@ -28,14 +27,11 @@ const Checkbox: React.FC<CheckboxProps> = ({
           id={id}
           value={value}
           onChange={(event) => {
-            if (value) {
-              setContent(event.target.value);
-            } else {
-              setContent(event.target.checked);
-            }
+            if (value) setContent((p) => ({ ...p, value: event.target.value }));
+            else setContent((p) => ({ ...p, value: event.target.checked }));
           }}
           checked={content ? true : false}
-          disabled={locked ? locked : false}
+          disabled={disabled ?? false}
         />
         <label htmlFor={id}>{children}</label>
       </div>
@@ -43,7 +39,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <InputBlock
-      error={error}
+      error={content.error && content.message}
       className={className}
       dataIsLoading={dataIsLoading}
     >
@@ -54,14 +50,11 @@ const Checkbox: React.FC<CheckboxProps> = ({
           id={id}
           value={value}
           onChange={(event) => {
-            if (value) {
-              setContent(event.target.value);
-            } else {
-              setContent(event.target.checked);
-            }
+            if (value) setContent((p) => ({ ...p, value: event.target.value }));
+            else setContent((p) => ({ ...p, value: event.target.checked }));
           }}
-          checked={content ? true : false}
-          disabled={locked ? locked : false}
+          checked={content.value ? true : false}
+          disabled={disabled ?? false}
         />
         <label htmlFor={id}>{children}</label>
       </div>

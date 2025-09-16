@@ -3,22 +3,21 @@ import { BaseBlock, InputBlock } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
-import { AdressItems, AdressProps } from "./Adress.types";
+import { AdressProps } from "./Adress.types";
 
 const Adress: React.FC<AdressProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   maxLength,
   placeHolder,
-  locked,
+  disabled = false,
   data,
-  required,
+  required = false,
   className,
-  dataIsLoading,
+  dataIsLoading = false,
 }) => {
   const id = useId();
 
@@ -26,25 +25,25 @@ const Adress: React.FC<AdressProps> = ({
   const [listVisibility, setListVisibility] = useState(false);
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required}>
+    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
       <InputBlock
-        error={error}
+        error={content.error && content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <div className={`windmillui-autocomplete-root-input`}>
           <input
-            disabled={locked ? locked : false}
+            disabled={disabled ?? false}
             name={id}
             id={id}
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength && maxLength}
             placeholder={placeHolder ? placeHolder : ""}
             className="windmillui-autocomplete-root-filter"
-            value={content}
+            value={content.value}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
-              setContent(target.value);
+              setContent((p) => ({ ...p, value: target.value }));
             }}
             onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => {
               const target = event.target as HTMLInputElement;
@@ -83,7 +82,10 @@ const Adress: React.FC<AdressProps> = ({
                         <button
                           onClick={(event) => {
                             event.preventDefault();
-                            setContent(option.properties.label);
+                            setContent((p) => ({
+                              ...p,
+                              value: option.properties.label,
+                            }));
                             setInputValueSize(0);
                             setListVisibility(false);
                           }}

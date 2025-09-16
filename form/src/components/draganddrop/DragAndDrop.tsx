@@ -10,7 +10,6 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   setContent,
   authorizedFiles,
   multipleUpload,
-  error,
   className,
   dataIsLoading,
 }) => {
@@ -18,7 +17,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   const [fileLabel, setFileLabel] = useState("");
 
   useEffect(() => {
-    setFiles(content);
+    setFiles(content.value);
   }, [content]);
 
   useEffect(() => {
@@ -42,17 +41,25 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
       setFiles([file]);
     }
 
-    setContent(file);
+    setContent((p) => ({ ...p, value: file }));
+  };
+
+  const classBuilder = () => {
+    const str = ["windmillui-drag-n-drop"];
+
+    if (className) str.push(className);
+
+    return str.join(" ");
   };
 
   return (
     <BaseBlock id="" label={label} size={size}>
       <InputBlock
-        error={error}
+        error={content.error && content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
-        <div className={`windmillui-drag-n-drop ${className}`}>
+        <div className={classBuilder()}>
           <FileUploader
             handleChange={handleChange}
             name="file"

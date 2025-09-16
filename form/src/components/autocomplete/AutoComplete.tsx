@@ -9,12 +9,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   maxLength,
   placeHolder,
-  locked,
+  disabled,
   data,
   required,
   className,
@@ -39,7 +38,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
   useEffect(() => {
     if (content) {
-      const value = content.toLowerCase();
+      const value = content.value.toLowerCase();
       const filterData = data.filter((item: { value: string; label: string }) =>
         item.value.toLowerCase().includes(value)
       );
@@ -48,26 +47,24 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
       setInputLabel(filterData[0].label);
     }
 
-    if (!content) {
-      setInputLabel("");
-    }
+    if (!content) setInputLabel("");
   }, [content]);
 
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
       <InputBlock
-        error={error}
+        error={content.error && content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <div className={`windmillui-autocomplete-root-input`}>
           <input
-            disabled={locked ? locked : false}
+            disabled={disabled ?? false}
             name={id}
             id={id}
-            readOnly={readOnly ? readOnly : false}
+            readOnly={readOnly ?? false}
             maxLength={maxLength && maxLength}
-            placeholder={placeHolder ? placeHolder : ""}
+            placeholder={placeHolder ?? ""}
             className="windmillui-autocomplete-root-filter"
             value={inputLabel}
             onChange={(event) => {
@@ -111,7 +108,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                       return (
                         <div
                           onClick={() => {
-                            setContent(option.value);
+                            setContent((p) => ({ ...p, value: option.value }));
                             setInputLabel(option.label);
                             setInputValueSize(0);
                             setListVisibility(false);

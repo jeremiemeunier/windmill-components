@@ -1,10 +1,11 @@
+import { CheckboxContent } from "../checkbox/Checkbox.types";
+
 export interface CheckboxSliderProps {
   label: string;
-  error: any;
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<any>>;
+  content: CheckboxContent;
+  setContent: React.Dispatch<React.SetStateAction<CheckboxContent>>;
   value?: string | number;
-  locked?: boolean;
+  disabled?: boolean;
   className?: string;
   loading?: boolean;
 }

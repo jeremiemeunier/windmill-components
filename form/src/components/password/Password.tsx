@@ -6,13 +6,12 @@ const Password: React.FC<PasswordProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   tagline,
   isNew,
   placeHolder,
-  locked,
+  disabled,
   className,
 }) => {
   const id = useId();
@@ -23,14 +22,17 @@ const Password: React.FC<PasswordProps> = ({
   const numberRegex = /[0-9]/;
   const specialRegex = /[!@#\$%\^\&*\)\(+=._-]/;
 
-  const passwordHandler = (event: any) => {
-    setContent(event.target.value);
-    setPasswordVerifSize(event.target.value.length);
+  const passwordHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setContent((p) => ({ ...p, value: evt.target.value }));
+    setPasswordVerifSize(evt.target.value.length);
   };
 
   return (
     <BaseBlock id={id} label={label} tagline={tagline} size={size}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={content.error && content.message}
+        className={className}
+      >
         <div
           className={`windmillui-password ${className}`}
           onMouseLeave={() => {
@@ -38,13 +40,13 @@ const Password: React.FC<PasswordProps> = ({
           }}
         >
           <input
-            disabled={locked ? locked : false}
+            disabled={disabled ?? false}
             type={passwordVisibility ? "text" : "password"}
             id={id}
             name={id}
             placeholder={placeHolder ? placeHolder : ""}
             onChange={passwordHandler}
-            value={content}
+            value={content.value}
             readOnly={readOnly ? readOnly : false}
           />
           <button
@@ -76,7 +78,7 @@ const Password: React.FC<PasswordProps> = ({
               Faire au moins 8 caractères
             </span>
             <span>
-              {uppercaseRegex.test(content) ? (
+              {uppercaseRegex.test(content.value) ? (
                 <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
                 <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
@@ -84,7 +86,7 @@ const Password: React.FC<PasswordProps> = ({
               Avoir au moins une lettre majuscule
             </span>
             <span>
-              {numberRegex.test(content) ? (
+              {numberRegex.test(content.value) ? (
                 <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
                 <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
@@ -92,7 +94,7 @@ const Password: React.FC<PasswordProps> = ({
               Avoir au moins 1 chiffre
             </span>
             <span>
-              {specialRegex.test(content) ? (
+              {specialRegex.test(content.value) ? (
                 <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
               ) : (
                 <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
