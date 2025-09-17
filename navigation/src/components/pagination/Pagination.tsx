@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { PaginationProps } from "./Pagination.types";
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -32,6 +32,8 @@ const Pagination: React.FC<PaginationProps> = ({
         {pages && !noSelect ? (
           <div className="windmillui pagination-select">
             <select
+              id={useId()}
+              name="paginationSelect"
               value={page}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 const target = event.target as HTMLSelectElement;
