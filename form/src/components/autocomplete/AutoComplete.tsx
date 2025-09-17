@@ -37,7 +37,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   };
 
   useEffect(() => {
-    if (content) {
+    if (content.value) {
       const value = content.value.toLowerCase();
       const filterData = data.filter((item: { value: string; label: string }) =>
         item.value.toLowerCase().includes(value)
@@ -47,7 +47,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
       setInputLabel(filterData[0].label);
     }
 
-    if (!content) setInputLabel("");
+    if (!content.value) setInputLabel("");
   }, [content]);
 
   return (
