@@ -1,6 +1,6 @@
-# @jeremiemeunier/navigation
+# @jeremiemeunier/theme
 
-Helpers for managing navigation state and pagination in React apps.
+React theme management system with context provider and theme switching components.
 
 ## Installation
 
@@ -13,36 +13,57 @@ Create a `.npmrc` file at the root of your project so npm can access the GitHub 
 Then install the package:
 
 ```bash
-npm install @jeremiemeunier/navigation
+npm install @jeremiemeunier/theme
 ```
 
 ## Usage
 
-Wrap your application with the `NavigationProvider` to expose navigation state:
+Wrap your application with the `ThemeProvider` to enable theme management:
 
 ```tsx
-import { NavigationProvider, NavigationContext } from "@jeremiemeunier/navigation";
+import { ThemeProvider } from "@jeremiemeunier/theme";
 
-<NavigationProvider>{/* your app */}</NavigationProvider>;
+const App = () => (
+  <ThemeProvider availableTheme={["lavand", "tomato", "sunflower"]}>
+    {/* your application */}
+  </ThemeProvider>
+);
 ```
 
-Access and update the context with React's `useContext`:
+Use the theme components in your app:
 
 ```tsx
-const { appActualPage, setAppActualPage } = useContext(NavigationContext);
+import { ThemeSelector, ThemeSwitch } from "@jeremiemeunier/theme";
+
+const Header = () => (
+  <div>
+    <ThemeSwitch />
+    <ThemeSelector />
+  </div>
+);
 ```
 
-### Pagination component
+### Available themes
 
-The package also includes a `Pagination` component to switch between pages:
+The package supports the following theme names:
+- `lavand`
+- `lavand-ultra`
+- `tomato` 
+- `sunflower`
 
-```tsx
-import { Pagination } from "@jeremiemeunier/navigation";
+### Components
 
-const [page, setPage] = useState(1);
+- `ThemeProvider` – context provider that manages theme state
+- `ThemeSwitch` – component to toggle between light and dark modes
+- `ThemeSelector` – component to select from available color themes
 
-<Pagination pages={10} page={page} setPage={setPage} />;
+### Build
+
+If you clone this repository and want to generate the distributable files run:
+
+```bash
+npm run build
 ```
 
-`Pagination` accepts an optional `sticky` prop to keep the component fixed while scrolling.
+This uses **tsup** to compile the source into the `dist/` folder.
 

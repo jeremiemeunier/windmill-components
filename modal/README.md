@@ -1,4 +1,4 @@
-# windmillui Modal
+# @jeremiemeunier/modal
 
 Bibliothèque React pour gérer des modales complexes. Le composant `Modal` expose plusieurs sous‑composants permettant de créer des menus ou des boîtes de dialogue.
 

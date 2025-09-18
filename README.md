@@ -8,11 +8,14 @@ Ce dépôt regroupe plusieurs librairies React publiées sous le scope `@jeremie
 | ------- | ------------------ |
 | **core** | Composants de base et utilitaires (ex. `Loader`). |
 | **carousel** | Composant de carrousel pour faire défiler du contenu. |
+| **cursor** | Curseur personnalisé qui met en évidence les liens. |
 | **drawer** | Panneau latéral coulissant. |
+| **editorparser** | Parser pour afficher le contenu d'un éditeur au format JSON. |
 | **form** | Large collection d’éléments de formulaire : `Input`, `Select`, `Checkbox`, `DatePicker`, etc. |
 | **hooks** | Hooks React réutilisables comme `useRefresh` et `useSeo`. |
 | **modal** | Système de modales complet avec de nombreux sous-composants. |
 | **navigation** | Provider et hook pour gérer l’état de navigation. |
+| **theme** | Gestion des thèmes avec contexte et composants de sélection. |
 | **toast** | Bibliothèque de notifications toast. |
 
 Chaque package possède un fichier `README.md` décrivant en détail son installation et son utilisation. Vous pouvez ainsi intégrer uniquement les composants dont vous avez besoin.
