@@ -30,7 +30,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
             if (value) setContent((p) => ({ ...p, value: event.target.value }));
             else setContent((p) => ({ ...p, value: event.target.checked }));
           }}
-          checked={content ? true : false}
+          checked={content.value ? true : false}
           disabled={disabled ?? false}
         />
         <label htmlFor={id}>{children}</label>
