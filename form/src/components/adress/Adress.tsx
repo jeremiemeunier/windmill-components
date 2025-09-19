@@ -25,7 +25,7 @@ const Adress: React.FC<AdressProps> = ({
   const [listVisibility, setListVisibility] = useState(false);
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
+    <BaseBlock id={id} label={label} size={size} required={required}>
       <InputBlock
         error={content.error && content.message}
         className={className}
