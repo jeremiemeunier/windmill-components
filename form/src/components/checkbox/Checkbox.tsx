@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import { InputBlock } from "../base/Base";
-import { CheckboxProps } from "./Checkbox.types";
+import { CheckboxContent, CheckboxProps } from "./Checkbox.types";
 
 const Checkbox: React.FC<CheckboxProps> = ({
   children,
@@ -11,6 +11,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   className,
   dataIsLoading,
   noCheckbox,
+  rawValue,
 }) => {
   const id = useId();
 
@@ -26,11 +27,24 @@ const Checkbox: React.FC<CheckboxProps> = ({
           name={id}
           id={id}
           value={value}
-          onChange={(event) => {
-            if (value) setContent((p) => ({ ...p, value: event.target.value }));
-            else setContent((p) => ({ ...p, value: event.target.checked }));
+          onChange={(evt) => {
+            if (rawValue) setContent(evt.target.value ?? evt.target.checked);
+            else {
+              if (value)
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.value,
+                }));
+              else
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.checked,
+                }));
+            }
           }}
-          checked={content.value ? true : false}
+          checked={
+            rawValue ? (content ? true : false) : content.value ? true : false
+          }
           disabled={disabled ?? false}
         />
         <label htmlFor={id}>{children}</label>
@@ -49,9 +63,20 @@ const Checkbox: React.FC<CheckboxProps> = ({
           name={id}
           id={id}
           value={value}
-          onChange={(event) => {
-            if (value) setContent((p) => ({ ...p, value: event.target.value }));
-            else setContent((p) => ({ ...p, value: event.target.checked }));
+          onChange={(evt) => {
+            if (rawValue) setContent(evt.target.value ?? evt.target.checked);
+            else {
+              if (value)
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.value,
+                }));
+              else
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.checked,
+                }));
+            }
           }}
           checked={content.value ? true : false}
           disabled={disabled ?? false}

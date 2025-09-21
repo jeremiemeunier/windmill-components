@@ -7,10 +7,11 @@ export interface CheckboxContent extends InputContent {
 export interface CheckboxProps {
   children: React.ReactNode;
   content: CheckboxContent;
-  setContent: React.Dispatch<React.SetStateAction<CheckboxContent>>;
+  setContent: React.Dispatch<React.SetStateAction<CheckboxContent> | any>;
   value?: string | number;
   disabled?: boolean;
   className?: string;
   dataIsLoading?: boolean;
   noCheckbox?: boolean;
+  rawValue?: boolean;
 }
