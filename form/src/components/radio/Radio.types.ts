@@ -8,6 +8,7 @@ export interface RadioValues {
   id: string | undefined;
   label: string;
   disabled?: boolean;
+  classname?: string;
 }
 
 export interface RadioProps {

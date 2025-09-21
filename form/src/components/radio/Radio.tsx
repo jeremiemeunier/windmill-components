@@ -14,6 +14,17 @@ const Radio: React.FC<RadioProps> = ({
 }) => {
   const id = useId();
 
+  const classBuilder = (special?: string) => {
+    const str = [];
+
+    if (viewBox) str.push("windmillui-template-radio");
+    else str.push("windmillui-template-radio-no-check");
+
+    if (special) str.push(special);
+
+    return str.join(" ");
+  };
+
   return (
     <BaseBlock id={id} label={label} size={size}>
       <RadioCheckboxBlock
@@ -22,14 +33,7 @@ const Radio: React.FC<RadioProps> = ({
         error={content.error && content.message}
       >
         {values.map((value: RadioValues, key) => (
-          <div
-            key={key}
-            className={`${
-              viewBox
-                ? "windmillui-template-radio"
-                : "windmillui-template-radio-no-check"
-            } ${className}`}
-          >
+          <div key={key} className={classBuilder(value.classname)}>
             <input
               type="radio"
               id={value.id}
