@@ -1,6 +1,6 @@
-import { InputProps } from "../input";
+import { InputContent } from "../input";
 
-export interface CheckboxSliderContent extends InputProps {
+export interface CheckboxSliderContent extends InputContent {
   value: boolean;
 }
 
@@ -8,7 +8,6 @@ export interface CheckboxSliderProps {
   label: string;
   content: CheckboxSliderContent;
   setContent: React.Dispatch<React.SetStateAction<CheckboxSliderContent>>;
-  value?: string | number;
   disabled?: boolean;
   className?: string;
   loading?: boolean;

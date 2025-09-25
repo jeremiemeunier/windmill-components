@@ -3,7 +3,6 @@ import { CheckboxSliderProps } from "./CheckboxSlider.types";
 
 const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
   label,
-  value,
   content,
   setContent,
   disabled,
@@ -27,7 +26,6 @@ const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
         type="checkbox"
         name={id}
         id={id}
-        value={value}
         onChange={(event) => {
           setContent((p) => ({ ...p, value: event.target.checked }));
         }}
