@@ -294,15 +294,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   useEffect(() => {
     setActiveMonth(
-      content ? new Date(content.value).getMonth() : new Date().getMonth()
+      content.value ? new Date(content.value).getMonth() : new Date().getMonth()
     );
     setActiveYear(
-      content ? new Date(content.value).getFullYear() : new Date().getFullYear()
+      content.value
+        ? new Date(content.value).getFullYear()
+        : new Date().getFullYear()
     );
     setActiveDay(
-      content ? new Date(content.value).getDay() : new Date().getDay()
+      content.value ? new Date(content.value).getDay() : new Date().getDay()
     );
-  }, [content]);
+  }, [content.value]);
 
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
@@ -318,7 +320,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             id={id}
             readOnly={readOnly ? readOnly : false}
             type="date"
-            value={content.value ?? ""}
+            value={content.value ? new Date(content.value).toISOString() : ""}
             onFocus={() => {
               setOpenCalendar(true);
             }}
