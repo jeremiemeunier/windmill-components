@@ -29,10 +29,9 @@ const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
         id={id}
         value={value}
         onChange={(event) => {
-          if (value) setContent((p) => ({ ...p, value: event.target.value }));
-          else setContent((p) => ({ ...p, value: event.target.checked }));
+          setContent((p) => ({ ...p, value: event.target.checked }));
         }}
-        checked={(content.value === value || content.value === true) ?? false}
+        checked={content.value}
         disabled={disabled ?? false}
       />
       <label htmlFor={id}>
