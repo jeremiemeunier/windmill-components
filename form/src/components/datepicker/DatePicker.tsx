@@ -340,7 +340,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             onClick={() => {
               setOpenCalendar(!openCalendar);
             }}
-            className={`icon dtc-icon-calendar`}
+            className={`icon windmill-icon-calendar`}
           ></i>
         </div>
         <AnimatePresence>
