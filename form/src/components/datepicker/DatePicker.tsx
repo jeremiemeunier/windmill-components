@@ -306,6 +306,22 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     );
   }, [content.value]);
 
+  const buildValueDate = () => {
+    const data = new Date(content.value);
+    const str = [];
+
+    // add year
+    str.push(data.getFullYear());
+
+    // add month
+    str.push((data.getMonth() + 1).toString().padStart(2, "0"));
+
+    // add day
+    str.push(data.getDate().toString().padStart(2, "0"));
+
+    return str.join("-");
+  };
+
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
       <InputBlock
@@ -320,7 +336,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             id={id}
             readOnly={readOnly ? readOnly : false}
             type="date"
-            value={content.value ? new Date(content.value).toISOString() : ""}
+            value={content.value ? buildValueDate() : ""}
             onFocus={() => {
               setOpenCalendar(true);
             }}
