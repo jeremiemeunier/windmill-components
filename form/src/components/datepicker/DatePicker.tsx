@@ -356,7 +356,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             onClick={() => {
               setOpenCalendar(!openCalendar);
             }}
-            className={`icon windmill-icon-calendar`}
+            className={`icon ti ti-calendar`}
           ></i>
         </div>
         <AnimatePresence>
@@ -369,7 +369,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             >
               <div className="windmillui-datepicker-calendar-month">
                 <button onClick={prevMonth}>
-                  <i className="icon windmill-icon-carret-left"></i>
+                  <i className="icon ti ti-caret-left-filled"></i>
                 </button>
                 <div>
                   {!disabledTodayButton &&
@@ -418,7 +418,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                   </select>
                 </div>
                 <button onClick={nextMonth}>
-                  <i className="icon windmill-icon-carret-right"></i>
+                  <i className="icon ti ti-caret-right-filled"></i>
                 </button>
               </div>
               <div className="windmillui-datepicker-calendar-days">

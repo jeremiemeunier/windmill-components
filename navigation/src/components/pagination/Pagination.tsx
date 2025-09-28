@@ -26,7 +26,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className="windmillui cta level-secondary format-icon-only"
           title="Page précédente"
         >
-          <i className="icon windmill-icon-chevron-left"></i>
+          <i className="icon ti ti-chevron-left"></i>
         </button>
 
         {pages && !noSelect ? (
@@ -53,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 return options;
               })()}
             </select>
-            <i className="icon windmill-icon-carret-down"></i>
+            <i className="icon ti ti-caret-down-filled"></i>
           </div>
         ) : null}
 
@@ -66,7 +66,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className="windmillui cta level-secondary format-icon-only"
           title="Page suivante"
         >
-          <i className="icon windmill-icon-chevron-right"></i>
+          <i className="icon ti ti-chevron-right"></i>
         </button>
       </div>
     </div>

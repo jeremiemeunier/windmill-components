@@ -59,9 +59,7 @@ const Adress: React.FC<AdressProps> = ({
               setListVisibility(!listVisibility);
             }}
             className={`icon ${
-              listVisibility
-                ? "windmill-icon-chevron-up"
-                : "windmill-icon-chevron-down"
+              listVisibility ? "ti ti-chevron-up" : "ti ti-chevron-down"
             }`}
           ></i>
         </div>
