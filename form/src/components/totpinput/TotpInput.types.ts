@@ -13,4 +13,5 @@ export interface TotpInputProps {
   required?: boolean;
   totpSize?: number;
   className?: string;
+  isAlphaNumeric?: boolean;
 }

@@ -11,13 +11,14 @@ const TotpInput: React.FC<TotpInputProps> = ({
   required,
   totpSize = 6,
   className,
+  isAlphaNumeric,
 }) => {
   const [values, setValues] = useState<string[]>(Array(totpSize).fill(""));
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const id = useId();
 
   const inputHandler = (index: number, value: string) => {
-    const cleanValue = value.replace(/[^0-9]/g, "");
+    const cleanValue = !isAlphaNumeric ? value.replace(/[^0-9]/g, "") : value;
     const newValues = [...values];
 
     if (cleanValue.length > 1) {
@@ -83,7 +84,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   inputHandler(key, event.target.value)
                 }
-                inputMode="numeric"
+                inputMode={isAlphaNumeric ? "text" : "numeric"}
                 autoComplete="one-time-code"
                 readOnly={locked ? locked : false}
                 onKeyDown={(event) => handleKeyDown(key, event)}

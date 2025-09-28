@@ -47,6 +47,7 @@ const Password: React.FC<PasswordProps> = ({
             placeholder={placeHolder ? placeHolder : ""}
             onChange={passwordHandler}
             value={content.value}
+            autoComplete={isNew ? "new-password" : "current-password"}
             readOnly={readOnly ? readOnly : false}
           />
           <button
