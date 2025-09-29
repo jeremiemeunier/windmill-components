@@ -20,4 +20,5 @@ export interface RadioProps {
   label?: string;
   size?: number;
   className?: string;
+  disabled?: boolean;
 }
