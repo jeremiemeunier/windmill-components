@@ -3,10 +3,15 @@ import React, {
   HTMLInputTypeAttribute,
 } from "react";
 
+export interface InputContent {
+  error: boolean;
+  message: string;
+  value: any | null;
+}
+
 export interface InputProps {
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<any>>;
-  error: any;
+  content: InputContent;
+  setContent: React.Dispatch<React.SetStateAction<InputContent>>;
   label?: string;
   size?: number;
   readOnly?: boolean;
@@ -14,7 +19,7 @@ export interface InputProps {
   type?: HTMLInputTypeAttribute;
   maxLength?: number;
   placeHolder?: string;
-  locked?: boolean;
+  disabled?: boolean;
   regex?: RegExp;
   regexLabel?: string;
   required?: boolean;

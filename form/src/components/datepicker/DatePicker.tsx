@@ -7,10 +7,9 @@ import { Calendar } from "../../class/DatePicker.class";
 export const DatePicker: React.FC<DatePickerProps> = ({
   content,
   setContent,
-  error,
   size,
   readOnly,
-  locked,
+  disabledOptions,
   required,
   label,
   blockedDate,
@@ -24,13 +23,15 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
   const [activeMonth, setActiveMonth] = useState<number>(
-    content ? new Date(content).getMonth() : new Date().getMonth()
+    content.value ? new Date(content.value).getMonth() : new Date().getMonth()
   );
   const [activeYear, setActiveYear] = useState<number>(
-    content ? new Date(content).getFullYear() : new Date().getFullYear()
+    content.value
+      ? new Date(content.value).getFullYear()
+      : new Date().getFullYear()
   );
-  const [activeDay, setActiveDay] = useState<number>(
-    content ? new Date(content).getDay() : new Date().getDay()
+  const [_activeDay, setActiveDay] = useState<number>(
+    content.value ? new Date(content.value).getDay() : new Date().getDay()
   );
 
   const [monthList] = useState<number[]>([
@@ -99,7 +100,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     const today = new Date().toLocaleDateString();
 
     if (
-      content ===
+      content.value ===
       `${activeYear}-${
         activeMonth + 1 < 10 ? `0${activeMonth + 1}` : activeMonth + 1
       }-${day < 10 ? `0${day}` : day}`
@@ -180,64 +181,73 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
         if (i === actualDay.getDate()) {
           if (
-            disabled &&
-            disabled?.indexOf("weekend") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("weekend") >= 0 &&
             (actualDay.getDay() === 6 || actualDay.getDay() === 0)
           ) {
             // lock weekend
             monthDateList.push({ day: actualDay.getDate(), disabled: true });
           } else if (
-            disabled &&
-            disabled?.indexOf("sunday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("sunday") >= 0 &&
             actualDay.getDay() === 0
           ) {
             // lock sunday
             monthDateList.push({ day: actualDay.getDate(), disabled: true });
           } else if (
-            disabled &&
-            disabled?.indexOf("monday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("monday") >= 0 &&
             actualDay.getDay() === 1
           ) {
             // lock sunday
             monthDateList.push({ day: actualDay.getDate(), disabled: true });
           } else if (
-            disabled &&
-            disabled?.indexOf("tuesday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("tuesday") >= 0 &&
             actualDay.getDay() === 2
           ) {
             // lock sunday
             monthDateList.push({ day: actualDay.getDate(), disabled: true });
           } else if (
-            disabled &&
-            disabled?.indexOf("wednesday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("wednesday") >= 0 &&
             actualDay.getDay() === 3
           ) {
             // lock sunday
             monthDateList.push({ day: actualDay.getDate(), disabled: true });
           } else if (
-            disabled &&
-            disabled?.indexOf("thursday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("thursday") >= 0 &&
             actualDay.getDay() === 4
           ) {
             // lock sunday
-            monthDateList.push({ day: actualDay.getDate(), disabled: true });
+            monthDateList.push({
+              day: actualDay.getDate(),
+              disabled: true,
+            });
           } else if (
-            disabled &&
-            disabled?.indexOf("friday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("friday") >= 0 &&
             actualDay.getDay() === 5
           ) {
             // lock sunday
-            monthDateList.push({ day: actualDay.getDate(), disabled: true });
+            monthDateList.push({
+              day: actualDay.getDate(),
+              disabled: true,
+            });
           } else if (
-            disabled &&
-            disabled?.indexOf("saturday") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("saturday") >= 0 &&
             actualDay.getDay() === 6
           ) {
             // lock sunday
-            monthDateList.push({ day: actualDay.getDate(), disabled: true });
+            monthDateList.push({
+              day: actualDay.getDate(),
+              disabled: true,
+            });
           } else if (
-            ((disabled && disabled?.indexOf("old") >= 0) ||
-              (disabled && disabled?.indexOf("past") >= 0)) &&
+            ((disabledOptions && disabledOptions?.indexOf("old") >= 0) ||
+              (disabledOptions && disabledOptions?.indexOf("past") >= 0)) &&
             (actualDay.getFullYear() < today.getFullYear() ||
               (actualDay.getFullYear() === today.getFullYear() &&
                 actualDay.getMonth() < today.getMonth()) ||
@@ -245,10 +255,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 actualDay.getMonth() === today.getMonth() &&
                 actualDay.getDate() < today.getDate()))
           ) {
-            monthDateList.push({ day: actualDay.getDate(), disabled: true });
+            monthDateList.push({
+              day: actualDay.getDate(),
+              disabled: true,
+            });
           } else if (
-            disabled &&
-            disabled?.indexOf("futur") >= 0 &&
+            disabledOptions &&
+            disabledOptions?.indexOf("futur") >= 0 &&
             (actualDay.getFullYear() > today.getFullYear() ||
               (actualDay.getFullYear() === today.getFullYear() &&
                 actualDay.getMonth() > today.getMonth()) ||
@@ -256,10 +269,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 actualDay.getMonth() === today.getMonth() &&
                 actualDay.getDate() > today.getDate()))
           ) {
-            monthDateList.push({ day: actualDay.getDate(), disabled: true });
+            monthDateList.push({
+              day: actualDay.getDate(),
+              disabled: true,
+            });
           } else {
             if (blockedDate && blockedDate.indexOf(stringDate) >= 0) {
-              monthDateList.push({ day: actualDay.getDate(), disabled: true });
+              monthDateList.push({
+                day: actualDay.getDate(),
+                disabled: true,
+              });
             } else {
               monthDateList.push({ day: actualDay.getDate() });
             }
@@ -271,39 +290,63 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     };
 
     buildMonthDate();
-  }, [activeMonth, activeYear, blockedDate, disabled]);
+  }, [activeMonth, activeYear, blockedDate, disabledOptions]);
 
   useEffect(() => {
     setActiveMonth(
-      content ? new Date(content).getMonth() : new Date().getMonth()
+      content.value ? new Date(content.value).getMonth() : new Date().getMonth()
     );
     setActiveYear(
-      content ? new Date(content).getFullYear() : new Date().getFullYear()
+      content.value
+        ? new Date(content.value).getFullYear()
+        : new Date().getFullYear()
     );
-    setActiveDay(content ? new Date(content).getDay() : new Date().getDay());
-  }, [content]);
+    setActiveDay(
+      content.value ? new Date(content.value).getDay() : new Date().getDay()
+    );
+  }, [content.value]);
+
+  const buildValueDate = () => {
+    const data = new Date(content.value);
+    const str = [];
+
+    // add year
+    str.push(data.getFullYear());
+
+    // add month
+    str.push((data.getMonth() + 1).toString().padStart(2, "0"));
+
+    // add day
+    str.push(data.getDate().toString().padStart(2, "0"));
+
+    return str.join("-");
+  };
 
   return (
     <BaseBlock id={id} size={size} label={label} required={required}>
       <InputBlock
-        error={error}
+        error={content.error && content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <div className={`windmillui-datepicker-root-input`}>
           <input
-            disabled={locked ? locked : false}
+            disabled={disabled ?? false}
             name={id}
             id={id}
             readOnly={readOnly ? readOnly : false}
             type="date"
-            value={content ? content : ""}
+            value={content.value ? buildValueDate() : ""}
             onFocus={() => {
               setOpenCalendar(true);
             }}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
-              setContent(target.value);
+              setContent({
+                error: content.error,
+                message: content.message,
+                value: target.value,
+              });
             }}
             onBlur={() => {
               setOpenCalendar(false);
@@ -313,7 +356,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             onClick={() => {
               setOpenCalendar(!openCalendar);
             }}
-            className={`icon dtc-icon-calendar`}
+            className={`icon ti ti-calendar`}
           ></i>
         </div>
         <AnimatePresence>
@@ -326,7 +369,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             >
               <div className="windmillui-datepicker-calendar-month">
                 <button onClick={prevMonth}>
-                  <i className="icon windmill-icon-carret-left"></i>
+                  <i className="icon ti ti-caret-left-filled"></i>
                 </button>
                 <div>
                   {!disabledTodayButton &&
@@ -375,7 +418,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                   </select>
                 </div>
                 <button onClick={nextMonth}>
-                  <i className="icon windmill-icon-carret-right"></i>
+                  <i className="icon ti ti-caret-right-filled"></i>
                 </button>
               </div>
               <div className="windmillui-datepicker-calendar-days">
@@ -399,13 +442,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                           event: React.MouseEvent<HTMLButtonElement, MouseEvent>
                         ) => {
                           event.preventDefault();
-                          setContent(
-                            `${activeYear}-${
+                          setContent((p) => ({
+                            ...p,
+                            value: `${activeYear}-${
                               activeMonth + 1 < 10
                                 ? `0${activeMonth + 1}`
                                 : activeMonth + 1
-                            }-${day.day < 10 ? `0${day.day}` : day.day}`
-                          );
+                            }-${day.day < 10 ? `0${day.day}` : day.day}`,
+                          }));
                           setActiveDay(day.day);
                           setOpenCalendar(false);
                         }}

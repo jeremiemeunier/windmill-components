@@ -45,6 +45,9 @@ useSeo({
   title: "Page title",
   description: "Short description",
   image: "/preview.png",
+  keywords: "react, hooks, seo",
+  color: "#3b82f6",
+  type: "website",
 });
 ```
 

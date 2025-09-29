@@ -1,3 +1,9 @@
+import { InputContent } from "../input";
+
+export interface DatePickerContent extends InputContent {
+  value: string;
+}
+
 export interface DayArrayProps {
   day: number;
   disabled?: boolean;
@@ -17,16 +23,15 @@ export type DisabledOption =
   | "futur";
 
 export interface DatePickerProps {
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: any;
+  content: DatePickerContent;
+  setContent: React.Dispatch<React.SetStateAction<DatePickerContent>>;
   size?: number;
   readOnly?: boolean;
-  locked?: boolean;
+  disabled?: boolean;
   required?: boolean;
   label?: string;
   blockedDate?: string[];
-  disabled?: DisabledOption[];
+  disabledOptions?: DisabledOption[];
   className?: string;
   disabledTodayButton?: boolean;
   dataIsLoading?: boolean;

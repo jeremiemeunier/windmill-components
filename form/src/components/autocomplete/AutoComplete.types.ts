@@ -1,3 +1,9 @@
+import { InputContent } from "../input";
+
+export interface AutoCompleteContent extends InputContent {
+  value: string;
+}
+
 export interface DataItems {
   label: string;
   value: string;
@@ -5,12 +11,11 @@ export interface DataItems {
 }
 
 export interface AutoCompleteProps {
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: any;
+  content: AutoCompleteContent;
+  setContent: React.Dispatch<React.SetStateAction<AutoCompleteContent>>;
   data: DataItems[];
   label?: string;
-  locked?: boolean;
+  disabled?: boolean;
   size?: number;
   readOnly?: boolean;
   maxLength?: number;

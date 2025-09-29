@@ -6,14 +6,13 @@ const Input: React.FC<InputProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   tagline,
   type,
   maxLength,
   placeHolder,
-  locked,
+  disabled,
   regex,
   regexLabel,
   required,
@@ -28,13 +27,13 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const id = useId();
   const [actualContentSize, setActualContentSize] = useState(
-    content?.length || 0
+    content?.value?.length ?? 0
   );
 
   const [internError, setInternError] = useState("");
 
   useEffect(() => {
-    setActualContentSize(content?.length || 0);
+    setActualContentSize(content?.value?.length ?? 0);
   }, [content]);
 
   return (
@@ -43,42 +42,37 @@ const Input: React.FC<InputProps> = ({
       label={label}
       size={size}
       tagline={tagline}
-      required={required ? true : false}
+      required={required ?? false}
     >
       <InputBlock
-        error={error || internError}
+        error={(content.error && content.message) || internError}
         maxLength={maxLength}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <input
-          disabled={locked ? true : false}
-          type={type ? type : "text"}
-          value={content}
+          disabled={disabled ?? false}
+          type={type ?? "text"}
+          value={content.value}
           name={name ? name : id}
           id={id}
-          readOnly={readOnly ? true : false}
+          readOnly={readOnly ?? false}
           maxLength={maxLength && maxLength}
           placeholder={placeHolder ? placeHolder : ""}
-          autoFocus={autofocus ? true : false}
+          autoFocus={autofocus ?? false}
           min={min && min}
           max={max && max}
           step={step && step}
           autoComplete={autoComplete && autoComplete}
-          onChange={(event) => {
-            setContent(event.target.value);
+          onChange={(evt) => {
+            setContent((p) => ({ ...p, value: evt.target.value }));
 
-            if (event.target.value) {
-              setActualContentSize(event.target.value.length);
-            }
-
-            if (regex && regex.test(event.target.value)) {
+            if (evt.target.value) setActualContentSize(evt.target.value.length);
+            if (regex && regex.test(evt.target.value))
               setInternError(
                 `Votre saisie ne doit pas contenir les caractères suivants : ${regexLabel}`
               );
-            } else {
-              setInternError("");
-            }
+            else setInternError("");
           }}
         />
         {maxLength && (

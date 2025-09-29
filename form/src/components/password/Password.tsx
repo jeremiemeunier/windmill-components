@@ -6,13 +6,12 @@ const Password: React.FC<PasswordProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   tagline,
   isNew,
   placeHolder,
-  locked,
+  disabled,
   className,
 }) => {
   const id = useId();
@@ -23,14 +22,17 @@ const Password: React.FC<PasswordProps> = ({
   const numberRegex = /[0-9]/;
   const specialRegex = /[!@#\$%\^\&*\)\(+=._-]/;
 
-  const passwordHandler = (event: any) => {
-    setContent(event.target.value);
-    setPasswordVerifSize(event.target.value.length);
+  const passwordHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setContent((p) => ({ ...p, value: evt.target.value }));
+    setPasswordVerifSize(evt.target.value.length);
   };
 
   return (
     <BaseBlock id={id} label={label} tagline={tagline} size={size}>
-      <InputBlock error={error} className={className}>
+      <InputBlock
+        error={content.error && content.message}
+        className={className}
+      >
         <div
           className={`windmillui-password ${className}`}
           onMouseLeave={() => {
@@ -38,13 +40,14 @@ const Password: React.FC<PasswordProps> = ({
           }}
         >
           <input
-            disabled={locked ? locked : false}
+            disabled={disabled ?? false}
             type={passwordVisibility ? "text" : "password"}
             id={id}
             name={id}
             placeholder={placeHolder ? placeHolder : ""}
             onChange={passwordHandler}
-            value={content}
+            value={content.value}
+            autoComplete={isNew ? "new-password" : "current-password"}
             readOnly={readOnly ? readOnly : false}
           />
           <button
@@ -56,9 +59,7 @@ const Password: React.FC<PasswordProps> = ({
           >
             <i
               className={
-                passwordVisibility
-                  ? "icon dtc-icon-hidden-eye"
-                  : "icon dtc-icon-eye"
+                passwordVisibility ? "icon ti ti-eye-closed" : "icon ti ti-eye"
               }
             ></i>
           </button>
@@ -69,33 +70,45 @@ const Password: React.FC<PasswordProps> = ({
             <br />
             <span>
               {passwordVerifSize >= 8 ? (
-                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
+                <i
+                  className="icon color-positive s-xs ti ti-circle-check-filled
+"
+                ></i>
               ) : (
-                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs ti ti-circle-x"></i>
               )}
               Faire au moins 8 caractères
             </span>
             <span>
-              {uppercaseRegex.test(content) ? (
-                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
+              {uppercaseRegex.test(content.value) ? (
+                <i
+                  className="icon color-positive s-xs ti ti-circle-check-filled
+"
+                ></i>
               ) : (
-                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs ti ti-circle-x"></i>
               )}
               Avoir au moins une lettre majuscule
             </span>
             <span>
-              {numberRegex.test(content) ? (
-                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
+              {numberRegex.test(content.value) ? (
+                <i
+                  className="icon color-positive s-xs ti ti-circle-check-filled
+"
+                ></i>
               ) : (
-                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs ti ti-circle-x"></i>
               )}
               Avoir au moins 1 chiffre
             </span>
             <span>
-              {specialRegex.test(content) ? (
-                <i className="icon color-positive s-xs windmill-icon-check-circle-fill"></i>
+              {specialRegex.test(content.value) ? (
+                <i
+                  className="icon color-positive s-xs ti ti-circle-check-filled
+"
+                ></i>
               ) : (
-                <i className="icon color-negative s-xs windmill-icon-cross-circle"></i>
+                <i className="icon color-negative s-xs ti ti-circle-x"></i>
               )}
               Avoir au moins un caractère spécial
             </span>

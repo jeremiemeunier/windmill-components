@@ -73,7 +73,7 @@ const Close: React.FC<CloseProps> = ({ setVisibility, refreshHandler }) => {
 
   return (
     <button className="windmillui-modal modal-close" onClick={closeHandler}>
-      <i className="icon windmill-icon-cross"></i>
+      <i className="icon ti ti-x"></i>
     </button>
   );
 };

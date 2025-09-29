@@ -10,41 +10,49 @@ const Radio: React.FC<RadioProps> = ({
   values,
   content,
   setContent,
-  error,
   className,
+  disabled,
 }) => {
   const id = useId();
+
+  const classBuilder = (special?: string) => {
+    const str = [];
+
+    if (viewBox) str.push("windmillui-template-radio");
+    else str.push("windmillui-template-radio-no-check");
+
+    if (special) str.push(special);
+
+    return str.join(" ");
+  };
 
   return (
     <BaseBlock id={id} label={label} size={size}>
       <RadioCheckboxBlock
         className={className}
         gridSize={gridSize}
-        error={error}
+        error={content.error && content.message}
       >
-        {values.map((value: RadioValues, key) => (
-          <div
-            key={key}
-            className={`${
-              viewBox
-                ? "windmillui-template-radio"
-                : "windmillui-template-radio-no-check"
-            } ${className}`}
-          >
-            <input
-              type="radio"
-              id={value.id}
-              onChange={(event) => {
-                setContent(event.target.value);
-              }}
-              checked={content === value.id ? true : false}
-              disabled={value?.disabled ? value.disabled : false}
-              value={value.id}
-              name={id}
-            />
-            <label htmlFor={value.id}>{value.label}</label>
-          </div>
-        ))}
+        {values.map((value: RadioValues, key) => {
+          const _id = useId();
+
+          return (
+            <div key={key} className={classBuilder(value.classname)}>
+              <input
+                type="radio"
+                id={_id}
+                onChange={(evt) => {
+                  setContent((p) => ({ ...p, value: evt.target.value }));
+                }}
+                checked={content.value === value.id ? true : false}
+                disabled={disabled || value?.disabled ? true : false}
+                value={value.id}
+                name={_id}
+              />
+              <label htmlFor={_id}>{value.label}</label>
+            </div>
+          );
+        })}
       </RadioCheckboxBlock>
     </BaseBlock>
   );

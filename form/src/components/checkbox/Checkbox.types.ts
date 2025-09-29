@@ -1,10 +1,17 @@
+import { InputContent } from "../input";
+
+export interface CheckboxContent extends InputContent {
+  value: string | number | boolean;
+}
+
 export interface CheckboxProps {
   children: React.ReactNode;
-  error: any;
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<any>>;
+  content: CheckboxContent;
+  setContent: React.Dispatch<React.SetStateAction<CheckboxContent> | any>;
   value?: string | number;
-  locked?: boolean;
+  disabled?: boolean;
   className?: string;
   dataIsLoading?: boolean;
+  noCheckbox?: boolean;
+  rawValue?: boolean;
 }

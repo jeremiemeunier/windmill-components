@@ -1,11 +1,16 @@
+import { InputContent } from "../input";
+
+export interface SelectContent extends InputContent {
+  value: string;
+}
+
 export interface SelectProps {
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<any>>;
+  content: SelectContent;
+  setContent: React.Dispatch<React.SetStateAction<SelectContent>>;
   children: React.ReactNode;
-  error: any;
   label?: string;
   size?: number;
-  locked?: boolean;
+  disabled?: boolean;
   className?: string;
   name?: string;
   dataIsLoading?: boolean;

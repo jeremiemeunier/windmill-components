@@ -70,14 +70,14 @@ const Carousel: React.FC<CarouselTypes> = ({
           disabled={currentPage === 0 ? true : false}
           className="windmillui carousel-nav-button carousel-nav-button-prev"
         >
-          <i className="icon windmill-icon-arrow-left"></i>
+          <i className="icon ti ti-arrow-left"></i>
         </button>
         <button
           onClick={movePage}
           disabled={currentPage === pages - 1 ? true : false}
           className="windmillui carousel-nav-button carousel-nav-button-next"
         >
-          <i className="icon windmill-icon-arrow-right"></i>
+          <i className="icon ti ti-arrow-right"></i>
         </button>
       </div>
     </div>

@@ -1,3 +1,9 @@
+import { InputContent } from "../input";
+
+export interface AdressContent extends InputContent {
+  value: string;
+}
+
 export interface AdressItems {
   type: string;
   geometry: {
@@ -24,12 +30,11 @@ export interface AdressItems {
 }
 
 export interface AdressProps {
-  content: any;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-  error: any;
+  content: AdressContent;
+  setContent: React.Dispatch<React.SetStateAction<AdressContent>>;
   data: AdressItems[] | [];
   label?: string;
-  locked?: boolean;
+  disabled?: boolean;
   size?: number;
   readOnly?: boolean;
   maxLength?: number;

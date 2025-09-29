@@ -1,0 +1,47 @@
+{
+  "name": "@jeremiemeunier/theme",
+  "version": "1.4.2",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremiemeunier/windmill-components.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "pub": "tsup && npm publish",
+    "build": "tsup",
+    "lint": "eslint ."
+  },
+  "publishConfig": {
+    "@jeremiemeunier:registry": "https://npm.pkg.github.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "esbuild-sass-plugin": "^3.3.1",
+    "eslint": "^9.33.0",
+    "lit-element": "^4.2.1",
+    "sass": "^1.90.0",
+    "scss": "^0.2.4",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}

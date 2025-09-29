@@ -6,12 +6,11 @@ const Input: React.FC<TagInputProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   readOnly,
   tagline,
   placeHolder,
-  locked,
+  disabled,
   required,
   name,
   autofocus,
@@ -26,7 +25,10 @@ const Input: React.FC<TagInputProps> = ({
     const { key } = event;
 
     if (separator.indexOf(key) >= 0) {
-      setContent([...content, target.value.slice(0, -1).trim()]);
+      setContent((p) => ({
+        ...p,
+        value: [...content.value, target.value.slice(0, -1).trim()],
+      }));
       target.value = "";
     }
   };
@@ -35,7 +37,10 @@ const Input: React.FC<TagInputProps> = ({
     const target = event.target as HTMLInputElement;
 
     if (target.value) {
-      setContent([...content, target.value.trim()]);
+      setContent((p) => ({
+        ...p,
+        value: [...content.value, target.value.slice(0, -1).trim()],
+      }));
       target.value = "";
     }
   };
@@ -46,27 +51,33 @@ const Input: React.FC<TagInputProps> = ({
       label={label}
       size={size}
       tagline={tagline}
-      required={required ? true : false}
+      required={required ?? false}
     >
-      <InputBlock error={error} dataIsLoading={dataIsLoading}>
+      <InputBlock
+        error={content.error && content.message}
+        dataIsLoading={dataIsLoading}
+      >
         <input
-          disabled={locked ? true : false}
+          disabled={disabled ?? false}
           name={name ? name : id}
           id={id}
-          readOnly={readOnly ? true : false}
+          readOnly={readOnly ?? false}
           placeholder={placeHolder ? placeHolder : ""}
-          autoFocus={autofocus ? true : false}
+          autoFocus={autofocus ?? false}
           onBlur={handleOut}
           onKeyUp={handleKey}
         />
         <div className={`windmillui-tag-root ${className}`}>
-          {content.map((tag, index) => (
+          {content.value.map((tag, i) => (
             <span
               className="windmillui-tag"
               title="Remove from list"
-              key={index}
+              key={i}
               onClick={() => {
-                setContent(content.filter((v) => v !== tag));
+                setContent((p) => ({
+                  ...p,
+                  value: content.value.filter((v) => v !== tag),
+                }));
               }}
             >
               {tag}

@@ -6,10 +6,9 @@ const Select: React.FC<SelectProps> = ({
   label,
   content,
   setContent,
-  error,
   size,
   children,
-  locked,
+  disabled,
   className,
   name,
   dataIsLoading,
@@ -19,18 +18,18 @@ const Select: React.FC<SelectProps> = ({
   return (
     <BaseBlock id={id} label={label} size={size}>
       <SelectBlock
-        error={error}
+        error={content.error ?? content.message}
         className={className}
         dataIsLoading={dataIsLoading}
       >
         <select
-          value={content}
+          value={content.value}
           name={name ? name : id}
           id={id}
-          onChange={(event) => {
-            setContent(event.target.value);
+          onChange={(evt) => {
+            setContent((p) => ({ ...p, value: evt.target.value }));
           }}
-          disabled={locked ? locked : false}
+          disabled={disabled ?? false}
           className={className}
         >
           {children}

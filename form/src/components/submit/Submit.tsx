@@ -23,7 +23,7 @@ const Submit: React.FC<SubmitProps> = ({
         disabled={loading || locked ? true : false}
       >
         <span>{label}</span>
-        <i className="icon windmill-icon-arrow-right"></i>
+        <i className="icon ti ti-arrow-right"></i>
         {loading && <Loader />}
       </button>
     </div>

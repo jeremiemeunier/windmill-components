@@ -1,22 +1,59 @@
 import React, { useId } from "react";
 import { InputBlock } from "../base/Base";
-import { CheckboxProps } from "./Checkbox.types";
+import { CheckboxContent, CheckboxProps } from "./Checkbox.types";
 
 const Checkbox: React.FC<CheckboxProps> = ({
   children,
-  error,
   value,
   content,
   setContent,
-  locked,
+  disabled,
   className,
   dataIsLoading,
+  noCheckbox,
+  rawValue,
 }) => {
   const id = useId();
 
+  if (noCheckbox)
+    return (
+      <div
+        className={
+          noCheckbox ? `windmillui-checkbox-no-check` : `windmillui-checkbox`
+        }
+      >
+        <input
+          type="checkbox"
+          name={id}
+          id={id}
+          value={value}
+          onChange={(evt) => {
+            if (rawValue) setContent(evt.target.value ?? evt.target.checked);
+            else {
+              if (value)
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.value,
+                }));
+              else
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.checked,
+                }));
+            }
+          }}
+          checked={
+            rawValue ? (content ? true : false) : content.value ? true : false
+          }
+          disabled={disabled ?? false}
+        />
+        <label htmlFor={id}>{children}</label>
+      </div>
+    );
+
   return (
     <InputBlock
-      error={error}
+      error={content.error && content.message}
       className={className}
       dataIsLoading={dataIsLoading}
     >
@@ -26,15 +63,23 @@ const Checkbox: React.FC<CheckboxProps> = ({
           name={id}
           id={id}
           value={value}
-          onChange={(event) => {
-            if (value) {
-              setContent(event.target.value);
-            } else {
-              setContent(event.target.checked);
+          onChange={(evt) => {
+            if (rawValue) setContent(evt.target.value ?? evt.target.checked);
+            else {
+              if (value)
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.value,
+                }));
+              else
+                setContent((p: CheckboxContent) => ({
+                  ...p,
+                  value: evt.target.checked,
+                }));
             }
           }}
-          checked={content ? true : false}
-          disabled={locked ? locked : false}
+          checked={content.value ? true : false}
+          disabled={disabled ?? false}
         />
         <label htmlFor={id}>{children}</label>
       </div>
