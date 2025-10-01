@@ -16,11 +16,9 @@ const Radio: React.FC<RadioProps> = ({
   const id = useId();
 
   const classBuilder = (special?: string) => {
-    const str = [];
+    const str = ["windmillui-radio"];
 
-    if (viewBox) str.push("windmillui-template-radio");
-    else str.push("windmillui-template-radio-no-check");
-
+    if (!viewBox) str.push("template-no-check");
     if (special) str.push(special);
 
     return str.join(" ");
