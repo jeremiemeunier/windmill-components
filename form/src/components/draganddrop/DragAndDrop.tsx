@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DragAndDropProps } from "./DragAndDrop.type";
+import { DragAndDropContent, DragAndDropProps } from "./DragAndDrop.type";
 import { FileUploader } from "react-drag-drop-files";
 import { BaseBlock, InputBlock } from "../base/Base";
 
@@ -9,12 +9,11 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   content,
   setContent,
   authorizedFiles,
-  multipleUpload,
   className,
   dataIsLoading,
 }) => {
-  const [files, setFiles] = useState<File[] | null>(null);
-  const [fileLabel, setFileLabel] = useState("");
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [fileLabel, setFileLabel] = useState<string[]>([]);
 
   useEffect(() => {
     setFiles(content.value);
@@ -23,24 +22,15 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   useEffect(() => {
     if (files) {
       try {
-        const labelArray: string[] = [];
-
         for (let i = 0; i < files.length; i++) {
-          labelArray.push(files[i].name);
+          setFileLabel([...fileLabel, files[i].name]);
         }
-
-        setFileLabel(labelArray.join(", "));
-      } catch (error) {}
+      } catch (err: any) {}
     }
   }, [files]);
 
   const handleChange = (file: any) => {
-    if (typeof file === "object") {
-      setFiles(file);
-    } else {
-      setFiles([file]);
-    }
-
+    setFiles(file);
     setContent((p) => ({ ...p, value: file }));
   };
 
@@ -65,31 +55,33 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
             name="file"
             types={authorizedFiles}
             hoverTitle={"Déposer ici"}
-            multiple={multipleUpload ? true : false}
+            multiple={true}
           >
             <div className="windmillui-drop-zone">
               <p>
-                {`${
-                  multipleUpload
-                    ? "Déposez un ou plusieurs fichier(s)"
-                    : "Déposer un fichier"
-                } ici (${authorizedFiles.join(", ")})`}
+                Déposez un ou plusieurs fichier(s) ici ($
+                {authorizedFiles.join(", ")})
               </p>
               <p>ou</p>
               <button className="windmillui cta level-secondary">
-                {multipleUpload
-                  ? "Choisir un ou plusieurs fichier(s)"
-                  : "Choisir un fichier"}
+                Choisir un ou plusieurs fichier(s)
               </button>
             </div>
           </FileUploader>
           <p>
             {files && files.length > 0
-              ? `Fichier${files.length > 1 ? "s" : ""} sélectionné${
-                  files.length > 1 ? "s" : ""
-                } : ${fileLabel}.`
+              ? files.length > 1
+                ? "Fichiers sélectionnés"
+                : "Fichier sélectionné"
               : "Déposez vos fichiers dans la zone pour les télécharger"}
           </p>
+          <div className="windmillui tag-container as-pl24 as-pr24 as-pb24">
+            {fileLabel.map((f, k) => (
+              <span key={k} className="teaui tag stroke color-brand">
+                {f}
+              </span>
+            ))}
+          </div>
         </div>
       </InputBlock>
     </BaseBlock>
