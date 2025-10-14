@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/cursor",
-  "version": "1.4.4",
+  "version": "1.4.6",
   "description": "Custom cursor component that frames links on hover",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
