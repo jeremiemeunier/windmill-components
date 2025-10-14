@@ -22,6 +22,14 @@ echo "|__/|__/_/_/ /_/\__,_/_/ /_/ /_/_/_/_/   "
 echo "                 packager                "
 echo ""
 
+echo ""
+echo "#########################################"
+echo ""
+echo "Exporting $pkg_folder"
+echo ""
+echo "#########################################"
+echo ""
+
 cd $pkg_folder
-npm i
+npm i --silent
 npm run pub
