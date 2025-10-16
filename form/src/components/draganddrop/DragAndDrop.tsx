@@ -75,13 +75,15 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
                 : "Fichier sélectionné"
               : "Déposez vos fichiers dans la zone pour les télécharger"}
           </p>
-          <div className="windmillui tag-container as-pl24 as-pr24 as-pb24">
-            {fileLabel.map((f, k) => (
-              <span key={k} className="teaui tag stroke color-brand">
-                {f}
-              </span>
-            ))}
-          </div>
+          {fileLabel.length > 0 && (
+            <div className="windmillui tag-container as-pl24 as-pr24 as-pb24">
+              {fileLabel.map((f, k) => (
+                <span key={k} className="teaui tag stroke color-brand">
+                  {f}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </InputBlock>
     </BaseBlock>
