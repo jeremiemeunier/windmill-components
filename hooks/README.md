@@ -1,28 +1,49 @@
 # @jeremiemeunier/hooks
 
-A small collection of React hooks used across windmillui projects.
+## Aperçu
+
+Collection de hooks React partagés entre les différents packages Windmill (`useRefresh`, `useSeo`, etc.).
 
 ## Installation
 
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
+
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
+
+2. Installez le package :
+
+   ```bash
+   npm install @jeremiemeunier/hooks
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Lint la base de code.                                    |
+| `npm run build` | Génère les bundles CommonJS/ESM via tsup.                |
+| `npm run pub`   | Construit puis publie la librairie.                      |
+
+## Développement local
+
 ```bash
-npm install @jeremiemeunier/hooks
-```
-
-## Build
-
-Run the build step before publishing or when using the hooks directly from the repository:
-
-```bash
+npm install
+npm run lint
 npm run build
+# npm run pub
 ```
 
-This uses [tsup](https://github.com/egoist/tsup) to generate CommonJS and ES modules in `dist/`.
+## Tests
 
-## Available hooks
+Les hooks ne disposent pas encore de tests automatisés.
+
+## Hooks disponibles
 
 ### `useRefresh`
 
-Refreshes active queries created with **@tanstack/react-query**. The hook exposes a `refreshing` function that accepts a list of query keys and invalidates then refetches matching queries.
+Rafraîchit les requêtes actives créées avec **@tanstack/react-query**. Le hook expose la fonction `refreshing` qui accepte une liste de clés de requête, invalide les entrées correspondantes puis les relance.
 
 ```ts
 import { useRefresh } from "@jeremiemeunier/hooks";
@@ -32,11 +53,11 @@ const { refreshing } = useRefresh();
 refreshing(["users"]);
 ```
 
-Make sure that a `QueryClientProvider` is set up in your application.
+Assurez-vous qu’un `QueryClientProvider` est présent dans votre application.
 
 ### `useSeo`
 
-Updates SEO related meta tags. Call the hook with the information you want to update.
+Met à jour les métadonnées SEO (balises `meta`). Appelez le hook avec les informations à appliquer.
 
 ```ts
 import { useSeo } from "@jeremiemeunier/hooks";
@@ -51,7 +72,7 @@ useSeo({
 });
 ```
 
-Add the following tags to your HTML so the hook can update them:
+Ajoutez les balises suivantes dans votre HTML pour qu’elles puissent être mises à jour :
 
 ```html
 <meta data-seo-title />
@@ -60,6 +81,6 @@ Add the following tags to your HTML so the hook can update them:
 <meta data-seo-theme />
 ```
 
-## Usage in a React project
+## Utilisation dans un projet React
 
-After installing the package and running the build step, import the hooks from `@jeremiemeunier/hooks` in your React components as shown above. They can be bundled with your application like any other dependency.
+Après l’installation (et éventuellement un build local), importez les hooks depuis `@jeremiemeunier/hooks` dans vos composants comme n’importe quelle dépendance.

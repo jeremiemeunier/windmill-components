@@ -4,27 +4,38 @@ Bibliothèque React pour gérer des modales complexes. Le composant `Modal` expo
 
 ## Installation
 
-Installez le paquet via npm :
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet pour pointer vers le registre GitHub :
+
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
+
+2. Installez le package :
+
+   ```bash
+   npm install @jeremiemeunier/modal
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Lint le projet avec ESLint.                              |
+| `npm run build` | Construit les artefacts dans `dist/` via tsup.           |
+| `npm run pub`   | Build + publication sur GitHub Packages.                |
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/modal
-```
-
-ou avec yarn :
-
-```bash
-yarn add @jeremiemeunier/modal
-```
-
-## Construction
-
-Si vous clonez ce dépôt et souhaitez générer la version distribuable, lancez :
-
-```bash
+npm install
+npm run lint
 npm run build
+# npm run pub
 ```
 
-La commande s’appuie sur **tsup** pour compiler les fichiers TypeScript dans le dossier `dist`.
+## Tests
+
+Le package ne dispose pas encore de tests automatisés.
 
 ## Utilisation
 

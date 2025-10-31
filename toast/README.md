@@ -1,25 +1,47 @@
 # @jeremiemeunier/toast
 
-Utility library for displaying toast notifications in React.
+## Aperçu
+
+Librairie utilitaire pour afficher des notifications toast réutilisables dans vos applications React.
 
 ## Installation
 
-Create a `.npmrc` file at the root of your project so npm can access the GitHub
-packages:
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
-```
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
 
-Then install the dependency:
+2. Installez la dépendance :
+
+   ```bash
+   npm install @jeremiemeunier/toast
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                                              |
+| --------------- | ------------------------------------------------------------------------ |
+| `npm run lint`  | Vérifie la base de code avec ESLint.                                     |
+| `npm run tsup`  | Compile le package et génère les artefacts dans `dist/`.                 |
+| `npm run pub`   | Exécute `tsup` puis publie la bibliothèque sur GitHub Packages.          |
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/toast
+npm install
+npm run lint
+npm run tsup
+# npm run pub
 ```
 
-## Usage
+## Tests
 
-Wrap your application with `ToastProvider` to enable notifications everywhere.
+Ce package ne définit pas encore de tests automatisés.
+
+## Utilisation
+
+Encapsulez votre application avec `ToastProvider` afin de rendre les notifications disponibles partout.
 
 ```tsx
 import { ToastProvider } from "@jeremiemeunier/toast";
@@ -27,7 +49,7 @@ import { ToastProvider } from "@jeremiemeunier/toast";
 const App = () => <ToastProvider>{/* your application */}</ToastProvider>;
 ```
 
-In your components use the `useToasts` hook to push or clear toasts.
+Dans vos composants, utilisez le hook `useToasts` pour ajouter ou supprimer des toasts.
 
 ```tsx
 import { useToasts } from "@jeremiemeunier/toast";
@@ -43,17 +65,17 @@ const Example = () => {
     });
   };
 
-  return <button onClick={notify}>Show toast</button>;
+  return <button onClick={notify}>Afficher un toast</button>;
 };
 ```
 
 ### API
 
-- `ToastProvider` – context provider that stores active toasts.
-- `useToasts()` – hook returning `pushToast` and `clearToast` functions.
-- `Toast` – component used internally to render each notification.
+- `ToastProvider` : provider de contexte qui stocke les toasts actifs.
+- `useToasts()` : hook retournant les fonctions `pushToast` et `clearToast`.
+- `Toast` : composant interne chargé d’afficher chaque notification.
 
-`pushToast` accepts the following options:
+`pushToast` accepte les options suivantes :
 
 ```ts
 {
@@ -70,13 +92,6 @@ const Example = () => {
 }
 ```
 
-### Build
+## Publication
 
-To generate the compiled files run:
-
-```bash
-npm run tsup
-```
-
-With this setup you can easily integrate toast notifications into any React
-project.
+`npm run pub` se charge de compiler le package avant de lancer `npm publish`. Une authentification GitHub Packages est requise.
