@@ -1,24 +1,47 @@
 # @jeremiemeunier/theme
 
-React theme management system with context provider and theme switching components.
+## Aperçu
+
+Système de gestion de thèmes basé sur un provider React et des composants de sélection/commutation.
 
 ## Installation
 
-Create a `.npmrc` file at the root of your project so npm can access the GitHub registry:
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
-```
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
 
-Then install the package:
+2. Installez le package :
+
+   ```bash
+   npm install @jeremiemeunier/theme
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Lint des sources avec ESLint.                            |
+| `npm run build` | Compile les bundles `dist/` via tsup.                    |
+| `npm run pub`   | Construit puis publie la librairie.                      |
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/theme
+npm install
+npm run lint
+npm run build
+# npm run pub
 ```
 
-## Usage
+## Tests
 
-Wrap your application with the `ThemeProvider` to enable theme management:
+Aucun test automatisé n’est encore fourni.
+
+## Utilisation
+
+Encapsulez votre application avec `ThemeProvider` pour activer la gestion des thèmes :
 
 ```tsx
 import { ThemeProvider } from "@jeremiemeunier/theme";
@@ -30,7 +53,7 @@ const App = () => (
 );
 ```
 
-Use the theme components in your app:
+Utilisez ensuite les composants de thème dans votre interface :
 
 ```tsx
 import { ThemeSelector, ThemeSwitch } from "@jeremiemeunier/theme";
@@ -43,27 +66,21 @@ const Header = () => (
 );
 ```
 
-### Available themes
+### Thèmes disponibles
 
-The package supports the following theme names:
+Le package prend en charge les thèmes suivants :
 - `lavand`
 - `lavand-ultra`
 - `tomato` 
 - `sunflower`
 
-### Components
+### Composants
 
-- `ThemeProvider` – context provider that manages theme state
-- `ThemeSwitch` – component to toggle between light and dark modes
-- `ThemeSelector` – component to select from available color themes
+- `ThemeProvider` : provider de contexte qui gère l’état du thème
+- `ThemeSwitch` : composant pour basculer entre les modes clair/sombre
+- `ThemeSelector` : composant permettant de choisir un thème colorimétrique
 
-### Build
+## Publication
 
-If you clone this repository and want to generate the distributable files run:
-
-```bash
-npm run build
-```
-
-This uses **tsup** to compile the source into the `dist/` folder.
+Le script `npm run pub` exécute le build et publie la bibliothèque sur GitHub Packages (une authentification préalable est nécessaire).
 

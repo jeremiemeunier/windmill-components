@@ -1,27 +1,58 @@
 # @jeremiemeunier/form
 
-Collection de composants React permettant de construire rapidement des formulaires.
+## Aperçu
 
-## Intégration dans un projet React
+Bibliothèque complète de champs et formulaires réutilisables (inputs, selecteurs, date pickers, soumissions…). Elle s’appuie sur `@jeremiemeunier/core` pour les styles et composants transverses.
 
-1. Ajoutez un fichier `.npmrc` à la racine de votre projet contenant&nbsp;:
-   ```
+## Installation
+
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
+   ```npmrc
    @jeremiemeunier:registry=https://npm.pkg.github.com
    ```
-2. Installez ensuite la librairie et ses dépendances&nbsp;:
+2. Installez les packages requis :
    ```bash
    npm install @jeremiemeunier/core @jeremiemeunier/form
    ```
-3. Importez les composants nécessaires&nbsp;:
+3. Importez les composants nécessaires dans votre application :
    ```tsx
    import { Input, Select, Submit } from "@jeremiemeunier/form";
    ```
 
-> Le package est déjà compilé et publié, aucune étape de build n'est requise.
+## Scripts npm
+
+| Commande          | Description                                                                  |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `npm run lint`    | Analyse statique avec ESLint.                                                |
+| `npm run build`   | Compile la bibliothèque avec tsup et publie les artefacts dans `dist/`.      |
+| `npm run pub`     | Construit puis publie la version courante sur GitHub Packages.               |
+| `npm run pubbeta` | Variante de publication qui publie la version courante avec le tag `beta`.   |
+
+## Développement local
+
+```bash
+npm install
+npm run lint
+npm run build
+# npm run pub      # publication stable (connexion à GitHub Packages requise)
+# npm run pubbeta  # publication d'une préversion
+```
+
+## Tests
+
+Ce package ne fournit pas encore de suite de tests automatisés.
+
+## Utilisation rapide
+
+Le package est déjà compilé et publié, aucune étape de build supplémentaire n'est requise pour la consommation depuis un projet React. Après l’installation, importez simplement le composant souhaité :
+
+```tsx
+import { Form, Input, Submit } from "@jeremiemeunier/form";
+```
 
 ## Composants disponibles
 
-- [`<Adress>`](#adress)
+- [`<Adresse>`](#adresse)
 - [`<AutoComplete>`](#autocomplete)
 - [`<Checkbox>`](#checkbox)
 - [`<CheckboxSlider>`](#checkboxslider)
@@ -122,7 +153,7 @@ const [error, setError] = useState("");
   name={optional: "my_input_name"} />
 ```
 
-For `type` props see [`<input>` : The Input (Form Input) element](https://developer.mozilla.org/fr/docs/Web/HTML/Element/input#les_différents_types_de_champs_input)
+For `type` props see [`<input>` : The Input (Form Input) element](https://developer.mozilla.org/fr/docs/Web/HTML/Element/input#les_diff%C3%A9rents_types_de_champs_input)
 
 ### FileInput
 
@@ -162,9 +193,14 @@ const [error, setError] = useState("");
     "link": "https://digitalteacompany.fr",
     "label": "DigitalTeacompany"
   }}
-  isNew={true|false}
-  placeHolder={"My password placeholder"}
-  locked={true|false} />
+  maxLength={integer}
+  placeHolder={"My input placeholder"}
+  locked={true|false}
+  regex={regexPattern}
+  regexLabel={"My error text for regex"}
+  required={true|false}
+  name={optional: "my_input_name"}
+  isNew={true|false} />
 ```
 
 ### TextArea
@@ -179,60 +215,375 @@ const [error, setError] = useState("");
   label={"My textarea label"}
   content={content}
   setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
   maxLength={integer}
+  placeHolder={"My textarea placeholder"}
+  locked={true|false}
+  regex={regexPattern}
+  regexLabel={"My error text for regex"}
+  required={true|false}
+  name={optional: "my_input_name"}
+  rows={optional: integer} />
+```
+
+### Message
+
+```jsx
+<Message
+  label={"My message label"}
+  content={"Message content"}
+  size={integer}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  type={"info"|"danger"|"warning"} />
+```
+
+### Checkbox
+
+```jsx
+const [content, setContent] = useState(true|false);
+const [error, setError] = useState("");
+
+...
+
+<Checkbox
+  label={"My checkbox label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  required={true|false}
+  name={optional: "my_checkbox_name"} />
+```
+
+### CheckboxSlider
+
+```jsx
+const [content, setContent] = useState(true|false);
+const [error, setError] = useState("");
+
+...
+
+<CheckboxSlider
+  label={"My checkbox slider label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  required={true|false}
+  name={optional: "my_checkbox_slider_name"} />
+```
+
+### Radio
+
+```jsx
+const [content, setContent] = useState("");
+const [error, setError] = useState("");
+
+...
+
+<Radio
+  label={"My radio label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  values={{
+    valueKey: "Value"
+  }}
+  required={true|false}
+  name={optional: "my_radio_name"} />
+```
+
+### Group
+
+```jsx
+const [content, setContent] = useState({
+  selectKey: "selectValue",
+  inputKey: "inputValue"
+});
+const [error, setError] = useState({
+  selectKey: "",
+  inputKey: ""
+});
+
+...
+
+<Group
+  label={"My group label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_group_name"}>
+  <Select
+    label={"My select label"}
+    content={content.selectKey}
+    setContent={(value) => setContent({
+      ...content,
+      selectKey: value
+    })}
+    error={error.selectKey}
+    size={integer}
+    readOnly={true|false}
+    tagline={{
+      "link": "https://digitalteacompany.fr",
+      "label": "DigitalTeacompany"
+    }}
+    locked={true|false}
+    required={true|false}
+    name={optional: "my_select_name"}>
+    <option>my select option</option>
+    <option>my select option</option>
+    <option>my select option</option>
+    <option>my select option</option>
+    <option>my select option</option>
+  </Select>
+  <Input
+    label={"My input label"}
+    content={content.inputKey}
+    setContent={(value) => setContent({
+      ...content,
+      inputKey: value
+    })}
+    error={error.inputKey}
+    size={integer}
+    readOnly={true|false}
+    tagline={{
+      "link": "https://digitalteacompany.fr",
+      "label": "DigitalTeacompany"
+    }}
+    locked={true|false}
+    required={true|false}
+    name={optional: "my_input_name"} />
+</Group>
+```
+
+### Form
+
+```jsx
+const [content, setContent] = useState({
+  inputKey: "",
+  selectKey: ""
+});
+const [error, setError] = useState({
+  inputKey: "",
+  selectKey: ""
+});
+
+...
+
+const mySubmitHandler = (event) => {
+  event.preventDefault();
+
+  ...
+};
+
+const myErrorHandler = (event) => {
+  event.preventDefault();
+
+  ...
+};
+
+<Form
+  content={content}
+  setContent={setContent}
+  error={error}
+  setError={setError}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  submit={{
+    "label": "My submit button label",
+    "action": mySubmitHandler,
+    "appearance": "primary"
+  }}
+  otherAction={{
+    "label": "My other button label",
+    "action": myErrorHandler,
+    "appearance": "secondary"
+  }}
+  locked={true|false}
+  name={optional: "my_form_name"}>
+  <Input ... />
+  <Select ... />
+  <Checkbox ... />
+  <CheckboxSlider ... />
+  <Radio ... />
+</Form>
+```
+
+### Progress
+
+```jsx
+const [content, setContent] = useState(0);
+const [error, setError] = useState("");
+
+...
+
+<Progress
+  label={"My progress label"}
+  content={content}
+  setContent={setContent}
   error={error}
   size={integer}
   tagline={{
     "link": "https://digitalteacompany.fr",
     "label": "DigitalTeacompany"
   }}
-  readOnly={true|false}
-  placeHolder={"My textarea placeholder"}
-  locked={true|false}
-  rows={integer} />
-```
-
-### Checkbox
-
-If a specific `value` is passed, on check the component return in `setContent` the value else `Checkbox` return a boolean.
-
-```jsx
-const [content, setContent] = useState("");
-const [error, setError] = useState("");
-
-...
-
-<Checkbox
-  error={error}
-  value={optional: "a_specific_value"}
-  content={content}
-  setContent={setContent}
-  locked={true|false}>
-  My checkbox label
-</Checkbox>
+  required={true|false}
+  name={optional: "my_progress_name"} />
 ```
 
 ### Submit
 
 ```jsx
+const mySubmitHandler = (event) => {
+  event.preventDefault();
+
+  ...
+};
+
+<Submit
+  label={"My submit button label"}
+  action={mySubmitHandler}
+  appearance={"primary"}
+  locked={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }} />
+```
+
+### DragAndDrop
+
+```jsx
 const [content, setContent] = useState("");
 const [error, setError] = useState("");
 
 ...
 
-<Submit
+<DragAndDrop
+  label={"My drag and drop label"}
+  content={content}
+  setContent={setContent}
+  error={error}
   size={integer}
-  format={true|false}
-  label={"My submit button label"}
-  otherAction={{
-    "link": "",
-    "icon": "",
-    "iconHide": true|false,
-    "visible": true|false,
-    "label": ""
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
   }}
-  loading
-  locked />
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_drag_and_drop_name"} />
+```
+
+### TagInput
+
+```jsx
+const [content, setContent] = useState(["Tag 1", "Tag 2"]);
+const [error, setError] = useState("");
+
+...
+
+<TagInput
+  label={"My tag input label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_tag_input_name"} />
+```
+
+### TotpInput
+
+```jsx
+const [content, setContent] = useState("");
+const [error, setError] = useState("");
+
+...
+
+<TotpInput
+  label={"My TOTP input label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_totp_input_name"} />
+```
+
+### DatePicker
+
+```jsx
+const [content, setContent] = useState(new Date());
+const [error, setError] = useState("");
+
+...
+
+<DatePicker
+  label={"My date picker label"}
+  content={content}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_date_picker_name"}
+  blockedDate={{
+    type: "array",
+    values: ["2023-01-01", "2023-01-02"]
+  }} />
 ```
 
 ### AutoComplete
@@ -240,13 +591,16 @@ const [error, setError] = useState("");
 ```jsx
 const [content, setContent] = useState("");
 const [error, setError] = useState("");
+
 const data = [
-  { label: "", value: "" },
-  { label: "", value: "" },
-  { label: "", value: "" },
-  { label: "", value: "" },
-  { label: "", value: "" },
-  { label: "", value: "" }
+  {
+    value: "FR",
+    label: "France"
+  },
+  {
+    value: "DE",
+    label: "Allemagne"
+  }
 ];
 
 ...
@@ -258,60 +612,62 @@ const data = [
   error={error}
   size={integer}
   readOnly={true|false}
-  maxLength={integer}
-  placeHolder={"My autocomplete placeholder"}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
   locked={true|false}
-  data={data}
-  required={true|false} />
+  required={true|false}
+  name={optional: "my_autocomplete_name"}
+  data={data} />
 ```
 
-### Message
+### Adresse
 
 ```jsx
-const data = {
-  type: "negative|positive|main",
-  content: "My message content text"
-};
+const [content, setContent] = useState({
+  address: "",
+  city: "",
+  zip: ""
+});
+const [error, setError] = useState({
+  address: "",
+  city: "",
+  zip: ""
+});
 
 ...
 
-<Message data={data} />
-```
-
-### Radio
-
-```jsx
-const data = [
-  { id: "8", label: "08:00" },
-  { id: "9", label: "09:00" },
-  { id: "10", label: "10:00" },
-  { id: "11", label: "11:00", disabled: true },
-  { id: "14", label: "14:00", disabled: true },
-  { id: "15", label: "15:00", disabled: true },
-  { id: "16", label: "16:00" },
-  { id: "17", label: "17:00" },
-];
-
-...
-
-<Radio values={data} />
-```
-
-### DatePicker
-
-```jsx
-<DatePicker
-  disabled="weekend"
-  content={count}
-  setContent={setCount}
+<Adresse
+  label={"My address label"}
+  content={content}
+  setContent={setContent}
   error={error}
-  blockedDate={[
-    "2024-05-23",
-    "2024-05-20",
-    "2024-05-21",
-    "2024-05-22",
-    "2024-05-31",
-  ]}
-  disabled={["sunday", "wednesday"]}
-/>
+  size={integer}
+  readOnly={true|false}
+  tagline={{
+    "link": "https://digitalteacompany.fr",
+    "label": "DigitalTeacompany"
+  }}
+  locked={true|false}
+  required={true|false}
+  name={optional: "my_address_name"} />
+```
+
+### FileInput drop zone
+
+```jsx
+const [content, setContent] = useState("");
+const [error, setError] = useState("");
+
+...
+
+<FileInput
+  label={"My file input label"}
+  setContent={setContent}
+  error={error}
+  size={integer}
+  required={true|false}
+  accept={["jpg", "xlsx", ...]}
+  dropZone={true|false} />
 ```

@@ -1,16 +1,49 @@
 # @jeremiemeunier/core
 
-To add `@jeremiemeunier` to you project you need to create a `.npmrc` file at the same folder base of you `package.json` with this line :
+## Aperçu
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
+Bibliothèque de composants transverses (loader, helpers d’animation…) utilisée par l’ensemble des packages Windmill.
+
+## Installation
+
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet pour pointer vers le registre GitHub :
+
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
+
+2. Installez ensuite la librairie :
+
+   ```bash
+   npm install @jeremiemeunier/core
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Vérifie le code avec ESLint.                             |
+| `npm run build` | Compile les sources avec tsup dans le dossier `dist/`.   |
+| `npm run pub`   | Lance le build puis publie le package sur le registre.   |
+
+Les commandes sont à exécuter depuis le dossier `core/`.
+
+## Développement local
+
+```bash
+npm install      # installe les dépendances du package
+npm run lint     # contrôle statique
+npm run build    # génère les bundles CommonJS, ES Module et les types
+# npm run pub   # nécessite d'être connecté à GitHub Packages
 ```
 
-| Core components   |
-| ----------------- |
-| [Loader](#loader) |
+## Tests
 
-## Loader
+Ce package ne définit pas encore de suite de tests automatisés.
+
+## Utilisation
+
+### Loader
 
 ```tsx
 <span className="windmillui-loader">
