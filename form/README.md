@@ -52,7 +52,7 @@ import { Form, Input, Submit } from "@jeremiemeunier/form";
 
 ## Composants disponibles
 
-- [`<Adress>`](#adress)
+- [`<Adresse>`](#adresse)
 - [`<AutoComplete>`](#autocomplete)
 - [`<Checkbox>`](#checkbox)
 - [`<CheckboxSlider>`](#checkboxslider)
@@ -622,7 +622,7 @@ const data = [
   data={data} />
 ```
 
-### Adress
+### Adresse
 
 ```jsx
 const [content, setContent] = useState({
@@ -638,8 +638,8 @@ const [error, setError] = useState({
 
 ...
 
-<Adress
-  label={"My adress label"}
+<Adresse
+  label={"My address label"}
   content={content}
   setContent={setContent}
   error={error}
@@ -651,7 +651,7 @@ const [error, setError] = useState({
   }}
   locked={true|false}
   required={true|false}
-  name={optional: "my_adress_name"} />
+  name={optional: "my_address_name"} />
 ```
 
 ### FileInput drop zone
