@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DragAndDropContent, DragAndDropProps } from "./DragAndDrop.type";
+import { DragAndDropProps } from "./DragAndDrop.type";
 import { FileUploader } from "react-drag-drop-files";
 import { BaseBlock, InputBlock } from "../base/Base";
 
@@ -22,10 +22,13 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   useEffect(() => {
     if (files) {
       try {
-        for (let i = 0; i < files.length; i++) {
-          setFileLabel([...fileLabel, files[i].name]);
-        }
-      } catch (err: any) {}
+        const names = Array.from(files).map(f => f.name);
+        setFileLabel(names);
+      } catch (err: any) {
+        console.error('Error processing files:', err);
+      }
+    } else {
+      setFileLabel([]);
     }
   }, [files]);
 
@@ -59,8 +62,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
           >
             <div className="windmillui-drop-zone">
               <p>
-                Déposez un ou plusieurs fichier(s) ici ($
-                {authorizedFiles.join(", ")})
+                Déposez un ou plusieurs fichier(s) ici ({authorizedFiles.join(", ")})
               </p>
               <p>ou</p>
               <button className="windmillui cta level-secondary">
