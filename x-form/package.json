@@ -2,7 +2,7 @@
   "name": "@jeremiemeunier/x-form",
   "version": "1.0.0",
   "description": "FormData-focused fork of form components for efficient form handling",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "private": false,
