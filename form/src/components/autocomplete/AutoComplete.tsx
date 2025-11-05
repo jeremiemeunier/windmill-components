@@ -79,9 +79,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
               setInputValueSize(target.value.length);
               filteringHandler(event);
 
-              inputValueSize > 0
-                ? setListVisibility(true)
-                : setListVisibility(false);
+              setListVisibility(inputValueSize > 0);
             }}
           />
           <i
@@ -109,6 +107,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                     {filteredData.map((option, index) => {
                       const optionValue = String(option[valueKey] || "");
                       const optionLabel = String(option[labelKey] || "");
+                      const uniqueKey = optionValue || `${optionLabel}-${index}`;
                       return (
                         <div
                           onClick={() => {
@@ -117,7 +116,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                             setInputValueSize(0);
                             setListVisibility(false);
                           }}
-                          key={optionValue || index}
+                          key={uniqueKey}
                         >
                           <p className="windmillui as-ma0 as-pa0">
                             {optionLabel}
