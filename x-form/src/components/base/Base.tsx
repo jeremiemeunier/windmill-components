@@ -114,7 +114,7 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
         children
       )}
       <i className="icon ti ti-caret-up-down"></i>
-      {error ? <p className="windmillui-message">{error}</p> : ""}
+      {error && <p className="windmillui-message">{error}</p>}
     </div>
   );
 };
