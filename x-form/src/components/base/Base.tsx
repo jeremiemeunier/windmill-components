@@ -31,11 +31,9 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
           {label}{" "}
           {required && <span className="windmillui-required">Requis</span>}
         </label>
-      ) : (
-        ""
-      )}
+      ) : null}
       {children}
-      {tagline && tagline}
+      {tagline}
     </div>
   );
 };
