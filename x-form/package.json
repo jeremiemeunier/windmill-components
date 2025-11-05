@@ -1,0 +1,56 @@
+{
+  "name": "@jeremiemeunier/x-form",
+  "version": "1.0.0",
+  "description": "FormData-focused fork of form components for efficient form handling",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremiemeunier/windmill-components.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "pub": "tsup && npm publish",
+    "pubbeta": "tsup && npm publish --tag beta",
+    "build": "tsup",
+    "lint": "eslint ."
+  },
+  "publishConfig": {
+    "@jeremiemeunier:registry": "https://npm.pkg.github.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [
+    "form",
+    "formdata",
+    "react",
+    "components"
+  ],
+  "dependencies": {
+    "@jeremiemeunier/core": "^1.4.4",
+    "framer-motion": "^12.23.12",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-drag-drop-files": "^3.1.0",
+    "react-router-dom": "^7.8.1",
+    "simplebar-react": "^3.3.2"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.13.3",
+    "@types/react": "^19.1.10",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.0",
+    "typed-scss-modules": "^8.1.1",
+    "typescript": "^5.9.2",
+    "sass": "^1.90.0",
+    "scss": "^0.2.4"
+  }
+}
