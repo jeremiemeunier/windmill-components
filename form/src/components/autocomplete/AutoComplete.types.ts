@@ -5,8 +5,9 @@ export interface AutoCompleteContent extends InputContent {
 }
 
 export interface DataItems {
-  label: string;
-  value: string;
+  [key: string]: any;
+  label?: string;
+  value?: string;
   details?: string;
 }
 
@@ -23,4 +24,6 @@ export interface AutoCompleteProps {
   required?: boolean;
   className?: string;
   dataIsLoading: boolean;
+  labelKey?: string;
+  valueKey?: string;
 }
