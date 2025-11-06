@@ -1,22 +1,45 @@
 # @jeremiemeunier/cursor
 
-Custom cursor component that highlights links by drawing a frame around them.
+## Aperçu
+
+Curseur personnalisé qui encadre automatiquement les liens et éléments interactifs pour améliorer leur mise en évidence.
 
 ## Installation
 
-Create a `.npmrc` file at the root of your project so npm can access the GitHub registry:
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
-```
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
 
-Then install the package:
+2. Installez le package :
+
+   ```bash
+   npm install @jeremiemeunier/cursor
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Vérifie la base de code avec ESLint.                     |
+| `npm run build` | Compile le package avec tsup et produit `dist/`.         |
+| `npm run pub`   | Construit puis publie la librairie sur GitHub Packages.  |
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/cursor
+npm install
+npm run lint
+npm run build
+# npm run pub   # publication (optionnelle)
 ```
 
-## Usage
+## Tests
+
+Ce package ne dispose pas encore de tests automatisés.
+
+## Utilisation
 
 ```tsx
 import { CustomCursor } from "@jeremiemeunier/cursor";
@@ -31,13 +54,5 @@ export default function App() {
 }
 ```
 
-### Build
-
-If you clone this repository and want to generate the distributable files run:
-
-```bash
-npm run build
-```
-
-This uses **tsup** to compile the source into the `dist/` folder.
+Le composant se charge d’injecter les styles nécessaires et de suivre la souris pour afficher un cadre animé autour des éléments ciblés.
 

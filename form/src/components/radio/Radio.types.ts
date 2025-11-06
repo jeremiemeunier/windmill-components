@@ -12,11 +12,11 @@ export interface RadioValues {
 }
 
 export interface RadioProps {
-  viewBox: boolean;
   gridSize: number;
   values: RadioValues[];
   content: RadioContent;
   setContent: React.Dispatch<React.SetStateAction<RadioContent>>;
+  viewBox?: boolean;
   label?: string;
   size?: number;
   className?: string;

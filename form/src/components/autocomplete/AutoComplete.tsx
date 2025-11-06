@@ -18,6 +18,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   required,
   className,
   dataIsLoading,
+  labelKey = "label",
+  valueKey = "value",
 }) => {
   const id = useId();
 
@@ -30,7 +32,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     const target = event.target as HTMLInputElement;
     const value = target.value.toLowerCase();
     const filterData = data.filter((item) =>
-      item.label.toLowerCase().includes(value)
+      String(item[labelKey] || "").toLowerCase().includes(value)
     );
 
     setFilteredData(filterData);
@@ -39,16 +41,18 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   useEffect(() => {
     if (content.value) {
       const value = content.value.toLowerCase();
-      const filterData = data.filter((item: { value: string; label: string }) =>
-        item.value.toLowerCase().includes(value)
+      const filterData = data.filter((item) =>
+        String(item[valueKey] || "").toLowerCase().includes(value)
       );
 
       setFilteredData(filterData);
-      setInputLabel(filterData[0].label);
+      if (filterData.length > 0) {
+        setInputLabel(String(filterData[0][labelKey] || ""));
+      }
     }
 
     if (!content.value) setInputLabel("");
-  }, [content]);
+  }, [content, data, labelKey, valueKey]);
 
   return (
     <BaseBlock id={id} label={label} size={size} required={required}>
@@ -75,9 +79,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
               setInputValueSize(target.value.length);
               filteringHandler(event);
 
-              inputValueSize > 0
-                ? setListVisibility(true)
-                : setListVisibility(false);
+              setListVisibility(inputValueSize > 0);
             }}
           />
           <i
@@ -102,19 +104,22 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
               <SimpleBar style={{ maxHeight: "240px" }}>
                 <div className="windmillui-autocomplete-list">
                   <AnimatePresence>
-                    {filteredData.map((option) => {
+                    {filteredData.map((option, index) => {
+                      const optionValue = String(option[valueKey] || "");
+                      const optionLabel = String(option[labelKey] || "");
+                      const uniqueKey = optionValue || `${optionLabel}-${index}`;
                       return (
                         <div
                           onClick={() => {
-                            setContent((p) => ({ ...p, value: option.value }));
-                            setInputLabel(option.label);
+                            setContent((p) => ({ ...p, value: optionValue }));
+                            setInputLabel(optionLabel);
                             setInputValueSize(0);
                             setListVisibility(false);
                           }}
-                          key={option.value}
+                          key={uniqueKey}
                         >
                           <p className="windmillui as-ma0 as-pa0">
-                            {option.label}
+                            {optionLabel}
                           </p>
                           {option.details && (
                             <p className="windmillui as-ma0 as-pa0 text labeled">

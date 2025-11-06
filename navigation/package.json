@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/navigation",
-  "version": "1.4.2",
+  "version": "1.4.7",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jeremiemeunier/core": "^1.1.0",
+    "@jeremiemeunier/core": "^1.4.4",
     "framer-motion": "^12.23.12",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

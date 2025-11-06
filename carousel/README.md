@@ -1,22 +1,47 @@
 # @jeremiemeunier/carousel
 
-Simple React carousel to scroll through an array of slides.
+## Aperçu
+
+Composant React de carrousel permettant de faire défiler un ensemble de slides avec pagination automatique.
 
 ## Installation
 
-Create a `.npmrc` file at the root of your project so npm can access the GitHub registry:
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet pour pointer vers le registre GitHub :
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
-```
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
 
-Then install the package:
+2. Installez le package :
+
+   ```bash
+   npm install @jeremiemeunier/carousel
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Analyse statique via ESLint.                             |
+| `npm run build` | Génère les bundles du composant avec tsup dans `dist/`.  |
+| `npm run pub`   | Construit puis publie la version courante sur le registre|
+
+Exécutez ces commandes depuis le dossier `carousel/`.
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/carousel
+npm install
+npm run lint
+npm run build
+# npm run pub   # publication nécessitant une connexion à GitHub Packages
 ```
 
-## Usage
+## Tests
+
+Ce package ne dispose pas encore de tests automatisés.
+
+## Utilisation
 
 ```tsx
 import { Carousel } from "@jeremiemeunier/carousel";
@@ -28,12 +53,12 @@ const slides = [<div>Slide 1</div>, <div>Slide 2</div>, <div>Slide 3</div>];
 
 ### Props
 
-| Name          | Type                | Default | Description                         |
-| ------------- | ------------------- | :-----: | ----------------------------------- |
-| `slides`      | `React.ReactNode[]` |   —     | Elements to display.                |
-| `slidesNumber`| `number`            |   `4`   | Number of slides visible at a time. |
-| `className`   | `string`            |   —     | Additional CSS classes.             |
+| Nom            | Type                | Défaut | Description                                  |
+| -------------- | ------------------- | :----: | -------------------------------------------- |
+| `slides`       | `React.ReactNode[]` |   —    | Éléments à afficher dans le carrousel.       |
+| `slidesNumber` | `number`            |  `4`   | Nombre de slides visibles simultanément.     |
+| `className`    | `string`            |   —    | Classe(s) CSS supplémentaires optionnelles.  |
 
-`Carousel` scrolls smoothly between groups of slides and renders navigation buttons to move between pages.
+Le composant gère la pagination, le scroll fluide et ajoute des contrôles de navigation accessibles.
 
  

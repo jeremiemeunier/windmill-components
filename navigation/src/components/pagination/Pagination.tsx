@@ -53,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 return options;
               })()}
             </select>
-            <i className="icon ti ti-caret-down-filled"></i>
+            <i className="icon ti ti-caret-down"></i>
           </div>
         ) : null}
 

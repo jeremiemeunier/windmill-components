@@ -6,27 +6,38 @@ balises HTML.
 
 ## Installation
 
-Ajoutez un fichier `.npmrc` à la racine de votre projet :
+1. Ajoutez un fichier `.npmrc` à la racine de votre projet :
 
-```npmrc
-@jeremiemeunier:registry=https://npm.pkg.github.com
-```
+   ```npmrc
+   @jeremiemeunier:registry=https://npm.pkg.github.com
+   ```
 
-Puis installez la dépendance :
+2. Installez la dépendance :
+
+   ```bash
+   npm install @jeremiemeunier/editorparser
+   ```
+
+## Scripts npm
+
+| Commande        | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run lint`  | Vérifie la qualité du code avec ESLint.                  |
+| `npm run build` | Construit les bundles `dist/` via tsup.                  |
+| `npm run pub`   | Construit puis publie le package sur GitHub Packages.    |
+
+## Développement local
 
 ```bash
-npm install @jeremiemeunier/editorparser
-```
-
-## Construction
-
-Si vous utilisez ce dépôt directement, générez la version distribuable avec :
-
-```bash
+npm install
+npm run lint
 npm run build
+# npm run pub
 ```
 
-La commande s'appuie sur **tsup** pour produire les fichiers dans `dist/`.
+## Tests
+
+Ce package ne propose pas encore de tests automatisés.
 
 ## Utilisation
 
