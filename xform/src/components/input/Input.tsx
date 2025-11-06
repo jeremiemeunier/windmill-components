@@ -1,12 +1,12 @@
 import React, { useId, useState } from "react";
-import { XInputProps } from "./Input.types";
+import { InputProps } from "./Input.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 
 /**
- * XInput component - FormData-compatible input field
+ * Input component - FormData-compatible input field
  * Uses native HTML input with name attribute for automatic FormData extraction
  */
-const XInput: React.FC<XInputProps> = ({
+const Input: React.FC<InputProps> = ({
   name,
   label,
   size,
@@ -71,4 +71,4 @@ const XInput: React.FC<XInputProps> = ({
   );
 };
 
-export default XInput;
+export default Input;

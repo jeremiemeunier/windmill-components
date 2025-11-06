@@ -1,12 +1,12 @@
 import React, { useId } from "react";
-import { XSelectProps } from "./Select.types";
+import { SelectProps } from "./Select.types";
 import { BaseBlock, SelectBlock } from "../base/Base";
 
 /**
- * XSelect component - FormData-compatible select field
+ * Select component - FormData-compatible select field
  * Uses native HTML select with name attribute for automatic FormData extraction
  */
-const XSelect: React.FC<XSelectProps> = ({
+const Select: React.FC<SelectProps> = ({
   name,
   label,
   size,
@@ -43,4 +43,4 @@ const XSelect: React.FC<XSelectProps> = ({
   );
 };
 
-export default XSelect;
+export default Select;

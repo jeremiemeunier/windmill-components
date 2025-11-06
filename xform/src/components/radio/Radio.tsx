@@ -1,12 +1,12 @@
 import React, { useId } from "react";
-import { XRadioProps } from "./Radio.types";
+import { RadioProps } from "./Radio.types";
 import { BaseBlock, RadioCheckboxBlock } from "../base/Base";
 
 /**
- * XRadio component - FormData-compatible radio button group
+ * Radio component - FormData-compatible radio button group
  * Uses native HTML radio inputs with name attribute for automatic FormData extraction
  */
-const XRadio: React.FC<XRadioProps> = ({
+const Radio: React.FC<RadioProps> = ({
   name,
   label,
   options,
@@ -29,7 +29,11 @@ const XRadio: React.FC<XRadioProps> = ({
       tagline={tagline}
       required={required ?? false}
     >
-      <RadioCheckboxBlock error={error} gridSize={gridSize} className={className}>
+      <RadioCheckboxBlock
+        error={error}
+        gridSize={gridSize}
+        className={className}
+      >
         {options.map((option, index) => {
           const id = `${groupId}-${index}`;
           return (
@@ -52,4 +56,4 @@ const XRadio: React.FC<XRadioProps> = ({
   );
 };
 
-export default XRadio;
+export default Radio;

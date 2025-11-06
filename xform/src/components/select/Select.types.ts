@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface XSelectProps {
+export interface SelectProps {
   name: string;
   label?: string;
   size?: number;

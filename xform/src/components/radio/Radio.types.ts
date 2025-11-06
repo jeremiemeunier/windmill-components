@@ -1,14 +1,14 @@
 import React from "react";
 
-export interface XRadioOption {
+export interface RadioOption {
   value: string;
   label: string;
 }
 
-export interface XRadioProps {
+export interface RadioProps {
   name: string;
   label?: string;
-  options: XRadioOption[];
+  options: RadioOption[];
   size?: number;
   disabled?: boolean;
   tagline?: React.ReactNode;

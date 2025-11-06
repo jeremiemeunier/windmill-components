@@ -1,12 +1,12 @@
 import React, { useId } from "react";
-import { XCheckboxProps } from "./Checkbox.types";
+import { CheckboxProps } from "./Checkbox.types";
 import { InputBlock } from "../base/Base";
 
 /**
- * XCheckbox component - FormData-compatible checkbox field
+ * Checkbox component - FormData-compatible checkbox field
  * Uses native HTML checkbox with name attribute for automatic FormData extraction
  */
-const XCheckbox: React.FC<XCheckboxProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   name,
   label,
   value,
@@ -35,4 +35,4 @@ const XCheckbox: React.FC<XCheckboxProps> = ({
   );
 };
 
-export default XCheckbox;
+export default Checkbox;

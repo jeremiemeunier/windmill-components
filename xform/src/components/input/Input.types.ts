@@ -3,7 +3,7 @@ import React, {
   HTMLInputTypeAttribute,
 } from "react";
 
-export interface XInputProps {
+export interface InputProps {
   name: string;
   label?: string;
   size?: number;

@@ -1,2 +1,2 @@
-export { default as XSubmit } from "./Submit";
+export { default as Submit } from "./Submit";
 export * from "./Submit.types";

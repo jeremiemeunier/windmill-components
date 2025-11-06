@@ -1,34 +1,41 @@
 import React from "react";
-import { XSubmitProps } from "./Submit.types";
+import { SubmitProps } from "./Submit.types";
+import { Loader } from "@jeremiemeunier/core";
 
 /**
- * XSubmit component - Submit button for XForm
+ * Submit component - Submit button for Form
  * Simple submit button with styling support
  */
-const XSubmit: React.FC<XSubmitProps> = ({
+const Submit: React.FC<SubmitProps> = ({
+  size,
   label,
-  disabled,
+  loading,
+  locked,
   className,
-  appearance = "primary",
   children,
 }) => {
   const classNameBuilder = () => {
-    const str: string[] = ["windmillui-button"];
+    const str: string[] = ["windmillui windmillui grid cta-container ha-end"];
 
-    if (appearance) str.push(`appearance-${appearance}`);
+    if (size) str.push(`size-${size}x`);
+    if (className) str.push(className);
 
     return className ? str.join(" ") + " " + className : str.join(" ");
   };
 
   return (
-    <button
-      type="submit"
-      disabled={disabled ?? false}
-      className={classNameBuilder()}
-    >
-      {children || label || "Submit"}
-    </button>
+    <div className={classNameBuilder()}>
+      {children}
+      <button
+        className="windmillui cta level-primary format-icon-right"
+        disabled={loading || locked ? true : false}
+      >
+        <span>{label}</span>
+        <i className="icon ti ti-arrow-right"></i>
+        {loading && <Loader />}
+      </button>
+    </div>
   );
 };
 
-export default XSubmit;
+export default Submit;

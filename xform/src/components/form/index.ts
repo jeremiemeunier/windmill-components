@@ -1,2 +1,2 @@
-export { default as XForm } from "./Form";
+export { default as Form } from "./Form";
 export * from "./Form.types";

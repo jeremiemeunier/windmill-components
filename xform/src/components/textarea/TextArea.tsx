@@ -1,12 +1,12 @@
 import React, { useId, useState } from "react";
-import { XTextAreaProps } from "./TextArea.types";
+import { TextAreaProps } from "./TextArea.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 
 /**
- * XTextArea component - FormData-compatible textarea field
+ * TextArea component - FormData-compatible textarea field
  * Uses native HTML textarea with name attribute for automatic FormData extraction
  */
-const XTextArea: React.FC<XTextAreaProps> = ({
+const TextArea: React.FC<TextAreaProps> = ({
   name,
   label,
   size,
@@ -22,9 +22,7 @@ const XTextArea: React.FC<XTextAreaProps> = ({
   error,
 }) => {
   const id = useId();
-  const [currentLength, setCurrentLength] = useState(
-    defaultValue?.length ?? 0
-  );
+  const [currentLength, setCurrentLength] = useState(defaultValue?.length ?? 0);
 
   return (
     <BaseBlock
@@ -61,4 +59,4 @@ const XTextArea: React.FC<XTextAreaProps> = ({
   );
 };
 
-export default XTextArea;
+export default TextArea;

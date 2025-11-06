@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface XTextAreaProps {
+export interface TextAreaProps {
   name: string;
   label?: string;
   size?: number;
