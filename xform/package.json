@@ -1,5 +1,5 @@
 {
-  "name": "@jeremiemeunier/x-form",
+  "name": "@jeremiemeunier/xform",
   "version": "1.0.0",
   "description": "FormData-focused fork of form components for efficient form handling",
   "main": "dist/index.cjs",
