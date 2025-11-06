@@ -12,6 +12,7 @@ Ce dépôt regroupe plusieurs librairies React publiées sous le scope `@jeremie
 | **drawer** | Panneau latéral coulissant. |
 | **editorparser** | Parser pour afficher le contenu d'un éditeur au format JSON. |
 | **form** | Large collection d’éléments de formulaire : `Input`, `Select`, `Checkbox`, `DatePicker`, etc. |
+| **x-form** | Fork FormData de form - composants de formulaire optimisés pour l'extraction automatique de FormData. |
 | **hooks** | Hooks React réutilisables comme `useRefresh` et `useSeo`. |
 | **modal** | Système de modales complet avec de nombreux sous-composants. |
 | **navigation** | Provider et hook pour gérer l’état de navigation. |
@@ -28,6 +29,7 @@ Chaque package possède un fichier `README.md` décrivant en détail son install
 - [`drawer`](drawer/README.md) : panneau latéral animé.
 - [`editorparser`](editorparser/README.md) : rendu d’un contenu JSON structuré.
 - [`form`](form/README.md) : ensemble complet de champs de formulaires.
+- [`x-form`](x-form/README.md) : composants de formulaire FormData-focused.
 - [`hooks`](hooks/README.md) : hooks React partagés (`useRefresh`, `useSeo`, …).
 - [`modal`](modal/README.md) : système de modales modulaire.
 - [`navigation`](navigation/README.md) : provider et composants de pagination.
