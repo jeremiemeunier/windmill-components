@@ -6,12 +6,12 @@ import React, {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ContextProps, ToastObject } from "./ToastContext.types";
-import Toast from "../../components/toast/Toast";
+import type { ContextProps, ToastObject } from "./ToastContext.types";
+import { Toast } from "../../components";
 
 const defaultPush: (toast: ToastObject) => ToastObject = (toast: ToastObject) =>
   toast;
-const defaultClear: (toast: ToastObject) => void = (toast: ToastObject) => {};
+const defaultClear: (toast: ToastObject) => void = () => {};
 
 export const ToastContext = createContext({
   pushToastRef: { current: defaultPush },
@@ -58,17 +58,17 @@ export const Toasts = () => {
   const { pushToastRef, clearToastRef } = useContext(ToastContext);
   const [toasts, setToasts] = useState<ToastObject[]>([]);
 
-  pushToastRef.current = ({ duration, persistent, ...props }) => {
+  pushToastRef.current = ({ duration, persistent, loading, ...props }) => {
     const id = parseInt(Date.now().toString(), 16);
     let timer: any;
 
-    if (!persistent) {
+    if (!persistent && !loading) {
       timer = setTimeout(() => {
         setToasts((v) => v.filter((t: ToastObject) => t.id !== id));
       }, (duration ?? 5) * 1000);
     }
 
-    const toast = { ...props, id, timer };
+    const toast = { ...props, id, timer, loading };
 
     setToasts((v) => {
       v.forEach((t) => clearTimeout(t.timer));
