@@ -132,7 +132,6 @@ const Trigger: React.FC<
   };
 
   const handleClick = () => {
-    console.log("Popover Trigger clicked");
     toggleOpen?.();
     onClick?.();
   };
