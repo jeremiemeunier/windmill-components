@@ -61,14 +61,17 @@ export const Heatmap: React.FC<HeatmapProps> = ({
     renderer.clear();
     renderer.render(data, config);
     renderer.drawHeatmap(cells);
+  }, [data, width, height, showGrid, showAxis, backgroundColor, padding]);
 
+  // Cleanup on unmount only
+  useEffect(() => {
     return () => {
       if (rendererRef.current) {
         rendererRef.current.destroy();
         rendererRef.current = null;
       }
     };
-  }, [data, width, height, showGrid, showAxis, backgroundColor, padding]);
+  }, []);
 
   return (
     <canvas

@@ -69,14 +69,17 @@ export const BarChart: React.FC<BarChartProps> = ({
     renderer.clear();
     renderer.render(data, config);
     renderer.drawBars(coloredBars);
+  }, [data, width, height, defaultColor, showGrid, showAxis, backgroundColor, padding]);
 
+  // Cleanup on unmount only
+  useEffect(() => {
     return () => {
       if (rendererRef.current) {
         rendererRef.current.destroy();
         rendererRef.current = null;
       }
     };
-  }, [data, width, height, defaultColor, showGrid, showAxis, backgroundColor, padding]);
+  }, []);
 
   return (
     <canvas

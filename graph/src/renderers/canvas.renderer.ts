@@ -3,6 +3,7 @@ import { IRenderer, GraphConfig, DataPoint, BarDataPoint, HeatmapCell } from '..
 export class CanvasRenderer implements IRenderer {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
+  private lastConfig: GraphConfig | null = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -22,8 +23,6 @@ export class CanvasRenderer implements IRenderer {
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
   }
-
-  private lastConfig: GraphConfig | null = null;
 
   render(data: any, config: GraphConfig): void {
     this.lastConfig = config;

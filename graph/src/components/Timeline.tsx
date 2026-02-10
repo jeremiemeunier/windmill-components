@@ -68,14 +68,17 @@ export const Timeline: React.FC<TimelineProps> = ({
     renderer.clear();
     renderer.render(data, config);
     renderer.drawLine(projectedPoints, color, lineWidth);
+  }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding, maxPoints]);
 
+  // Cleanup on unmount only
+  useEffect(() => {
     return () => {
       if (rendererRef.current) {
         rendererRef.current.destroy();
         rendererRef.current = null;
       }
     };
-  }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding, maxPoints]);
+  }, []);
 
   return (
     <canvas

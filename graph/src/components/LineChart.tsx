@@ -66,14 +66,17 @@ export const LineChart: React.FC<LineChartProps> = ({
     renderer.clear();
     renderer.render(data, config);
     renderer.drawLine(projectedPoints, color, lineWidth);
+  }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding]);
 
+  // Cleanup on unmount only
+  useEffect(() => {
     return () => {
       if (rendererRef.current) {
         rendererRef.current.destroy();
         rendererRef.current = null;
       }
     };
-  }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding]);
+  }, []);
 
   return (
     <canvas
