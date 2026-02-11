@@ -456,3 +456,198 @@ function TremorDashboard() {
   );
 }
 ```
+
+## Tremor Data Format
+
+### Using Tremor-style data with index and categories
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+function TremorExample() {
+  // Tremor data format - flexible object structure
+  const chartData = [
+    { month: 'Jan', sales: 2890, revenue: 3200, costs: 2100 },
+    { month: 'Feb', sales: 2756, revenue: 3100, costs: 2200 },
+    { month: 'Mar', sales: 3322, revenue: 3800, costs: 2400 },
+    { month: 'Apr', sales: 3470, revenue: 4000, costs: 2600 },
+    { month: 'May', sales: 3475, revenue: 4100, costs: 2700 },
+    { month: 'Jun', sales: 3129, revenue: 3600, costs: 2300 },
+  ];
+
+  return (
+    <div>
+      <h3>Sales & Revenue Trend</h3>
+      <AreaChart
+        tremorData={chartData}
+        index="month"
+        categories={['sales', 'revenue']}
+        colors={['#3b82f6', '#10b981']}
+        width={800}
+        height={400}
+        showGrid={true}
+        showAxis={true}
+      />
+    </div>
+  );
+}
+```
+
+### Multiple Series with Tremor Format
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+function MultiSeriesExample() {
+  const data = [
+    { date: '2024-01', desktop: 186, mobile: 80, tablet: 45 },
+    { date: '2024-02', desktop: 305, mobile: 200, tablet: 98 },
+    { date: '2024-03', desktop: 237, mobile: 120, tablet: 86 },
+    { date: '2024-04', desktop: 273, mobile: 190, tablet: 105 },
+    { date: '2024-05', desktop: 209, mobile: 130, tablet: 92 },
+  ];
+
+  return (
+    <AreaChart
+      tremorData={data}
+      index="date"
+      categories={['desktop', 'mobile', 'tablet']}
+      colors={['#3b82f6', '#10b981', '#f59e0b']}
+      width={900}
+      height={500}
+      fillOpacity={0.25}
+    />
+  );
+}
+```
+
+### Gradient Area Chart
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+function GradientExample() {
+  const data = [
+    { x: 0, y: 20 },
+    { x: 1, y: 45 },
+    { x: 2, y: 28 },
+    { x: 3, y: 80 },
+    { x: 4, y: 65 },
+    { x: 5, y: 95 },
+  ];
+
+  return (
+    <div>
+      <h3>Performance with Gradient</h3>
+      <AreaChart
+        data={data}
+        width={800}
+        height={400}
+        showGradient={true}
+        gradientFrom="#3b82f6"
+        gradientTo="#8b5cf6"
+        fillOpacity={0.5}
+        lineWidth={3}
+      />
+    </div>
+  );
+}
+```
+
+### Complete Dashboard with Tremor Data
+
+```tsx
+import { AreaChart, BarChart, DonutChart } from '@jeremiemeunier/graph';
+
+function TremorDashboard() {
+  const timeSeriesData = [
+    { month: 'Jan', value: 2890 },
+    { month: 'Feb', value: 2756 },
+    { month: 'Mar', value: 3322 },
+    { month: 'Apr', value: 3470 },
+    { month: 'May', value: 3475 },
+  ];
+
+  const categoryData = [
+    { name: 'Direct', value: 4890 },
+    { name: 'Referral', value: 2103 },
+    { name: 'Social', value: 2050 },
+    { name: 'Organic', value: 1300 },
+  ];
+
+  const distributionData = [
+    { category: 'North America', value: 40 },
+    { category: 'Europe', value: 30 },
+    { category: 'Asia', value: 20 },
+    { category: 'Others', value: 10 },
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', padding: '20px' }}>
+      <div>
+        <h3>Revenue Trend (Tremor Format)</h3>
+        <AreaChart
+          tremorData={timeSeriesData}
+          index="month"
+          categories={['value']}
+          colors={['#3b82f6']}
+          width={600}
+          height={300}
+          showGradient={true}
+          gradientFrom="#3b82f6"
+          gradientTo="#60a5fa"
+          fillOpacity={0.3}
+        />
+      </div>
+      
+      <div>
+        <h3>Traffic Sources</h3>
+        <DonutChart
+          data={distributionData}
+          width={300}
+          height={300}
+          showLegend={true}
+        />
+      </div>
+      
+      <div style={{ gridColumn: '1 / -1' }}>
+        <h3>Channel Performance</h3>
+        <BarChart
+          data={categoryData}
+          width={800}
+          height={300}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+## Key Features of Tremor Data Format
+
+**Flexible Data Structure:**
+- Use any property names for your data
+- `index`: Specify which property to use as X-axis
+- `categories`: Array of property names to visualize as series
+
+**Benefits:**
+- Natural data format (no transformation needed)
+- Multiple series from single dataset
+- Type-safe with TypeScript
+- Gradient support for visual appeal
+- Compatible with specs.md architecture
+
+**Conversion:**
+The library automatically converts Tremor format to internal format using `convertTremorData` utility, which you can also use directly:
+
+```tsx
+import { convertTremorData } from '@jeremiemeunier/graph';
+
+const tremorData = [
+  { month: 'Jan', sales: 100, costs: 80 },
+  { month: 'Feb', sales: 150, costs: 90 },
+];
+
+const converted = convertTremorData(tremorData, 'month', ['sales', 'costs']);
+// Returns: [[{x: 0, y: 100, label: 'Jan'}, ...], [{x: 0, y: 80, label: 'Jan'}, ...]]
+```

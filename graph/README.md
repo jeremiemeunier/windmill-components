@@ -34,7 +34,7 @@ Cette bibliothèque n'est pas une simple collection de graphiques - c'est un **m
 
 3. Importez les composants dans votre application :
    ```tsx
-   import { LineChart, BarChart, Timeline, Heatmap } from "@jeremiemeunier/graph";
+   import { LineChart, AreaChart, BarChart, Timeline, Heatmap } from "@jeremiemeunier/graph";
    ```
 
 ## Fonctionnalités
@@ -62,6 +62,12 @@ Cette bibliothèque n'est pas une simple collection de graphiques - c'est un **m
 
 **Tremor-Inspired:**
 Tous les graphiques suivent les modèles et logiques de Tremor tout en respectant strictement `specs.md`.
+
+**Tremor Data Format Support:**
+- ✅ `index`: string - La clé à utiliser pour l'axe X
+- ✅ `categories`: string[] - Les clés à extraire comme séries de données
+- ✅ `data`: flexible - Format d'objet flexible avec n'importe quelles clés
+- ✅ Gradients - Support des dégradés de couleur personnalisables
 
 ### 🧱 Architecture
 
@@ -99,6 +105,63 @@ function App() {
       lineWidth={2}
       showGrid={true}
       showAxis={true}
+    />
+  );
+}
+```
+
+### AreaChart with Tremor Data Format
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+// Tremor-style data format
+const chartData = [
+  { date: 'Jan', sales: 2890, costs: 2400 },
+  { date: 'Feb', sales: 2756, costs: 2200 },
+  { date: 'Mar', sales: 3322, costs: 2600 },
+  { date: 'Apr', sales: 3470, costs: 2800 },
+  { date: 'May', sales: 3475, costs: 2900 },
+];
+
+function App() {
+  return (
+    <AreaChart
+      tremorData={chartData}
+      index="date"
+      categories={['sales', 'costs']}
+      colors={['#3b82f6', '#10b981']}
+      width={800}
+      height={400}
+      showGrid={true}
+      showAxis={true}
+    />
+  );
+}
+```
+
+### AreaChart with Gradient
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+const data = [
+  { x: 0, y: 10 },
+  { x: 1, y: 20 },
+  { x: 2, y: 15 },
+  { x: 3, y: 30 },
+];
+
+function App() {
+  return (
+    <AreaChart
+      data={data}
+      width={800}
+      height={400}
+      showGradient={true}
+      gradientFrom="#3b82f6"
+      gradientTo="#8b5cf6"
+      fillOpacity={0.4}
     />
   );
 }

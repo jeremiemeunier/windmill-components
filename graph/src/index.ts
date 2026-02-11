@@ -1,6 +1,9 @@
 // Types
 export * from './types';
 
+// Utils
+export { convertTremorData, interpolateGradient, createCanvasGradient } from './utils/tremor';
+
 // Core
 export { ScaleManager, createScaleManager } from './core/scale';
 export { Projection, createProjection } from './core/projection';

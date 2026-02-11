@@ -1,32 +1,54 @@
 import React, { useEffect, useRef } from 'react';
-import { DataPoint, GraphConfig } from '../types';
+import { DataPoint, GraphConfig, TremorChartData } from '../types';
 import { createAreaModel } from '../models/area.model';
 import { createCanvasRenderer } from '../renderers/canvas.renderer';
+import { convertTremorData, createCanvasGradient } from '../utils/tremor';
 
 export interface AreaChartProps {
-  data: DataPoint[];
+  // Standard data format
+  data?: DataPoint[];
+  
+  // Tremor-style data format
+  tremorData?: TremorChartData[];
+  index?: string;
+  categories?: string[];
+  
+  // Styling
   width?: number;
   height?: number;
   color?: string;
+  colors?: string[];
   lineWidth?: number;
   showGrid?: boolean;
   showAxis?: boolean;
   backgroundColor?: string;
   padding?: { top: number; right: number; bottom: number; left: number };
   fillOpacity?: number;
+  
+  // Gradient support
+  showGradient?: boolean;
+  gradientFrom?: string;
+  gradientTo?: string;
 }
 
 export const AreaChart: React.FC<AreaChartProps> = ({
   data,
+  tremorData,
+  index,
+  categories,
   width = 800,
   height = 600,
   color = '#3b82f6',
+  colors,
   lineWidth = 2,
   showGrid = true,
   showAxis = true,
   backgroundColor = '#ffffff',
   padding = { top: 40, right: 40, bottom: 60, left: 60 },
   fillOpacity = 0.3,
+  showGradient = false,
+  gradientFrom,
+  gradientTo,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
@@ -50,10 +72,21 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       showAxis,
       backgroundColor,
       lineWidth,
+      colors,
     };
 
+    // Convert Tremor data if provided
+    let chartData: DataPoint[] = data || [];
+    let seriesData: DataPoint[][] = [];
+    
+    if (tremorData && index && categories) {
+      seriesData = convertTremorData(tremorData, index, categories);
+      // Use first series for single-line chart
+      chartData = seriesData[0] || [];
+    }
+
     // Create model and compute
-    const model = createAreaModel(data, config);
+    const model = createAreaModel(chartData, config);
     if (!model.validate()) {
       console.warn('Invalid area chart data');
       return;
@@ -64,10 +97,43 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     // Render
     const renderer = rendererRef.current;
     renderer.clear(config);
-    renderer.render(data, config);
-    renderer.drawArea(areaPath, color, fillOpacity);
-    renderer.drawLine(projectedPoints, color, lineWidth);
-  }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding, fillOpacity]);
+    renderer.render(chartData, config);
+    
+    // Draw with gradient if enabled
+    if (showGradient && gradientFrom && gradientTo) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const gradient = createCanvasGradient(
+          ctx,
+          0,
+          padding.top,
+          0,
+          height - padding.bottom,
+          gradientFrom,
+          gradientTo
+        );
+        renderer.drawArea(areaPath, gradient, fillOpacity);
+        renderer.drawLine(projectedPoints, gradientTo, lineWidth);
+      }
+    } else {
+      const lineColor = colors?.[0] || color;
+      renderer.drawArea(areaPath, lineColor, fillOpacity);
+      renderer.drawLine(projectedPoints, lineColor, lineWidth);
+    }
+    
+    // Draw additional series if using Tremor data with multiple categories
+    if (seriesData.length > 1) {
+      seriesData.slice(1).forEach((series, idx) => {
+        const seriesModel = createAreaModel(series, config);
+        if (seriesModel.validate()) {
+          const { projectedPoints: seriesPoints, areaPath: seriesPath } = seriesModel.compute();
+          const seriesColor = colors?.[idx + 1] || color;
+          renderer.drawArea(seriesPath, seriesColor, fillOpacity * 0.7);
+          renderer.drawLine(seriesPoints, seriesColor, lineWidth);
+        }
+      });
+    }
+  }, [data, tremorData, index, categories, width, height, color, colors, lineWidth, showGrid, showAxis, backgroundColor, padding, fillOpacity, showGradient, gradientFrom, gradientTo]);
 
   // Cleanup on unmount only
   useEffect(() => {

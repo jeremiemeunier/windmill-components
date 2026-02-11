@@ -22,6 +22,21 @@ export interface HeatmapCell {
   value: number;
 }
 
+// Tremor-style data format
+export interface TremorChartData {
+  [key: string]: string | number;
+}
+
+export interface TremorChartProps {
+  data: TremorChartData[];
+  index: string;
+  categories: string[];
+  colors?: string[];
+  showGradient?: boolean;
+  gradientFrom?: string;
+  gradientTo?: string;
+}
+
 export interface Viewport {
   width: number;
   height: number;

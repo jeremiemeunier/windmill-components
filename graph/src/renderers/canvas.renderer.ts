@@ -44,7 +44,7 @@ export class CanvasRenderer implements IRenderer {
     }
   }
 
-  drawLine(points: DataPoint[], color: string = '#3b82f6', lineWidth: number = 2): void {
+  drawLine(points: DataPoint[], color: string | CanvasGradient = '#3b82f6', lineWidth: number = 2): void {
     if (points.length < 2) return;
 
     this.ctx.strokeStyle = color;
@@ -85,7 +85,7 @@ export class CanvasRenderer implements IRenderer {
     });
   }
 
-  drawArea(areaPath: string, color: string = '#3b82f6', opacity: number = 0.3): void {
+  drawArea(areaPath: string, color: string | CanvasGradient = '#3b82f6', opacity: number = 0.3): void {
     const path = new Path2D(areaPath);
     this.ctx.fillStyle = color;
     this.ctx.globalAlpha = opacity;
