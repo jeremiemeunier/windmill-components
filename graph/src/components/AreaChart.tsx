@@ -4,6 +4,9 @@ import { createAreaModel } from '../models/area.model';
 import { createCanvasRenderer } from '../renderers/canvas.renderer';
 import { convertTremorData, createCanvasGradient } from '../utils/tremor';
 
+// Constants
+const SECONDARY_SERIES_OPACITY_FACTOR = 0.7;
+
 export interface AreaChartProps {
   // Standard data format
   data?: DataPoint[];
@@ -122,7 +125,6 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     }
     
     // Draw additional series if using Tremor data with multiple categories
-    const SECONDARY_SERIES_OPACITY_FACTOR = 0.7;
     if (seriesData.length > 1) {
       seriesData.slice(1).forEach((series, idx) => {
         const seriesModel = createAreaModel(series, config);
