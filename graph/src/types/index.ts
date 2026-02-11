@@ -54,7 +54,7 @@ export interface GraphConfig {
 export type RendererType = 'canvas' | 'svg' | 'webgl';
 
 export interface IRenderer {
-  clear(): void;
+  clear(config?: GraphConfig): void;
   render(data: any, config: GraphConfig): void;
   destroy(): void;
 }

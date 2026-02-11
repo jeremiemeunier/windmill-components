@@ -50,6 +50,7 @@ export class GraphEngine {
 
   startRenderLoop(dataProvider: () => any) {
     const loop = () => {
+      this.markDirty();
       this.render(dataProvider());
       this.animationFrameId = requestAnimationFrame(loop);
     };
@@ -83,14 +84,32 @@ export class ComputeEngine {
     mean: number;
     median: number;
   } {
+    if (!data || data.length === 0) {
+      return {
+        min: 0,
+        max: 0,
+        mean: 0,
+        median: 0,
+      };
+    }
+
     const sorted = [...data].sort((a, b) => a - b);
     const sum = data.reduce((acc, val) => acc + val, 0);
+    const len = sorted.length;
+    const middle = Math.floor(len / 2);
+
+    let median: number;
+    if (len % 2 === 0) {
+      median = (sorted[middle - 1] + sorted[middle]) / 2;
+    } else {
+      median = sorted[middle];
+    }
 
     return {
-      min: sorted[0] ?? 0,
-      max: sorted[sorted.length - 1] ?? 0,
-      mean: sum / data.length,
-      median: sorted[Math.floor(sorted.length / 2)] ?? 0,
+      min: sorted[0],
+      max: sorted[len - 1],
+      mean: sum / len,
+      median,
     };
   }
 

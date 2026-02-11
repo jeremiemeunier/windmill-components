@@ -14,7 +14,6 @@ export interface TimelineProps {
   backgroundColor?: string;
   padding?: { top: number; right: number; bottom: number; left: number };
   maxPoints?: number;
-  realtime?: boolean;
 }
 
 export const Timeline: React.FC<TimelineProps> = ({
@@ -28,7 +27,6 @@ export const Timeline: React.FC<TimelineProps> = ({
   backgroundColor = '#ffffff',
   padding = { top: 40, right: 40, bottom: 60, left: 60 },
   maxPoints = 1000,
-  realtime = false,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
@@ -65,7 +63,7 @@ export const Timeline: React.FC<TimelineProps> = ({
 
     // Render
     const renderer = rendererRef.current;
-    renderer.clear();
+    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawLine(projectedPoints, color, lineWidth);
   }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding, maxPoints]);

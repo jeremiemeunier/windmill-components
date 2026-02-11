@@ -1,4 +1,4 @@
-import { IRenderer, GraphConfig, DataPoint, BarDataPoint, HeatmapCell } from '../types';
+import { IRenderer, GraphConfig, DataPoint } from '../types';
 
 export class CanvasRenderer implements IRenderer {
   private canvas: HTMLCanvasElement;
@@ -14,13 +14,19 @@ export class CanvasRenderer implements IRenderer {
     this.ctx = context;
   }
 
-  clear(): void {
+  clear(config?: GraphConfig): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
-    // Fill background if configured
-    if (this.lastConfig?.backgroundColor) {
-      this.ctx.fillStyle = this.lastConfig.backgroundColor;
+    // Prefer the explicitly provided config, fall back to the last one used
+    const bgColor = config?.backgroundColor ?? this.lastConfig?.backgroundColor;
+
+    if (bgColor) {
+      this.ctx.fillStyle = bgColor;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    if (config) {
+      this.lastConfig = config;
     }
   }
 

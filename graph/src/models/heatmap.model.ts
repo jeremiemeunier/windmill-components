@@ -14,11 +14,15 @@ export class HeatmapModel implements IGraphModel<HeatmapCell> {
   compute(): {
     cells: Array<{ x: number; y: number; width: number; height: number; color: string }>;
   } {
-    const scaleManager = new ScaleManager();
-
     // Find grid dimensions
     const xValues = [...new Set(this.data.map((d) => d.x))].sort((a, b) => a - b);
     const yValues = [...new Set(this.data.map((d) => d.y))].sort((a, b) => a - b);
+
+    // Build index maps for O(1) lookups
+    const xIndexMap = new Map<number, number>();
+    const yIndexMap = new Map<number, number>();
+    xValues.forEach((val, idx) => xIndexMap.set(val, idx));
+    yValues.forEach((val, idx) => yIndexMap.set(val, idx));
 
     // Calculate cell dimensions
     const availableWidth =
@@ -40,8 +44,8 @@ export class HeatmapModel implements IGraphModel<HeatmapCell> {
 
     // Map data to cells with colors
     const cells = this.data.map((cell) => {
-      const xIndex = xValues.indexOf(cell.x);
-      const yIndex = yValues.indexOf(cell.y);
+      const xIndex = xIndexMap.get(cell.x) ?? 0;
+      const yIndex = yIndexMap.get(cell.y) ?? 0;
 
       const x = this.config.viewport.padding.left + xIndex * cellWidth;
       const y = this.config.viewport.padding.top + yIndex * cellHeight;

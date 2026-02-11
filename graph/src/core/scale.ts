@@ -1,6 +1,6 @@
-import { scaleLinear, scaleTime, scaleBand, scaleSequential, ScaleLinear, ScaleTime, ScaleBand } from 'd3-scale';
+import { scaleLinear, scaleTime, scaleBand, ScaleLinear, ScaleTime, ScaleBand } from 'd3-scale';
 import { extent } from 'd3-array';
-import { Domain, Viewport } from '../types';
+import { Viewport } from '../types';
 
 export class ScaleManager {
   private xScale: ScaleLinear<number, number> | ScaleTime<number, number> | ScaleBand<string> | null = null;

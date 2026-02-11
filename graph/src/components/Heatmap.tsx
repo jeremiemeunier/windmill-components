@@ -11,7 +11,6 @@ export interface HeatmapProps {
   showAxis?: boolean;
   backgroundColor?: string;
   padding?: { top: number; right: number; bottom: number; left: number };
-  onCellClick?: (cell: HeatmapCell, index: number) => void;
 }
 
 export const Heatmap: React.FC<HeatmapProps> = ({
@@ -22,7 +21,6 @@ export const Heatmap: React.FC<HeatmapProps> = ({
   showAxis = true,
   backgroundColor = '#ffffff',
   padding = { top: 40, right: 40, bottom: 60, left: 60 },
-  onCellClick,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
@@ -58,7 +56,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({
 
     // Render
     const renderer = rendererRef.current;
-    renderer.clear();
+    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawHeatmap(cells);
   }, [data, width, height, showGrid, showAxis, backgroundColor, padding]);

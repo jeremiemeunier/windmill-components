@@ -3,6 +3,7 @@ import { IRenderer, GraphConfig, DataPoint } from '../types';
 export class SVGRenderer implements IRenderer {
   private svg: SVGSVGElement;
   private mainGroup: SVGGElement;
+  private lastConfig: GraphConfig | null = null;
 
   constructor(svg: SVGSVGElement) {
     this.svg = svg;
@@ -10,13 +11,18 @@ export class SVGRenderer implements IRenderer {
     this.svg.appendChild(this.mainGroup);
   }
 
-  clear(): void {
+  clear(config?: GraphConfig): void {
     while (this.mainGroup.firstChild) {
       this.mainGroup.removeChild(this.mainGroup.firstChild);
+    }
+    
+    if (config) {
+      this.lastConfig = config;
     }
   }
 
   render(data: any, config: GraphConfig): void {
+    this.lastConfig = config;
     // Draw background
     if (config.backgroundColor) {
       const rect = this.createSVGElement('rect', {

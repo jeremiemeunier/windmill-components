@@ -12,7 +12,6 @@ export interface BarChartProps {
   showAxis?: boolean;
   backgroundColor?: string;
   padding?: { top: number; right: number; bottom: number; left: number };
-  onBarClick?: (bar: BarDataPoint, index: number) => void;
 }
 
 export const BarChart: React.FC<BarChartProps> = ({
@@ -24,7 +23,6 @@ export const BarChart: React.FC<BarChartProps> = ({
   showAxis = true,
   backgroundColor = '#ffffff',
   padding = { top: 40, right: 40, bottom: 60, left: 60 },
-  onBarClick,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
@@ -66,7 +64,7 @@ export const BarChart: React.FC<BarChartProps> = ({
 
     // Render
     const renderer = rendererRef.current;
-    renderer.clear();
+    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawBars(coloredBars);
   }, [data, width, height, defaultColor, showGrid, showAxis, backgroundColor, padding]);

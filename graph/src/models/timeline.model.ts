@@ -11,12 +11,16 @@ export class TimelineModel implements IGraphModel<TimeSeriesDataPoint> {
     this.data = data;
     this.config = config;
     this.maxPoints = maxPoints;
+    this.trimToWindow();
   }
 
   compute(): {
     projectedPoints: Array<{ x: number; y: number; label?: string }>;
     projection: Projection;
   } {
+    // Trim again at compute time in case data was updated
+    this.trimToWindow();
+    
     const scaleManager = new ScaleManager();
 
     // Sort by timestamp
