@@ -13,11 +13,16 @@ export function convertTremorData(
   categories: string[]
 ): DataPoint[][] {
   return categories.map((category) => {
-    return data.map((row, idx) => ({
-      x: typeof row[index] === 'number' ? row[index] : idx,
-      y: typeof row[category] === 'number' ? row[category] : 0,
-      label: String(row[index] || idx),
-    }));
+    return data.map((row, idx) => {
+      const indexValue = row[index];
+      const isNumericIndex = typeof indexValue === 'number';
+      
+      return {
+        x: isNumericIndex ? indexValue : idx,
+        y: typeof row[category] === 'number' ? row[category] : 0,
+        label: isNumericIndex ? String(indexValue) : String(indexValue || idx),
+      };
+    });
   });
 }
 

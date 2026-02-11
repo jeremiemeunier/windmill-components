@@ -122,13 +122,15 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     }
     
     // Draw additional series if using Tremor data with multiple categories
+    const SECONDARY_SERIES_OPACITY_FACTOR = 0.7;
     if (seriesData.length > 1) {
       seriesData.slice(1).forEach((series, idx) => {
         const seriesModel = createAreaModel(series, config);
         if (seriesModel.validate()) {
           const { projectedPoints: seriesPoints, areaPath: seriesPath } = seriesModel.compute();
-          const seriesColor = colors?.[idx + 1] || color;
-          renderer.drawArea(seriesPath, seriesColor, fillOpacity * 0.7);
+          // idx starts at 0 for slice(1), so add 1 to get the correct color index
+          const seriesColor = colors?.[idx + 1] || colors?.[0] || color;
+          renderer.drawArea(seriesPath, seriesColor, fillOpacity * SECONDARY_SERIES_OPACITY_FACTOR);
           renderer.drawLine(seriesPoints, seriesColor, lineWidth);
         }
       });
