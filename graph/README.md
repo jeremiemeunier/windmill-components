@@ -148,7 +148,6 @@ function App() {
       height={400}
       color="#10b981"
       maxPoints={1000}
-      realtime={true}
     />
   );
 }

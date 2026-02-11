@@ -92,7 +92,6 @@ function MyTimeline() {
       height={400}
       color="#10b981"
       maxPoints={100}
-      realtime={true}
       showGrid={true}
       showAxis={true}
     />
