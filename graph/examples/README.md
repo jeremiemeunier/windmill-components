@@ -307,3 +307,153 @@ function CulledChart({ data, viewport, projection }) {
   return <LineChart data={visibleData} />;
 }
 ```
+
+### AreaChart Example
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+function MyAreaChart() {
+  const data = [
+    { x: 0, y: 10 },
+    { x: 1, y: 20 },
+    { x: 2, y: 15 },
+    { x: 3, y: 30 },
+    { x: 4, y: 25 },
+    { x: 5, y: 40 },
+  ];
+
+  return (
+    <AreaChart
+      data={data}
+      width={800}
+      height={400}
+      color="#3b82f6"
+      fillOpacity={0.3}
+      showGrid={true}
+      showAxis={true}
+    />
+  );
+}
+```
+
+### DonutChart Example
+
+```tsx
+import { DonutChart } from '@jeremiemeunier/graph';
+
+function MyDonutChart() {
+  const data = [
+    { category: 'Sales', value: 45, color: '#3b82f6' },
+    { category: 'Marketing', value: 25, color: '#10b981' },
+    { category: 'Operations', value: 20, color: '#f59e0b' },
+    { category: 'R&D', value: 10, color: '#ef4444' },
+  ];
+
+  return (
+    <DonutChart
+      data={data}
+      width={400}
+      height={400}
+      showLegend={true}
+    />
+  );
+}
+```
+
+### ScatterChart Example
+
+```tsx
+import { ScatterChart } from '@jeremiemeunier/graph';
+
+function MyScatterChart() {
+  const data = Array.from({ length: 50 }, () => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+  }));
+
+  return (
+    <ScatterChart
+      data={data}
+      width={800}
+      height={400}
+      color="#8b5cf6"
+      pointRadius={5}
+      showGrid={true}
+      showAxis={true}
+    />
+  );
+}
+```
+
+## Tremor-Style Examples
+
+All charts follow Tremor models and logic while strictly respecting `specs.md` architecture:
+
+### Analytics Dashboard
+
+```tsx
+import {
+  AreaChart,
+  BarChart,
+  DonutChart,
+  LineChart,
+  ScatterChart,
+} from '@jeremiemeunier/graph';
+
+function TremorDashboard() {
+  const salesData = [
+    { x: 1, y: 2890 },
+    { x: 2, y: 2756 },
+    { x: 3, y: 3322 },
+    { x: 4, y: 3470 },
+    { x: 5, y: 3475 },
+  ];
+
+  const categoryData = [
+    { category: 'Direct', value: 4890 },
+    { category: 'Referral', value: 2103 },
+    { category: 'Social', value: 2050 },
+    { category: 'Organic', value: 1300 },
+  ];
+
+  const distributionData = [
+    { category: 'North America', value: 40 },
+    { category: 'Europe', value: 30 },
+    { category: 'Asia', value: 20 },
+    { category: 'Others', value: 10 },
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+      <div>
+        <h3>Revenue Trend</h3>
+        <AreaChart
+          data={salesData}
+          width={600}
+          height={300}
+          color="#3b82f6"
+          fillOpacity={0.2}
+        />
+      </div>
+      <div>
+        <h3>Traffic Sources</h3>
+        <DonutChart
+          data={distributionData}
+          width={300}
+          height={300}
+          showLegend={true}
+        />
+      </div>
+      <div>
+        <h3>Monthly Performance</h3>
+        <BarChart
+          data={categoryData}
+          width={600}
+          height={300}
+        />
+      </div>
+    </div>
+  );
+}
+```

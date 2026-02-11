@@ -85,6 +85,29 @@ export class CanvasRenderer implements IRenderer {
     });
   }
 
+  drawArea(areaPath: string, color: string = '#3b82f6', opacity: number = 0.3): void {
+    const path = new Path2D(areaPath);
+    this.ctx.fillStyle = color;
+    this.ctx.globalAlpha = opacity;
+    this.ctx.fill(path);
+    this.ctx.globalAlpha = 1.0;
+  }
+
+  drawDonut(segments: Array<{
+    startAngle: number;
+    endAngle: number;
+    color: string;
+  }>, centerX: number, centerY: number, outerRadius: number, innerRadius: number): void {
+    segments.forEach((segment) => {
+      this.ctx.fillStyle = segment.color;
+      this.ctx.beginPath();
+      this.ctx.arc(centerX, centerY, outerRadius, segment.startAngle, segment.endAngle);
+      this.ctx.arc(centerX, centerY, innerRadius, segment.endAngle, segment.startAngle, true);
+      this.ctx.closePath();
+      this.ctx.fill();
+    });
+  }
+
   private drawGrid(config: GraphConfig): void {
     const { viewport, gridColor = '#e5e7eb' } = config;
     const gridSpacing = 50;

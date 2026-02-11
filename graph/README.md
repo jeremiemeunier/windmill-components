@@ -51,10 +51,17 @@ Cette bibliothèque n'est pas une simple collection de graphiques - c'est un **m
 
 ### 📊 Types de Graphiques
 
+**Core Charts:**
 - **LineChart** - Graphique en ligne pour visualiser les tendances
+- **AreaChart** - Graphique en aires (ligne avec remplissage)
 - **BarChart** - Graphique à barres pour comparer les catégories
+- **ScatterChart** - Graphique de dispersion pour les corrélations
 - **Timeline** - Graphique temporel pour les séries chronologiques
 - **Heatmap** - Carte de chaleur pour les données matricielles
+- **DonutChart** - Graphique en anneau pour les proportions
+
+**Tremor-Inspired:**
+Tous les graphiques suivent les modèles et logiques de Tremor tout en respectant strictement `specs.md`.
 
 ### 🧱 Architecture
 
@@ -142,6 +149,84 @@ function App() {
       color="#10b981"
       maxPoints={1000}
       realtime={true}
+    />
+  );
+}
+```
+
+### AreaChart
+
+```tsx
+import { AreaChart } from '@jeremiemeunier/graph';
+
+const data = [
+  { x: 0, y: 10 },
+  { x: 1, y: 20 },
+  { x: 2, y: 15 },
+  { x: 3, y: 30 },
+];
+
+function App() {
+  return (
+    <AreaChart
+      data={data}
+      width={800}
+      height={400}
+      color="#3b82f6"
+      fillOpacity={0.3}
+      showGrid={true}
+      showAxis={true}
+    />
+  );
+}
+```
+
+### DonutChart
+
+```tsx
+import { DonutChart } from '@jeremiemeunier/graph';
+
+const data = [
+  { category: 'Product A', value: 40, color: '#3b82f6' },
+  { category: 'Product B', value: 30, color: '#10b981' },
+  { category: 'Product C', value: 20, color: '#f59e0b' },
+  { category: 'Product D', value: 10, color: '#ef4444' },
+];
+
+function App() {
+  return (
+    <DonutChart
+      data={data}
+      width={400}
+      height={400}
+      showLegend={true}
+    />
+  );
+}
+```
+
+### ScatterChart
+
+```tsx
+import { ScatterChart } from '@jeremiemeunier/graph';
+
+const data = [
+  { x: 10, y: 20 },
+  { x: 15, y: 25 },
+  { x: 20, y: 30 },
+  { x: 25, y: 22 },
+];
+
+function App() {
+  return (
+    <ScatterChart
+      data={data}
+      width={800}
+      height={400}
+      color="#8b5cf6"
+      pointRadius={5}
+      showGrid={true}
+      showAxis={true}
     />
   );
 }
