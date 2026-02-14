@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { DataPoint, GraphConfig, TremorChartData } from '../types';
 import { createAreaModel } from '../models/area.model';
-import { createCanvasRenderer } from '../renderers/canvas.renderer';
-import { convertTremorData, createCanvasGradient } from '../utils/tremor';
+import { createSVGRenderer } from '../renderers/svg.renderer';
+import { convertTremorData } from '../utils/tremor';
 
 // Constants
 const SECONDARY_SERIES_OPACITY_FACTOR = 0.7;
@@ -53,20 +53,16 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   gradientFrom,
   gradientTo,
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const rendererRef = useRef<ReturnType<typeof createSVGRenderer> | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Set canvas size
-    canvas.width = width;
-    canvas.height = height;
+    const svg = svgRef.current;
+    if (!svg) return;
 
     // Create renderer if not exists
     if (!rendererRef.current) {
-      rendererRef.current = createCanvasRenderer(canvas);
+      rendererRef.current = createSVGRenderer(svg);
     }
 
     const config: GraphConfig = {
@@ -104,20 +100,10 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     
     // Draw with gradient if enabled
     if (showGradient && gradientFrom && gradientTo) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        const gradient = createCanvasGradient(
-          ctx,
-          0,
-          padding.top,
-          0,
-          height - padding.bottom,
-          gradientFrom,
-          gradientTo
-        );
-        renderer.drawArea(areaPath, gradient, fillOpacity);
-        renderer.drawLine(projectedPoints, gradientTo, lineWidth);
-      }
+      // Create SVG gradient
+      const gradientRef = renderer.createGradient(gradientFrom, gradientTo, 0, 0, 0, 1);
+      renderer.drawArea(areaPath, gradientRef, fillOpacity);
+      renderer.drawLine(projectedPoints, gradientTo, lineWidth);
     } else {
       const lineColor = colors?.[0] || color;
       renderer.drawArea(areaPath, lineColor, fillOpacity);
@@ -150,8 +136,10 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <svg
+      ref={svgRef}
+      width={width}
+      height={height}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

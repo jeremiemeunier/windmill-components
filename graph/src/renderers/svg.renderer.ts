@@ -4,9 +4,13 @@ export class SVGRenderer implements IRenderer {
   private svg: SVGSVGElement;
   private mainGroup: SVGGElement;
   private lastConfig: GraphConfig | null = null;
+  private defs: SVGDefsElement;
+  private gradientCounter: number = 0;
 
   constructor(svg: SVGSVGElement) {
     this.svg = svg;
+    this.defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    this.svg.appendChild(this.defs);
     this.mainGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     this.svg.appendChild(this.mainGroup);
   }
@@ -15,6 +19,12 @@ export class SVGRenderer implements IRenderer {
     while (this.mainGroup.firstChild) {
       this.mainGroup.removeChild(this.mainGroup.firstChild);
     }
+    
+    // Clear gradients
+    while (this.defs.firstChild) {
+      this.defs.removeChild(this.defs.firstChild);
+    }
+    this.gradientCounter = 0;
     
     if (config) {
       this.lastConfig = config;
@@ -121,6 +131,97 @@ export class SVGRenderer implements IRenderer {
 
     this.mainGroup.appendChild(group);
     return group as SVGGElement;
+  }
+
+  drawArea(areaPath: string, color: string = '#3b82f6', opacity: number = 0.3): SVGPathElement {
+    const path = this.createSVGElement('path', {
+      d: areaPath,
+      fill: color,
+      'fill-opacity': opacity.toString(),
+      stroke: 'none',
+    }) as SVGPathElement;
+
+    this.mainGroup.appendChild(path);
+    return path;
+  }
+
+  drawDonut(segments: Array<{
+    startAngle: number;
+    endAngle: number;
+    color: string;
+  }>, centerX: number, centerY: number, outerRadius: number, innerRadius: number): SVGGElement {
+    const group = this.createSVGElement('g', { class: 'donut' });
+
+    segments.forEach((segment) => {
+      const path = this.createDonutSegmentPath(
+        centerX,
+        centerY,
+        innerRadius,
+        outerRadius,
+        segment.startAngle,
+        segment.endAngle
+      );
+
+      const pathElement = this.createSVGElement('path', {
+        d: path,
+        fill: segment.color,
+      });
+      group.appendChild(pathElement);
+    });
+
+    this.mainGroup.appendChild(group);
+    return group as SVGGElement;
+  }
+
+  private createDonutSegmentPath(
+    centerX: number,
+    centerY: number,
+    innerRadius: number,
+    outerRadius: number,
+    startAngle: number,
+    endAngle: number
+  ): string {
+    const x1 = centerX + outerRadius * Math.cos(startAngle);
+    const y1 = centerY + outerRadius * Math.sin(startAngle);
+    const x2 = centerX + outerRadius * Math.cos(endAngle);
+    const y2 = centerY + outerRadius * Math.sin(endAngle);
+    const x3 = centerX + innerRadius * Math.cos(endAngle);
+    const y3 = centerY + innerRadius * Math.sin(endAngle);
+    const x4 = centerX + innerRadius * Math.cos(startAngle);
+    const y4 = centerY + innerRadius * Math.sin(startAngle);
+
+    const largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0;
+
+    return [
+      `M ${x1} ${y1}`,
+      `A ${outerRadius} ${outerRadius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+      `L ${x3} ${y3}`,
+      `A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x4} ${y4}`,
+      'Z',
+    ].join(' ');
+  }
+
+  createGradient(fromColor: string, toColor: string, x1: number = 0, y1: number = 0, x2: number = 0, y2: number = 1): string {
+    const gradientId = `gradient-${this.gradientCounter++}`;
+    const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+    gradient.setAttribute('id', gradientId);
+    gradient.setAttribute('x1', x1.toString());
+    gradient.setAttribute('y1', y1.toString());
+    gradient.setAttribute('x2', x2.toString());
+    gradient.setAttribute('y2', y2.toString());
+
+    const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop1.setAttribute('offset', '0%');
+    stop1.setAttribute('stop-color', fromColor);
+    gradient.appendChild(stop1);
+
+    const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop2.setAttribute('offset', '100%');
+    stop2.setAttribute('stop-color', toColor);
+    gradient.appendChild(stop2);
+
+    this.defs.appendChild(gradient);
+    return `url(#${gradientId})`;
   }
 
   private drawGrid(config: GraphConfig): void {

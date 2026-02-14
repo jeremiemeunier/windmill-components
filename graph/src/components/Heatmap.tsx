@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { HeatmapCell, GraphConfig } from '../types';
 import { createHeatmapModel } from '../models/heatmap.model';
-import { createCanvasRenderer } from '../renderers/canvas.renderer';
+import { createSVGRenderer } from '../renderers/svg.renderer';
 
 export interface HeatmapProps {
   data: HeatmapCell[];
@@ -22,20 +22,16 @@ export const Heatmap: React.FC<HeatmapProps> = ({
   backgroundColor = '#ffffff',
   padding = { top: 40, right: 40, bottom: 60, left: 60 },
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const rendererRef = useRef<ReturnType<typeof createSVGRenderer> | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Set canvas size
-    canvas.width = width;
-    canvas.height = height;
+    const svg = svgRef.current;
+    if (!svg) return;
 
     // Create renderer if not exists
     if (!rendererRef.current) {
-      rendererRef.current = createCanvasRenderer(canvas);
+      rendererRef.current = createSVGRenderer(svg);
     }
 
     const config: GraphConfig = {
@@ -72,8 +68,10 @@ export const Heatmap: React.FC<HeatmapProps> = ({
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <svg
+      ref={svgRef}
+      width={width}
+      height={height}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

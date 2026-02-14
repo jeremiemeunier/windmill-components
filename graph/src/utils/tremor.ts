@@ -78,3 +78,19 @@ export function createCanvasGradient(
   gradient.addColorStop(1, toColor);
   return gradient;
 }
+
+/**
+ * Create SVG gradient reference (returns gradient ID reference)
+ * To be used with SVGRenderer.createGradient()
+ */
+export function createSVGGradientRef(
+  renderer: any, // SVGRenderer
+  fromColor: string,
+  toColor: string,
+  x1: number = 0,
+  y1: number = 0,
+  x2: number = 0,
+  y2: number = 1
+): string {
+  return renderer.createGradient(fromColor, toColor, x1, y1, x2, y2);
+}

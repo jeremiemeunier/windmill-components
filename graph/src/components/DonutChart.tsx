@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { GraphConfig } from '../types';
 import { DonutDataPoint, createDonutModel } from '../models/donut.model';
-import { createCanvasRenderer } from '../renderers/canvas.renderer';
+import { createSVGRenderer } from '../renderers/svg.renderer';
 
 export interface DonutChartProps {
   data: DonutDataPoint[];
@@ -20,20 +20,16 @@ export const DonutChart: React.FC<DonutChartProps> = ({
   backgroundColor = '#ffffff',
   padding = { top: 20, right: 20, bottom: 20, left: 20 },
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef<ReturnType<typeof createCanvasRenderer> | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const rendererRef = useRef<ReturnType<typeof createSVGRenderer> | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Set canvas size
-    canvas.width = width;
-    canvas.height = height;
+    const svg = svgRef.current;
+    if (!svg) return;
 
     // Create renderer if not exists
     if (!rendererRef.current) {
-      rendererRef.current = createCanvasRenderer(canvas);
+      rendererRef.current = createSVGRenderer(svg);
     }
 
     const config: GraphConfig = {
@@ -64,19 +60,21 @@ export const DonutChart: React.FC<DonutChartProps> = ({
       let legendY = height - padding.bottom - (segments.length * 20);
 
       segments.forEach((segment, index) => {
-        // Draw color box
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.fillStyle = segment.color;
-          ctx.fillRect(legendX, legendY + index * 20, 12, 12);
-        }
+        // Draw color box using SVG rect
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', legendX.toString());
+        rect.setAttribute('y', (legendY + index * 20).toString());
+        rect.setAttribute('width', '12');
+        rect.setAttribute('height', '12');
+        rect.setAttribute('fill', segment.color);
+        svg.appendChild(rect);
 
         // Draw label
         renderer.drawText(
           `${segment.category} (${segment.percentage.toFixed(1)}%)`,
           legendX + 20,
           legendY + index * 20 + 10,
-          { color: '#374151', font: '12px sans-serif', baseline: 'middle' }
+          { color: '#374151', fontSize: 12, anchor: 'start' }
         );
       });
     }
@@ -93,8 +91,10 @@ export const DonutChart: React.FC<DonutChartProps> = ({
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <svg
+      ref={svgRef}
+      width={width}
+      height={height}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );
