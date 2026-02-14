@@ -5,7 +5,7 @@
 Bibliothèque de graphiques complète et adaptative inspirée de l'architecture interne de YouTube Studio. Un moteur de rendu graphique haute performance construit avec :
 
 - **D3 pour les calculs uniquement** (scales, projections, layouts)
-- **Rendu personnalisé** (Canvas, SVG)
+- **Rendu SVG** pour une qualité et scalabilité optimales
 - **Architecture modulaire** et industrielle
 - **Intégration React** optimisée
 - **Support temps réel** pour le streaming de données
@@ -17,7 +17,7 @@ Bibliothèque de graphiques complète et adaptative inspirée de l'architecture 
 Cette bibliothèque n'est pas une simple collection de graphiques - c'est un **moteur de rendu graphique** avec une séparation claire des responsabilités :
 
 - **Compute Layer** : D3 pour les mathématiques et les transformations
-- **Render Engine** : Canvas/SVG pour le rendu haute performance
+- **Render Engine** : SVG pour un rendu vectoriel haute qualité
 - **React Components** : Adaptateurs légers pour l'intégration
 
 ## Installation
@@ -76,10 +76,19 @@ Data Layer
     ↓
 Compute Layer (D3: scales, math, layout)
     ↓
-Render Engine (Canvas/SVG)
+SVG Render Engine
     ↓
 React Components
 ```
+
+### ✨ Avantages du Rendu SVG
+
+- **Scalabilité** : Graphiques vectoriels qui s'adaptent parfaitement à toutes les résolutions
+- **Accessibilité** : Meilleur support pour les lecteurs d'écran et sélection de texte
+- **Interactivité** : Facilite l'ajout d'effets de survol, gestionnaires de clic et animations
+- **Intégration DOM** : S'intègre parfaitement avec HTML/CSS
+- **Styling** : Peut être stylisé avec CSS
+- **Performance** : Pas besoin de redessiner entièrement lors de changements partiels
 
 ## Utilisation Rapide
 
