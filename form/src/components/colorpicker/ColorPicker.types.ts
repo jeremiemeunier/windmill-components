@@ -1,13 +1,13 @@
-export interface PasswordProps {
+export interface ColorPickerProps {
   name: string;
-  label: string;
+  label?: string;
   size?: number;
   readOnly?: boolean;
   tagline?: React.ReactNode;
-  isNew?: boolean;
-  placeHolder?: string;
   disabled?: boolean;
+  required?: boolean;
   className?: string;
-  controls?: {};
+  defaultValue?: string;
   error?: string;
+  onChange?: (value: string) => void;
 }

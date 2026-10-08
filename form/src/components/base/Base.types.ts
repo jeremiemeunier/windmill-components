@@ -1,35 +1,45 @@
+import React from "react";
+
+export type InputLocker = {
+  value: boolean;
+  message: string;
+};
+
 export interface BaseBlockProps {
   id: string;
-  children: React.ReactNode;
   label?: string;
   size?: number;
   tagline?: React.ReactNode;
-  required?: boolean;
+  children: React.ReactNode;
   className?: string;
+  required?: boolean;
 }
 
 export interface InputBlockProps {
   children: React.ReactNode;
-  error: any | boolean;
-  maxLength?: number;
+  error?: string;
+  maxLength?: {
+    value: number;
+    current: number;
+  };
   className?: string;
   dataIsLoading?: boolean;
+  lockWhenDataIsLoading?: boolean;
+  locked?: InputLocker;
+  subContainer?: React.ReactNode;
 }
 
 export interface RadioCheckboxBlockProps {
   children: React.ReactNode;
-  error: any;
-  gridSize: number;
-  className?: string;
-}
-
-export interface SelectBlockProps {
-  children: React.ReactNode;
-  error: any;
+  error?: string;
+  gridSize?: number;
   className?: string;
   dataIsLoading?: boolean;
 }
 
-export interface LoaderProps {
-  size?: "small" | "medium" | "large";
+export interface SelectBlockProps {
+  children: React.ReactNode;
+  error?: string;
+  className?: string;
+  dataIsLoading?: boolean;
 }

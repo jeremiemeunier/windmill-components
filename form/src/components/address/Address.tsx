@@ -2,48 +2,54 @@ import React, { useId, useState } from "react";
 import { BaseBlock, InputBlock } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
+import { AddressProps } from "./Address.types";
 import "simplebar-react/dist/simplebar.min.css";
-import { AdressProps } from "./Adress.types";
 
-const Adress: React.FC<AdressProps> = ({
+const Address: React.FC<AddressProps> = ({
+  required = false,
+  error,
   label,
-  content,
-  setContent,
   size,
   readOnly,
   maxLength,
   placeHolder,
   disabled = false,
   data,
-  required = false,
-  className,
   dataIsLoading = false,
+  onChange,
+  defaultValue = "",
 }) => {
   const id = useId();
 
   const [inputValueSize, setInputValueSize] = useState(0);
   const [listVisibility, setListVisibility] = useState(false);
+  const [content, setContent] = useState<string>("");
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required}>
-      <InputBlock
-        error={content.error && content.message}
-        className={className}
-        dataIsLoading={dataIsLoading}
-      >
+    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
+      <InputBlock error={error} dataIsLoading={dataIsLoading ?? false}>
         <div className={`windmillui-autocomplete-root-input`}>
           <input
             disabled={disabled ?? false}
             name={id}
             id={id}
             readOnly={readOnly ? readOnly : false}
-            maxLength={maxLength && maxLength}
-            placeholder={placeHolder ? placeHolder : ""}
+            maxLength={maxLength}
+            placeholder={placeHolder ?? ""}
             className="windmillui-autocomplete-root-filter"
-            value={content.value}
+            value={content}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
-              setContent((p) => ({ ...p, value: target.value }));
+              setContent(target.value);
+              if (onChange) {
+                const event = {
+                  target: {
+                    name: id,
+                    value: target.value,
+                  },
+                } as React.ChangeEvent<HTMLInputElement>;
+                onChange(event);
+              }
             }}
             onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => {
               const target = event.target as HTMLInputElement;
@@ -80,10 +86,7 @@ const Adress: React.FC<AdressProps> = ({
                         <button
                           onClick={(event) => {
                             event.preventDefault();
-                            setContent((p) => ({
-                              ...p,
-                              value: option.properties.label,
-                            }));
+                            setContent(option.properties.label);
                             setInputValueSize(0);
                             setListVisibility(false);
                           }}
@@ -104,4 +107,4 @@ const Adress: React.FC<AdressProps> = ({
   );
 };
 
-export default Adress;
+export default Address;

@@ -1,40 +1,47 @@
-import { InputProps } from "./Input.types";
-import { BaseBlock, InputBlock } from "../base/Base";
 import React, { useEffect, useId, useState } from "react";
+import { BaseBlock, InputBlock } from "../base/Base";
+import type { InputProps } from "./Input.types";
 
+/**
+ * Input component - FormData-compatible input field
+ * Uses native HTML input with name attribute for automatic FormData extraction
+ */
 const Input: React.FC<InputProps> = ({
+  name,
   label,
-  content,
-  setContent,
   size,
   readOnly,
   tagline,
   type,
   maxLength,
-  placeHolder,
+  placeholder,
   disabled,
-  regex,
-  regexLabel,
   required,
-  name,
   autofocus,
   autoComplete,
   className,
   min,
   max,
   step,
+  defaultValue,
   dataIsLoading,
+  error,
+  regex,
+  locked,
+  onChange,
 }) => {
   const id = useId();
-  const [actualContentSize, setActualContentSize] = useState(
-    content?.value?.length ?? 0
+
+  const [internError, setInternError] = useState<string>("");
+  const [currentLength, setCurrentLength] = useState<number>(
+    defaultValue?.toString().length ?? 0,
   );
 
-  const [internError, setInternError] = useState("");
-
   useEffect(() => {
-    setActualContentSize(content?.value?.length ?? 0);
-  }, [content]);
+    if (defaultValue) {
+      setCurrentLength(defaultValue.toString().length);
+    }
+  }, [defaultValue]);
 
   return (
     <BaseBlock
@@ -45,41 +52,70 @@ const Input: React.FC<InputProps> = ({
       required={required ?? false}
     >
       <InputBlock
-        error={(content.error && content.message) || internError}
-        maxLength={maxLength}
+        error={internError || error}
+        maxLength={
+          maxLength
+            ? {
+                value: maxLength,
+                current: currentLength,
+              }
+            : undefined
+        }
         className={className}
         dataIsLoading={dataIsLoading}
+        locked={locked}
       >
         <input
-          disabled={disabled ?? false}
+          disabled={(disabled || locked?.value) ?? false}
           type={type ?? "text"}
-          value={content.value}
-          name={name ? name : id}
+          name={name}
           id={id}
           readOnly={readOnly ?? false}
-          maxLength={maxLength && maxLength}
-          placeholder={placeHolder ? placeHolder : ""}
+          maxLength={maxLength}
+          placeholder={placeholder ?? ""}
           autoFocus={autofocus ?? false}
-          min={min && min}
-          max={max && max}
-          step={step && step}
-          autoComplete={autoComplete && autoComplete}
+          min={min}
+          max={max}
+          step={step}
+          autoComplete={autoComplete}
+          defaultValue={defaultValue}
+          required={required}
           onChange={(evt) => {
-            setContent((p) => ({ ...p, value: evt.target.value }));
+            if (maxLength) {
+              setCurrentLength(evt.target.value.length);
+            }
 
-            if (evt.target.value) setActualContentSize(evt.target.value.length);
-            if (regex && regex.test(evt.target.value))
-              setInternError(
-                `Votre saisie ne doit pas contenir les caractères suivants : ${regexLabel}`
-              );
-            else setInternError("");
+            if (onChange) {
+              onChange(evt);
+            }
+
+            if (regex) {
+              if (!regex.value || !regex.message) {
+                console.error(
+                  "Input component: regex prop requires both value and message properties",
+                );
+                return;
+              }
+
+              if (regex.type === "required") {
+                if (!regex.value.test(evt.target.value)) {
+                  setInternError(regex.message);
+                } else {
+                  setInternError("");
+                }
+                return;
+              }
+
+              if (regex.type === "rejected") {
+                if (regex.value.test(evt.target.value)) {
+                  setInternError(regex.message);
+                } else {
+                  setInternError("");
+                }
+              }
+            }
           }}
         />
-        {maxLength && (
-          <span className="windmillui-max-length">
-            {actualContentSize} / {maxLength}
-          </span>
-        )}
       </InputBlock>
     </BaseBlock>
   );

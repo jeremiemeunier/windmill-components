@@ -1,4 +1,5 @@
-import {
+import React from "react";
+import type {
   BaseBlockProps,
   InputBlockProps,
   RadioCheckboxBlockProps,
@@ -12,6 +13,7 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
   tagline,
   children,
   required,
+  className,
 }) => {
   const classNameBuilder = () => {
     const str: string[] = ["windmillui-form-container"];
@@ -19,6 +21,8 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
     if (size) str.push(`gwc-${size}`);
     if (label) str.push("template-label");
     else str.push("template-default");
+
+    if (className) str.push(className);
 
     return str.join(" ");
   };
@@ -28,13 +32,18 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
       {label ? (
         <label htmlFor={id}>
           {label}{" "}
-          {required && <span className="windmillui-required">Requis</span>}
+          {required ? (
+            <>
+              <span className="windmillui-required" aria-hidden="true">
+                *
+              </span>
+              <span className="sr-only">required</span>
+            </>
+          ) : null}
         </label>
-      ) : (
-        ""
-      )}
+      ) : null}
       {children}
-      {tagline && tagline}
+      {tagline}
     </div>
   );
 };
@@ -45,26 +54,45 @@ export const InputBlock: React.FC<InputBlockProps> = ({
   maxLength,
   className,
   dataIsLoading,
+  lockWhenDataIsLoading,
+  locked,
+  subContainer,
 }) => {
   const classNameBuilder = () => {
-    const str: string[] = ["windmillui-input"];
+    const str: string[] = ["windmillui-input", "root"];
 
     if (error) str.push("state-negative");
     if (dataIsLoading) str.push("state-loading");
-    if (maxLength) str.push("template-max-length");
+    if (className) str.push(className);
 
-    return className ? str.join(" ") + " " + className : str.join(" ");
+    return str.join(" ");
   };
 
   return (
     <div className={classNameBuilder()}>
-      {dataIsLoading ? (
-        <div className="windmillui-input-placeholder"></div>
-      ) : (
-        children
-      )}
+      <div className="input-container">
+        {dataIsLoading && lockWhenDataIsLoading ? (
+          <div className="windmillui-input-placeholder"></div>
+        ) : (
+          children
+        )}
+        {maxLength && maxLength.value && (
+          <span className="windmillui-input-maxlength">
+            {maxLength.current} / {maxLength.value}
+          </span>
+        )}
+        {locked && locked.value && (
+          <span className="windmillui-input-locked">
+            <i className="icon ti ti-lock" />
+            <span>{locked.message}</span>
+          </span>
+        )}
+      </div>
+      {subContainer}
       {error && typeof error === "string" && (
-        <p className="windmillui-message">{error}</p>
+        <p className="input-message" role="alert">
+          {error}
+        </p>
       )}
     </div>
   );
@@ -75,15 +103,47 @@ export const RadioCheckboxBlock: React.FC<RadioCheckboxBlockProps> = ({
   error,
   gridSize,
   className,
+  dataIsLoading,
 }) => {
+  const classNameBuilder = ({
+    base,
+    block,
+  }: {
+    base?: string;
+    block?: "base" | "grid";
+  }) => {
+    const str: string[] = ["windmillui", base ? base : "windmillui-container"];
+
+    if (block === "grid") {
+      if (error) str.push("state-negative");
+      if (gridSize) {
+        str.push("grid");
+        str.push("rgs-8");
+        str.push("cgs-8");
+        str.push(`tc-${gridSize}`);
+      }
+    } else {
+      if (className) str.push(className);
+    }
+
+    if (dataIsLoading) str.push("state-loading");
+
+    return str.join(" ");
+  };
+
   return (
-    <div className={`windmillui-container ${className ?? ""}`}>
+    <div className={classNameBuilder({})}>
       <div
-        className={`windmillui-radio-grid ${
-          error ? "state-negative" : ""
-        } grid rgs-8 cgs-8 tc-${gridSize}`}
+        className={classNameBuilder({
+          base: "windmillui-radio-grid",
+          block: "grid",
+        })}
       >
-        {children}
+        {dataIsLoading ? (
+          <div className="windmillui-input-placeholder"></div>
+        ) : (
+          children
+        )}
       </div>
       {error && <p className="windmillui-message">{error}</p>}
     </div>
@@ -101,8 +161,9 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
 
     if (error) str.push("state-negative");
     if (dataIsLoading) str.push("state-loading");
+    if (className) str.push(className);
 
-    return className ? str.join(" ") + " " + className : str.join(" ");
+    return str.join(" ");
   };
 
   return (
@@ -112,8 +173,8 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
       ) : (
         children
       )}
-      <i className="icon ti ti-caret-up-down"></i>
-      {error ? <p className="windmillui-message">{error}</p> : ""}
+      <i className="icon ti ti-caret-down-filled"></i>
+      {error && <p className="windmillui-message">{error}</p>}
     </div>
   );
 };

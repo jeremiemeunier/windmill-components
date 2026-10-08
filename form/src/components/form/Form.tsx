@@ -1,16 +1,24 @@
-import { FormProps } from "./Form.types";
+import React from "react";
+import type { FormProps } from "./Form.types";
 
-const Form: React.FC<FormProps> = ({
-  children,
-  handler,
-  encType,
-  className,
-}) => {
+/**
+ * Form component - A FormData-focused form wrapper
+ * Automatically extracts FormData from form submission and passes it to the onSubmit handler
+ */
+const Form: React.FC<FormProps> = ({ children, onSubmit, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    onSubmit(formData, event);
+  };
+
   return (
     <form
-      onSubmit={handler}
-      encType={encType && encType}
-      className={`windmillui-form ${className}`}
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+      className={`windmillui-form ${className || ""}`}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
     >
       {children}
     </form>

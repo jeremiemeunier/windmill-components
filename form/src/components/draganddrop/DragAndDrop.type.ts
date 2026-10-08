@@ -1,15 +1,17 @@
-import { InputContent } from "../input";
-
-export interface DragAndDropContent extends InputContent {
-  value: FileList | null;
-}
+import { InputLocker } from "../base/Base.types";
 
 export interface DragAndDropProps {
+  name: string;
   size?: number;
   label?: string;
-  content: DragAndDropContent;
-  setContent: React.Dispatch<React.SetStateAction<DragAndDropContent>>;
   authorizedFiles: string[];
+  multiple?: boolean;
+  required?: boolean;
+  disabled?: boolean;
   className?: string;
+  error?: string;
   dataIsLoading?: boolean;
+  lockWhenDataIsLoading?: boolean;
+  locked?: InputLocker;
+  onChange?: (file: File | File[] | null) => void;
 }

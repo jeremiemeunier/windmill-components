@@ -1,24 +1,22 @@
-import { InputContent } from "../input";
+import React from "react";
 
-export interface RadioContent extends InputContent {
-  value: string | number;
-}
-
-export interface RadioValues {
-  id: string | undefined;
+export interface RadioOption {
+  value: string;
   label: string;
-  disabled?: boolean;
-  classname?: string;
 }
 
 export interface RadioProps {
-  gridSize: number;
-  values: RadioValues[];
-  content: RadioContent;
-  setContent: React.Dispatch<React.SetStateAction<RadioContent>>;
-  viewBox?: boolean;
+  name: string;
   label?: string;
+  options: RadioOption[];
   size?: number;
-  className?: string;
   disabled?: boolean;
+  tagline?: React.ReactNode;
+  required?: boolean;
+  className?: string;
+  defaultValue?: string;
+  error?: string;
+  gridSize?: number;
+  viewBox?: boolean;
+  dataIsLoading?: boolean;
 }

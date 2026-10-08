@@ -1,10 +1,4 @@
-import { InputContent } from "../input";
-
-export interface AdressContent extends InputContent {
-  value: string;
-}
-
-export interface AdressItems {
+export interface AddressItems {
   type: string;
   geometry: {
     type: string;
@@ -29,10 +23,10 @@ export interface AdressItems {
   };
 }
 
-export interface AdressProps {
-  content: AdressContent;
-  setContent: React.Dispatch<React.SetStateAction<AdressContent>>;
-  data: AdressItems[] | [];
+export interface AddressProps {
+  name: string;
+  error: string | undefined;
+  data: AddressItems[] | [];
   label?: string;
   disabled?: boolean;
   size?: number;
@@ -42,4 +36,6 @@ export interface AdressProps {
   required?: boolean;
   className?: string;
   dataIsLoading?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
 }

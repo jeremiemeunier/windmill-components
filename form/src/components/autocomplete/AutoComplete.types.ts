@@ -1,29 +1,50 @@
-import { InputContent } from "../input";
+import { InputLocker } from "../base/Base.types";
 
-export interface AutoCompleteContent extends InputContent {
-  value: string;
-}
-
-export interface DataItems {
+export interface AutoCompleteDataItem {
   [key: string]: any;
-  label?: string;
-  value?: string;
-  details?: string;
 }
 
 export interface AutoCompleteProps {
-  content: AutoCompleteContent;
-  setContent: React.Dispatch<React.SetStateAction<AutoCompleteContent>>;
-  data: DataItems[];
+  name: string;
+  nameLabel?: string;
   label?: string;
+  placeHolder?: string;
+  data: AutoCompleteDataItem[];
   disabled?: boolean;
   size?: number;
   readOnly?: boolean;
   maxLength?: number;
-  placeHolder?: string;
   required?: boolean;
+  autofocus?: boolean;
   className?: string;
   dataIsLoading: boolean;
-  labelKey?: string;
-  valueKey?: string;
+  lockWhenDataIsLoading?: boolean;
+  defaultValue?: string | number;
+  error?: string;
+  options: {
+    label: {
+      key: string;
+      details?: {
+        key: string;
+        isRenderedInLabel: boolean;
+        position: "top" | "bottom";
+        className?: string;
+      };
+    };
+    value: {
+      key: string;
+      enhancedValues?: {
+        data: AutoCompleteDataItem[];
+        label: string;
+        otherValueLabel?: string;
+      };
+    };
+    icon?: {
+      key: string;
+      type: "icon" | "image";
+      className?: string;
+    };
+  };
+  onChange?: (value: string | number) => void;
+  locked?: InputLocker;
 }

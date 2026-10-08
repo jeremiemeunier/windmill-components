@@ -1,4 +1,4 @@
-export * from "./adress";
+export * from "./address";
 export * from "./autocomplete";
 export * from "./checkbox";
 export * from "./checkboxslider";
@@ -6,7 +6,6 @@ export * from "./datepicker";
 export * from "./draganddrop";
 export * from "./fileinput";
 export * from "./form";
-export * from "./group";
 export * from "./input";
 export * from "./message";
 export * from "./password";

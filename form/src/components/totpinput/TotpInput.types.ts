@@ -1,12 +1,6 @@
-import { InputContent } from "../input";
-
-export interface TotpContent extends InputContent {
-  value: string;
-}
-
 export interface TotpInputProps {
-  content: TotpContent;
-  setContent: React.Dispatch<React.SetStateAction<TotpContent>>;
+  name: string;
+  error?: string;
   label?: string;
   size?: number;
   locked?: boolean;

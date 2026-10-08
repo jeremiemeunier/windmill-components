@@ -1,17 +1,17 @@
-import { InputContent } from "../input";
-
-export interface SelectContent extends InputContent {
-  value: string;
-}
+import React from "react";
 
 export interface SelectProps {
-  content: SelectContent;
-  setContent: React.Dispatch<React.SetStateAction<SelectContent>>;
-  children: React.ReactNode;
+  name: string;
   label?: string;
   size?: number;
   disabled?: boolean;
+  tagline?: React.ReactNode;
+  required?: boolean;
   className?: string;
-  name?: string;
+  defaultValue?: string;
+  error?: string;
+  children: React.ReactNode;
+  placeholder?: string;
   dataIsLoading?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }

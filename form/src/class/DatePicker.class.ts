@@ -18,10 +18,31 @@ export class Calendar {
     return new Date(year, month + 1, 0);
   }
 
+  generateMonthDays(year: number, month: number): number[] {
+    const firstDay = this.getFirstDayOfMonth(year, month);
+    const lastDay = this.getLastDayOfMonth(year, month);
+
+    // JS getDay(): 0 = dimanche. L'UI commence au lundi.
+    const leadingEmptyDays = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = lastDay.getDate();
+
+    const monthDays: number[] = [];
+
+    for (let i = 0; i < leadingEmptyDays; i++) {
+      monthDays.push(0);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      monthDays.push(day);
+    }
+
+    return monthDays;
+  }
+
   generateCalendar(): (number | string)[][] {
     const firstDay = this.getFirstDayOfMonth(
       this.currentYear,
-      this.currentMonth
+      this.currentMonth,
     );
     const lastDay = this.getLastDayOfMonth(this.currentYear, this.currentMonth);
 
@@ -34,7 +55,7 @@ export class Calendar {
     const prevMonthLastDay = new Date(
       this.currentYear,
       this.currentMonth,
-      0
+      0,
     ).getDate();
     for (let i = firstWeekDay - 1; i >= 0; i--) {
       week.push(prevMonthLastDay - i);
