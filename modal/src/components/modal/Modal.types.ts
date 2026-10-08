@@ -13,14 +13,28 @@ export interface HeaderProps {
 
 export interface ModalContainerProps {
   children: React.ReactNode;
-  size?: "small" | "medium" | "large" | "fullscreen" | "sl" | "sm" | "sf";
+  size?: "s-lg" | "s-sm" | "s-xl" | "s-fs" | "s-md";
   template?: "menu" | undefined;
   direction?: "top" | "bottom";
   maxHeight?: string;
 }
 
+export interface ModalSmallActionsProps {
+  children?: React.ReactNode;
+}
+
+export interface ModalActionsProps {
+  children: React.ReactNode;
+  isLink?: boolean;
+  to?: string;
+  title?: string;
+  handler?: () => void;
+}
+
 export interface BodyProps {
   children: React.ReactNode;
+  id?: string;
+  tabPanel?: boolean;
 }
 
 export interface NavigationProps {
@@ -32,4 +46,5 @@ export interface NavigationItemProps {
   setPage: React.Dispatch<React.SetStateAction<string | number>>;
   isActive: boolean;
   pageId: string | number;
+  panelId?: string;
 }
