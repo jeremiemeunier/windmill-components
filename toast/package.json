@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/toast",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -32,6 +32,10 @@
     "framer-motion": "^12.25.0",
     "react": "^19.2.3",
     "react-router-dom": "^7.12.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@swc/core": "^1.15.8",
