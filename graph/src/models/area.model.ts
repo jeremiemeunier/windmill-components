@@ -12,10 +12,10 @@ export class AreaModel implements IGraphModel<DataPoint> {
     this.config = config;
   }
 
-  compute(): { 
-    projectedPoints: DataPoint[]; 
+  compute(sharedProjection?: Projection): {
+    projectedPoints: DataPoint[];
     areaPath: string;
-    projection: Projection 
+    projection: Projection
   } {
     const scaleManager = new ScaleManager();
 
@@ -28,7 +28,7 @@ export class AreaModel implements IGraphModel<DataPoint> {
     const yScale = scaleManager.autoScale(yValues, this.config.viewport, 'y');
 
     // Create projection
-    const projection = new Projection(xScale, yScale);
+    const projection = sharedProjection ?? new Projection(xScale, yScale);
 
     // Project all points
     const projectedPoints = this.data.map((point) => ({

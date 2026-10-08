@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { DataPoint, GraphConfig, TremorChartData } from '../types';
 import { createAreaModel } from '../models/area.model';
 import { createSVGRenderer } from '../renderers/svg.renderer';
+import { ScaleManager } from '../core/scale';
+import { Projection } from '../core/projection';
 import { convertTremorData } from '../utils/tremor';
 
 // Constants
@@ -73,6 +75,8 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       lineWidth,
       colors,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Convert Tremor data if provided
     let chartData: DataPoint[] = data || [];
@@ -91,11 +95,16 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       return;
     }
 
-    const { projectedPoints, areaPath } = model.compute();
+    const dataSeries = seriesData.length > 0 ? seriesData : [chartData];
+    const allPoints = dataSeries.flat();
+    const scaleManager = new ScaleManager();
+    const projection = new Projection(
+      scaleManager.autoScale(allPoints.map((point) => point.x), config.viewport, 'x'),
+      scaleManager.autoScale(allPoints.map((point) => point.y), config.viewport, 'y'),
+    );
+    const { projectedPoints, areaPath } = model.compute(projection);
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(chartData, config);
     
     // Draw with gradient if enabled
@@ -115,7 +124,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       seriesData.slice(1).forEach((series, idx) => {
         const seriesModel = createAreaModel(series, config);
         if (seriesModel.validate()) {
-          const { projectedPoints: seriesPoints, areaPath: seriesPath } = seriesModel.compute();
+          const { projectedPoints: seriesPoints, areaPath: seriesPath } = seriesModel.compute(projection);
           // idx starts at 0 for slice(1), so add 1 to get the correct color index
           const seriesColor = colors?.[idx + 1] || colors?.[0] || color;
           renderer.drawArea(seriesPath, seriesColor, fillOpacity * SECONDARY_SERIES_OPACITY_FACTOR);
@@ -140,6 +149,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

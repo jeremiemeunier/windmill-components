@@ -32,7 +32,16 @@ export const component: React.FC<ComponentProps> & {
     <PaginationContext.Provider
       value={{ page, setPage, setPageSize, allPages, config }}
     >
-      <div className={buildClassName()}>{children}</div>
+      <div
+        className={buildClassName()}
+        style={
+          config?.sticky?.key
+            ? { position: "sticky", top: `${config.sticky.top}px`, zIndex: 1 }
+            : undefined
+        }
+      >
+        {children}
+      </div>
     </PaginationContext.Provider>
   );
 };
@@ -59,6 +68,7 @@ const PaginationPrevious: React.FC<PaginationPrevNextProps> = () => {
 
   return (
     <button
+      type="button"
       className={buildClassName()}
       title={config?.prevNextLabel?.value[0] ?? "Previous page"}
       onClick={() => setPage(Math.max(page - 1, 1))}
@@ -95,6 +105,7 @@ const PaginationNext: React.FC<PaginationPrevNextProps> = () => {
 
   return (
     <button
+      type="button"
       className={buildClassName()}
       title={config?.prevNextLabel?.value[1] ?? "Next page"}
       onClick={() => setPage(Math.min(page + 1, allPages ?? 1))}
@@ -131,6 +142,7 @@ const PaginationFirst: React.FC<PaginationFirstLastProps> = () => {
 
   return (
     <button
+      type="button"
       className={buildClassName()}
       title={config?.firstLastLabel?.value[0] ?? "First page"}
       onClick={() => setPage(1)}
@@ -167,6 +179,7 @@ const PaginationLast: React.FC<PaginationFirstLastProps> = () => {
 
   return (
     <button
+      type="button"
       className={buildClassName()}
       title={config?.firstLastLabel?.value[1] ?? "Last page"}
       onClick={() => setPage(allPages ?? 1)}
@@ -182,12 +195,13 @@ const PaginationLast: React.FC<PaginationFirstLastProps> = () => {
 component.PaginationLast = PaginationLast;
 
 const PaginationSelect: React.FC<PaginationSelectProps> = () => {
-  const { setPage, allPages } = usePagination();
+  const { page, setPage, allPages } = usePagination();
 
   return (
     <div className="pagination-select">
       <select
         id={useId()}
+        value={page}
         onChange={(e) => setPage(Number(e.target.value))}
         name="paginationSelect"
         disabled={allPages === undefined || allPages <= 1}
@@ -205,19 +219,33 @@ const PaginationSelect: React.FC<PaginationSelectProps> = () => {
 component.PaginationSelect = PaginationSelect;
 
 const PaginationItem: React.FC<PaginationItemProps> = () => {
-  const { page, setPage, allPages } = usePagination();
+  const { page, setPage, allPages, config } = usePagination();
 
   const totalPages = Math.max(allPages ?? 1, 0);
-  const visiblePages = Math.min(totalPages, 5);
-  const firstVisiblePage = Math.max(
-    1,
-    Math.min(page - 2, totalPages - visiblePages + 1),
-  );
+  const maxPageButtons = Math.max(3, Math.floor(config?.renderEllipsis ?? 5));
+  const pageNumbers =
+    totalPages <= maxPageButtons
+      ? Array.from({ length: totalPages }, (_, index) => index + 1)
+      : (() => {
+          const middleCount = maxPageButtons - 2;
+          const firstMiddlePage = Math.max(
+            2,
+            Math.min(
+              page - Math.floor(middleCount / 2),
+              totalPages - middleCount,
+            ),
+          );
+          return [
+            1,
+            ...Array.from({ length: middleCount }, (_, index) => firstMiddlePage + index),
+            totalPages,
+          ];
+        })();
 
-  const buildClassName = (i: number) => {
+  const buildClassName = (pageNumber: number) => {
     const str: string[] = ["cta", "format-carret", "pagination-page-unit"];
 
-    if (page === i + 1) {
+    if (page === pageNumber) {
       str.push("level-secondary");
     } else {
       str.push("level-tertiary");
@@ -228,19 +256,23 @@ const PaginationItem: React.FC<PaginationItemProps> = () => {
 
   return (
     <>
-      {Array.from({ length: visiblePages }, (_, i) => {
-        const pageNumber = firstVisiblePage + i;
-
-        return (
+      {pageNumbers.map((pageNumber, index) => (
+        <React.Fragment key={pageNumber}>
+          {index > 0 && pageNumber - pageNumbers[index - 1] > 1 && (
+            <span className="pagination-ellipsis" aria-hidden="true">
+              …
+            </span>
+          )}
           <button
-            key={pageNumber}
-            className={buildClassName(pageNumber - 1)}
+            type="button"
+            className={buildClassName(pageNumber)}
             onClick={() => setPage(pageNumber)}
+            aria-current={page === pageNumber ? "page" : undefined}
           >
             <span>{pageNumber}</span>
           </button>
-        );
-      })}
+        </React.Fragment>
+      ))}
     </>
   );
 };
@@ -248,6 +280,7 @@ component.PaginationItem = PaginationItem;
 
 const PaginationRows: React.FC<PaginationRowsProps> = () => {
   const { config, setPageSize } = usePagination();
+  const id = useId();
 
   if (!setPageSize) {
     console.error("PaginationRows: No setPageSize function provided.");
@@ -269,7 +302,7 @@ const PaginationRows: React.FC<PaginationRowsProps> = () => {
       <span>{config?.rowsLabel ?? "Rows per page:"}</span>
       <div className="pagination-select">
         <select
-          id={useId()}
+          id={id}
           name="paginationRows"
           disabled={!config?.rowsAvailable?.length}
           onChange={(e) => setPageSize(Number(e.target.value))}

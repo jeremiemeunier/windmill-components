@@ -38,6 +38,8 @@ export const DonutChart: React.FC<DonutChartProps> = ({
       showAxis: false,
       backgroundColor,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createDonutModel(data, config);
@@ -49,8 +51,6 @@ export const DonutChart: React.FC<DonutChartProps> = ({
     const { segments, centerX, centerY, outerRadius, innerRadius } = model.compute();
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawDonut(segments, centerX, centerY, outerRadius, innerRadius);
 
@@ -61,13 +61,7 @@ export const DonutChart: React.FC<DonutChartProps> = ({
 
       segments.forEach((segment, index) => {
         // Draw color box using SVG rect
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', legendX.toString());
-        rect.setAttribute('y', (legendY + index * 20).toString());
-        rect.setAttribute('width', '12');
-        rect.setAttribute('height', '12');
-        rect.setAttribute('fill', segment.color);
-        svg.appendChild(rect);
+        renderer.drawRect(legendX, legendY + index * 20, 12, 12, segment.color);
 
         // Draw label
         renderer.drawText(
@@ -95,6 +89,7 @@ export const DonutChart: React.FC<DonutChartProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

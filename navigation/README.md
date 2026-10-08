@@ -64,8 +64,15 @@ import { Pagination } from "@jeremiemeunier/navigation";
 
 const [page, setPage] = useState(1);
 
-<Pagination pages={10} page={page} setPage={setPage} />;
+<Pagination page={page} setPage={setPage} allPages={10}>
+  <Pagination.PaginationPrevious />
+  <Pagination.PaginationItem />
+  <Pagination.PaginationNext />
+</Pagination>;
 ```
 
-`Pagination` accepte la prop optionnelle `sticky` afin de fixer le composant lors du défilement.
+La configuration sticky se passe dans `config`, par exemple `config={{ sticky: { key: true, top: 0 } }}`.
 
+## Migration depuis la version 1.x
+
+La version 2 remplace l’API compacte `<Pagination pages={...} />` par une composition de contrôles enfants. Renommez `pages` en `allPages` et ajoutez les contrôles souhaités comme enfants. Les options `sticky`, `noSelect` et `pages` ont été remplacées par `config.sticky`, la composition explicite des contrôles et `allPages`.

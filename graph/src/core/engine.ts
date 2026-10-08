@@ -42,7 +42,7 @@ export class GraphEngine {
     }
 
     if (this.isDirty) {
-      this.renderer.clear();
+      this.renderer.clear(this.config);
       this.renderer.render(data, this.config);
       this.isDirty = false;
     }

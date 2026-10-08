@@ -14,6 +14,24 @@ import {
 } from "./Modal.types";
 import { Link } from "react-router-dom";
 
+const sizeAliases: Record<string, string> = {
+  small: "s-sm",
+  medium: "s-md",
+  large: "s-lg",
+  fullscreen: "s-fs",
+  sl: "s-lg",
+  sm: "s-md",
+  sf: "s-fs",
+};
+
+const getSizeClass = (size?: ModalContainerProps["size"]) => {
+  if (!size) return "";
+  const normalizedSize = sizeAliases[size] ?? size;
+  return normalizedSize === size
+    ? `size-${normalizedSize} ${normalizedSize}`
+    : `size-${normalizedSize} ${normalizedSize} ${size}`;
+};
+
 const Modal: React.FC<ModalProps> & {
   Background: React.FC<CloseProps>;
   Body: React.FC<BodyProps>;
@@ -163,9 +181,7 @@ const MenuLeft: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ ease: "easeOut", duration: 0.3 }}
-      className={`windmillui-modal modal-container format-menu position-left ${
-        size ? `size-${size} ${size}` : ""
-      }`}
+      className={`windmillui-modal modal-container format-menu position-left ${getSizeClass(size)}`}
       role="dialog"
       aria-modal="true"
       aria-label="Dialog"
@@ -189,9 +205,7 @@ const MenuRight: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ ease: "easeOut", duration: 0.1 }}
-      className={`windmillui-modal modal-container format-menu position-right ${
-        size ? `size-${size} ${size}` : ""
-      }`}
+      className={`windmillui-modal modal-container format-menu position-right ${getSizeClass(size)}`}
       role="dialog"
       aria-modal="true"
       aria-label="Dialog"
@@ -214,7 +228,7 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
   const returnMaxHeightScroll = () => {
     if (maxHeight) return maxHeight;
     else {
-      if (size === "s-fs") {
+      if (sizeAliases[size ?? ""] === "s-fs" || size === "s-fs") {
         return "calc(100vh - 32px)";
       }
       if (template === "menu") {
@@ -229,9 +243,7 @@ const ModalCenter: React.FC<ModalContainerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: direction === "top" ? -100 : 100 }}
       transition={{ ease: "easeOut", duration: 0.1 }}
-      className={`windmillui-modal modal-container ${
-        size ? `size-${size} ${size}` : ""
-      }`}
+      className={`windmillui-modal modal-container ${getSizeClass(size)}`}
       role="dialog"
       aria-modal="true"
       aria-label="Dialog"
@@ -299,7 +311,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
       role="tab"
       aria-selected={isActive}
       aria-controls={panelId}
-      tabIndex={isActive ? 0 : -1}
+      tabIndex={0}
       type="button"
     >
       {label}

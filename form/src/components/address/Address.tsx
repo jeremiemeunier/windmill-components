@@ -6,6 +6,7 @@ import { AddressProps } from "./Address.types";
 import "simplebar-react/dist/simplebar.min.css";
 
 const Address: React.FC<AddressProps> = ({
+  name,
   required = false,
   error,
   label,
@@ -31,7 +32,7 @@ const Address: React.FC<AddressProps> = ({
         <div className={`windmillui-autocomplete-root-input`}>
           <input
             disabled={disabled ?? false}
-            name={id}
+            name={name ?? id}
             id={id}
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength}
@@ -44,7 +45,7 @@ const Address: React.FC<AddressProps> = ({
               if (onChange) {
                 const event = {
                   target: {
-                    name: id,
+                    name: name ?? id,
                     value: target.value,
                   },
                 } as React.ChangeEvent<HTMLInputElement>;

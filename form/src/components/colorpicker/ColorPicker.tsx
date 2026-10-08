@@ -39,15 +39,22 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       <InputBlock error={error} className={className}>
         <div className={`windmillui-colorpicker ${className ?? ""}`}>
           <input
-            disabled={disabled ?? false}
+            disabled={disabled || readOnly}
             type="color"
-            name={name}
+            name={readOnly ? undefined : name}
             id={id}
-            readOnly={readOnly ?? false}
             defaultValue={colorValue}
             onChange={handleColorChange}
             className="windmillui-colorpicker-input"
           />
+          {readOnly && (
+            <input
+              type="hidden"
+              name={name}
+              value={colorValue}
+              disabled={disabled ?? false}
+            />
+          )}
           <span className="windmillui-colorpicker-value">{colorValue}</span>
         </div>
       </InputBlock>

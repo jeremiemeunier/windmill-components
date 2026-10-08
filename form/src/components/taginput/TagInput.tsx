@@ -1,5 +1,5 @@
 import { BaseBlock, InputBlock } from "../base/Base";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { TagInputProps } from "./TagInput.types";
 
 const TagInput: React.FC<TagInputProps> = ({
@@ -20,6 +20,7 @@ const TagInput: React.FC<TagInputProps> = ({
   onChange,
 }) => {
   const id = useId();
+  const onChangeRef = useRef(onChange);
 
   const [content, setContent] = useState<string[]>(
     defaultValue
@@ -35,10 +36,9 @@ const TagInput: React.FC<TagInputProps> = ({
 
     if (separator.indexOf(key) >= 0) {
       event.preventDefault();
+      const newValue = target.value.slice(0, -1).trim();
 
       setContent((prev) => {
-        const newValue = target.value.slice(0, -1).trim();
-
         if (newValue && prev.indexOf(newValue) === -1) {
           return [...prev, newValue];
         }
@@ -54,10 +54,9 @@ const TagInput: React.FC<TagInputProps> = ({
 
   const handleOut = (event: React.FocusEvent<HTMLInputElement, Element>) => {
     const target = event.target as HTMLInputElement;
+    const newValue = target.value.trim();
 
     setContent((prev) => {
-      const newValue = target.value.trim();
-
       if (newValue && prev.indexOf(newValue) === -1) {
         return [...prev, newValue];
       }
@@ -71,16 +70,20 @@ const TagInput: React.FC<TagInputProps> = ({
   };
 
   useEffect(() => {
-    if (onChange) {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    if (onChangeRef.current) {
       const event = {
         target: {
           name,
           value: content.join(","),
         },
       } as React.ChangeEvent<HTMLInputElement>;
-      onChange(event);
+      onChangeRef.current(event);
     }
-  }, [content, name, onChange]);
+  }, [content, name]);
 
   return (
     <BaseBlock
@@ -120,7 +123,12 @@ const TagInput: React.FC<TagInputProps> = ({
           onBlur={handleOut}
           onKeyUp={handleKey}
         />
-        <input name={name} type="hidden" value={content.join(",")} />
+        <input
+          name={name}
+          type="hidden"
+          value={content.join(",")}
+          disabled={disabled ?? false}
+        />
       </InputBlock>
     </BaseBlock>
   );

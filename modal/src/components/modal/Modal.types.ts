@@ -13,7 +13,19 @@ export interface HeaderProps {
 
 export interface ModalContainerProps {
   children: React.ReactNode;
-  size?: "s-lg" | "s-sm" | "s-xl" | "s-fs" | "s-md";
+  size?:
+    | "s-lg"
+    | "s-sm"
+    | "s-xl"
+    | "s-fs"
+    | "s-md"
+    | "small"
+    | "medium"
+    | "large"
+    | "fullscreen"
+    | "sl"
+    | "sm"
+    | "sf";
   template?: "menu" | undefined;
   direction?: "top" | "bottom";
   maxHeight?: string;

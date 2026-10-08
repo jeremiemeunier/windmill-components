@@ -40,6 +40,8 @@ export const Heatmap: React.FC<HeatmapProps> = ({
       showAxis,
       backgroundColor,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createHeatmapModel(data, config);
@@ -51,8 +53,6 @@ export const Heatmap: React.FC<HeatmapProps> = ({
     const { cells } = model.compute();
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawHeatmap(cells);
   }, [data, width, height, showGrid, showAxis, backgroundColor, padding]);
@@ -72,6 +72,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

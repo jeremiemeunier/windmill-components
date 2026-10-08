@@ -1,7 +1,9 @@
 import { IRenderer, GraphConfig, DataPoint } from '../types';
 
 export class SVGRenderer implements IRenderer {
+  private static rendererCounter = 0;
   private svg: SVGSVGElement;
+  private readonly idPrefix = `graph-${SVGRenderer.rendererCounter++}`;
   private mainGroup: SVGGElement;
   private lastConfig: GraphConfig | null = null;
   private defs: SVGDefsElement;
@@ -95,6 +97,18 @@ export class SVGRenderer implements IRenderer {
 
     this.mainGroup.appendChild(group);
     return group as SVGGElement;
+  }
+
+  drawRect(x: number, y: number, width: number, height: number, fill: string): SVGRectElement {
+    const rect = this.createSVGElement('rect', {
+      x: x.toString(),
+      y: y.toString(),
+      width: width.toString(),
+      height: height.toString(),
+      fill,
+    }) as SVGRectElement;
+    this.mainGroup.appendChild(rect);
+    return rect;
   }
 
   drawPoints(points: DataPoint[], color: string = '#3b82f6', radius: number = 3): SVGGElement {
@@ -202,7 +216,7 @@ export class SVGRenderer implements IRenderer {
   }
 
   createGradient(fromColor: string, toColor: string, x1: number = 0, y1: number = 0, x2: number = 0, y2: number = 1): string {
-    const gradientId = `gradient-${this.gradientCounter++}`;
+    const gradientId = `${this.idPrefix}-gradient-${this.gradientCounter++}`;
     const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
     gradient.setAttribute('id', gradientId);
     gradient.setAttribute('x1', x1.toString());

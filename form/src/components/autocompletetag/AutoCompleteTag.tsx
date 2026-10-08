@@ -34,7 +34,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     const target = event.target as HTMLInputElement;
     const value = target.value.toLowerCase();
     const filterData = data.filter((item) =>
-      String(item[labelKey] || "")
+      String(item[labelKey] ?? "")
         .toLowerCase()
         .includes(value)
     );
@@ -43,13 +43,13 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   };
 
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue !== undefined && defaultValue !== null) {
       const defaultItem = data.find(
         (item) => String(item[valueKey]) === String(defaultValue)
       );
       if (defaultItem) {
-        setContent(String(defaultItem[valueKey] || ""));
-        setInputLabel(String(defaultItem[labelKey] || ""));
+        setContent(String(defaultItem[valueKey] ?? ""));
+        setInputLabel(String(defaultItem[labelKey] ?? ""));
       }
     }
   }, [defaultValue]);
@@ -58,14 +58,14 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     if (content) {
       const value = content.toLowerCase();
       const filterData = data.filter((item) =>
-        String(item[valueKey] || "")
+        String(item[valueKey] ?? "")
           .toLowerCase()
           .includes(value)
       );
 
       setFilteredData(filterData);
       if (filterData.length > 0) {
-        setInputLabel(String(filterData[0][labelKey] || ""));
+        setInputLabel(String(filterData[0][labelKey] ?? ""));
       }
     }
 
@@ -123,8 +123,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                 <div className="windmillui-autocomplete-list">
                   <AnimatePresence>
                     {filteredData.map((option, index) => {
-                      const optionValue = String(option[valueKey] || "");
-                      const optionLabel = String(option[labelKey] || "");
+                      const optionValue = String(option[valueKey] ?? "");
+                      const optionLabel = String(option[labelKey] ?? "");
                       const uniqueKey =
                         optionValue || `${optionLabel}-${index}`;
                       return (

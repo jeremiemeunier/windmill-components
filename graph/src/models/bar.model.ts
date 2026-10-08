@@ -27,18 +27,23 @@ export class BarModel implements IGraphModel<BarDataPoint> {
       scaleManager.computeRange(this.config.viewport, 'x'),
       0.2
     );
-    const yScale = scaleManager.autoScale(values, this.config.viewport, 'y');
+    const yScale = scaleManager.autoScale(
+      [...values, 0],
+      this.config.viewport,
+      'y'
+    );
 
     // Create projection
     const projection = new Projection(xScale, yScale);
 
     // Compute bar positions and dimensions
-    const baseY = this.config.viewport.height - this.config.viewport.padding.bottom;
+    const baseY = projection.projectY(0);
     const bars = this.data.map((bar) => {
       const x = xScale(bar.category) ?? 0;
-      const y = projection.projectY(bar.value);
+      const valueY = projection.projectY(bar.value);
+      const y = Math.min(valueY, baseY);
       const width = xScale.bandwidth();
-      const height = baseY - y;
+      const height = Math.abs(baseY - valueY);
 
       return {
         x,

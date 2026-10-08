@@ -45,6 +45,8 @@ export const LineChart: React.FC<LineChartProps> = ({
       backgroundColor,
       lineWidth,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createLineModel(data, config);
@@ -56,8 +58,6 @@ export const LineChart: React.FC<LineChartProps> = ({
     const { projectedPoints } = model.compute();
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawLine(projectedPoints, color, lineWidth);
   }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding]);
@@ -77,6 +77,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

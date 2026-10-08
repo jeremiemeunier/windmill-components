@@ -64,11 +64,6 @@ const TextArea: React.FC<TextAreaProps> = ({
             }
           }}
         />
-        {maxLength && (
-          <span className="windmillui-max-length">
-            {currentLength} / {maxLength}
-          </span>
-        )}
       </InputBlock>
     </BaseBlock>
   );

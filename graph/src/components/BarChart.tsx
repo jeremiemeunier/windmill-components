@@ -42,6 +42,8 @@ export const BarChart: React.FC<BarChartProps> = ({
       showAxis,
       backgroundColor,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createBarModel(data, config);
@@ -59,8 +61,6 @@ export const BarChart: React.FC<BarChartProps> = ({
     }));
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawBars(coloredBars);
   }, [data, width, height, defaultColor, showGrid, showAxis, backgroundColor, padding]);
@@ -80,6 +80,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

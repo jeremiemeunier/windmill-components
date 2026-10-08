@@ -44,6 +44,8 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       showAxis,
       backgroundColor,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createScatterModel(data, config);
@@ -55,8 +57,6 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
     const { projectedPoints } = model.compute();
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawPoints(projectedPoints, color, pointRadius);
   }, [data, width, height, color, pointRadius, showGrid, showAxis, backgroundColor, padding]);
@@ -76,6 +76,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );

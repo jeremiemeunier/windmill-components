@@ -47,6 +47,8 @@ export const Timeline: React.FC<TimelineProps> = ({
       backgroundColor,
       lineWidth,
     };
+    const renderer = rendererRef.current;
+    renderer.clear(config);
 
     // Create model and compute
     const model = createTimelineModel(data, config, maxPoints);
@@ -58,8 +60,6 @@ export const Timeline: React.FC<TimelineProps> = ({
     const { projectedPoints } = model.compute();
 
     // Render
-    const renderer = rendererRef.current;
-    renderer.clear(config);
     renderer.render(data, config);
     renderer.drawLine(projectedPoints, color, lineWidth);
   }, [data, width, height, color, lineWidth, showGrid, showAxis, backgroundColor, padding, maxPoints]);
@@ -79,6 +79,7 @@ export const Timeline: React.FC<TimelineProps> = ({
       ref={svgRef}
       width={width}
       height={height}
+      viewBox={`0 0 ${width} ${height}`}
       style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
     />
   );
