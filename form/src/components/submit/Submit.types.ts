@@ -5,4 +5,5 @@ export interface SubmitProps {
   locked?: boolean;
   className?: string;
   children?: React.ReactNode;
+  buttonSize?: "sm" | "sl";
 }

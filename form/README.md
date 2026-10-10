@@ -42,6 +42,16 @@ npm run build
 
 Ce package ne fournit pas encore de suite de tests automatisés.
 
+## Migration depuis la version 1.x
+
+La version 2 remplace les champs contrôlés par des champs HTML natifs : utilisez `defaultValue`, `name` et `onChange` au lieu de `content`/`setContent`. `Form` reçoit désormais `onSubmit(formData, event)` et extrait les valeurs via `FormData`. Le composant `Group` n'est plus exporté ; regroupez les champs avec votre propre élément de présentation. Les exemples ci-dessous décrivent l'API 1.x et doivent être migrés avant la mise à jour.
+
+```tsx
+<Form onSubmit={(formData) => save(Object.fromEntries(formData))}>
+  <Input name="email" defaultValue="" />
+</Form>
+```
+
 ## Utilisation rapide
 
 Le package est déjà compilé et publié, aucune étape de build supplémentaire n'est requise pour la consommation depuis un projet React. Après l’installation, importez simplement le composant souhaité :
@@ -50,7 +60,7 @@ Le package est déjà compilé et publié, aucune étape de build supplémentair
 import { Form, Input, Submit } from "@jeremiemeunier/form";
 ```
 
-## Composants disponibles
+## Composants disponibles dans l'API 1.x
 
 - [`<Adresse>`](#adresse)
 - [`<AutoComplete>`](#autocomplete)
@@ -60,7 +70,6 @@ import { Form, Input, Submit } from "@jeremiemeunier/form";
 - [`<DragAndDrop>`](#draganddrop)
 - [`<FileInput>`](#fileinput)
 - [`<Form>`](#form)
-- [`<Group>`](#group)
 - [`<Input>`](#input)
 - [`<Message>`](#message)
 - [`<Password>`](#password)
@@ -318,7 +327,9 @@ const [error, setError] = useState("");
   name={optional: "my_radio_name"} />
 ```
 
-### Group
+### Group (API 1.x uniquement)
+
+`Group` n'est plus inclus depuis la version 2.0.0. Utilisez un élément de présentation (`fieldset`, `div`, etc.) pour organiser vos champs.
 
 ```jsx
 const [content, setContent] = useState({

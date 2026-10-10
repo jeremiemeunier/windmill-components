@@ -1,34 +1,34 @@
 import React, {
-  HTMLInputAutoCompleteAttribute,
-  HTMLInputTypeAttribute,
+  type HTMLInputAutoCompleteAttribute,
+  type HTMLInputTypeAttribute,
 } from "react";
-
-export interface InputContent {
-  error: boolean;
-  message: string;
-  value: any | null;
-}
+import { InputLocker } from "../base/Base.types";
 
 export interface InputProps {
-  content: InputContent;
-  setContent: React.Dispatch<React.SetStateAction<InputContent>>;
+  name: string;
   label?: string;
   size?: number;
   readOnly?: boolean;
   tagline?: React.ReactNode;
   type?: HTMLInputTypeAttribute;
   maxLength?: number;
-  placeHolder?: string;
+  placeholder?: string;
   disabled?: boolean;
-  regex?: RegExp;
-  regexLabel?: string;
   required?: boolean;
-  name?: string;
   autofocus?: boolean;
   autoComplete?: HTMLInputAutoCompleteAttribute;
   className?: string;
   min?: number;
   max?: number;
   step?: number;
+  defaultValue?: string | number;
   dataIsLoading?: boolean;
+  error?: string;
+  regex?: {
+    value: RegExp;
+    message: string;
+    type: "required" | "rejected";
+  };
+  locked?: InputLocker;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

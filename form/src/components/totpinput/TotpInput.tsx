@@ -3,9 +3,9 @@ import { TotpInputProps } from "./TotpInput.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 
 const TotpInput: React.FC<TotpInputProps> = ({
+  name,
+  error,
   label,
-  content,
-  setContent,
   size,
   locked,
   required,
@@ -14,6 +14,8 @@ const TotpInput: React.FC<TotpInputProps> = ({
   isAlphaNumeric,
 }) => {
   const [values, setValues] = useState<string[]>(Array(totpSize).fill(""));
+  const [content, setContent] = useState<string>("");
+
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const id = useId();
 
@@ -27,7 +29,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
         newValues[index + i] = digit;
       });
       setValues(newValues);
-      setContent((p) => ({ ...p, value: newValues.join("") }));
+      setContent(newValues.join(""));
       const nextIndex = index + digits.length;
       if (nextIndex < totpSize) {
         inputsRef.current[nextIndex]?.focus();
@@ -37,7 +39,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
     newValues[index] = cleanValue;
     setValues(newValues);
-    setContent((p) => ({ ...p, value: newValues.join("") }));
+    setContent(newValues.join(""));
 
     if (cleanValue && index < totpSize - 1) {
       inputsRef.current[index + 1]?.focus();
@@ -46,10 +48,10 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
   const handlePaste = (
     index: number,
-    event: React.ClipboardEvent<HTMLInputElement>
+    evt: React.ClipboardEvent<HTMLInputElement>
   ) => {
-    event.preventDefault();
-    const pasteData = event.clipboardData.getData("text");
+    evt.preventDefault();
+    const pasteData = evt.clipboardData.getData("text");
     if (pasteData) {
       inputHandler(index, pasteData.trim());
     }
@@ -57,9 +59,9 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
   const handleKeyDown = (
     index: number,
-    event: React.KeyboardEvent<HTMLInputElement>
+    evt: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (event.key === "Backspace" && !values[index] && index > 0) {
+    if (evt.key === "Backspace" && !values[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
     }
   };
@@ -68,12 +70,12 @@ const TotpInput: React.FC<TotpInputProps> = ({
     <BaseBlock id={id} label={label} size={size} required={required ?? false}>
       <div
         className={`windmillui-totp-root ${
-          content.error ? "state-negative" : ""
+          error ? "state-negative" : ""
         } ${className}`}
       >
         <div className="totp-fields">
           {Array.from({ length: totpSize }, (_, key) => (
-            <InputBlock key={key} error={content.error ?? false}>
+            <InputBlock key={key} error={error}>
               <input
                 ref={(element) => {
                   inputsRef.current[key] = element;
@@ -92,10 +94,9 @@ const TotpInput: React.FC<TotpInputProps> = ({
               />
             </InputBlock>
           ))}
+          <input type="hidden" name={name} value={content} />
         </div>
-        {content.error && (
-          <p className="windmillui-message">{content.message}</p>
-        )}
+        {error && <p className="windmillui-message">{error}</p>}
       </div>
     </BaseBlock>
   );

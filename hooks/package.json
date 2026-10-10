@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/hooks",
-  "version": "1.4.7",
+  "version": "1.5.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,21 +29,25 @@
   "license": "ISC",
   "dependencies": {
     "@tanstack/react-query": "^5.85.5",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
     "react-router-dom": "^7.18.2",
     "simplebar-react": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
+    "@types/node": "^25.0.5",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
     "esbuild-sass-plugin": "^3.3.1",
     "eslint": "^10.8.0",
-    "lit-element": "^4.2.1",
-    "tsup": "^8.5.0",
-    "sass": "^1.90.0",
+    "lit-element": "^4.2.2",
+    "tsup": "^8.5.1",
+    "sass": "^1.97.2",
     "scss": "^0.2.4",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   }
 }

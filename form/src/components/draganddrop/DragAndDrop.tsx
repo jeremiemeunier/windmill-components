@@ -1,40 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { DragAndDropProps } from "./DragAndDrop.type";
 import { FileUploader } from "react-drag-drop-files";
 import { BaseBlock, InputBlock } from "../base/Base";
 
 const DragAndDrop: React.FC<DragAndDropProps> = ({
+  name,
   size,
   label,
-  content,
-  setContent,
   authorizedFiles,
+  multiple = true,
+  required,
+  disabled,
   className,
+  error,
   dataIsLoading,
+  lockWhenDataIsLoading,
+  locked,
+  onChange,
 }) => {
-  const [files, setFiles] = useState<FileList | null>(null);
-  const [fileLabel, setFileLabel] = useState<string[]>([]);
+  const id = useId();
 
-  useEffect(() => {
-    setFiles(content.value);
-  }, [content]);
+  const [files, setFiles] = useState<File | File[] | null>(null);
+  const [fileLabel, setFileLabel] = useState<string[]>([]);
 
   useEffect(() => {
     if (files) {
       try {
-        const names = Array.from(files).map(f => f.name);
+        const names = Array.isArray(files)
+          ? files.map((f) => f.name)
+          : [files.name];
         setFileLabel(names);
       } catch (err: any) {
-        console.error('Error processing files:', err);
+        console.error("Error processing files:", err);
       }
     } else {
       setFileLabel([]);
     }
   }, [files]);
 
-  const handleChange = (file: any) => {
+  const handleChange = (file: File | File[]) => {
     setFiles(file);
-    setContent((p) => ({ ...p, value: file }));
+    onChange?.(file);
   };
 
   const classBuilder = () => {
@@ -46,23 +52,28 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   };
 
   return (
-    <BaseBlock id="" label={label} size={size}>
+    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
       <InputBlock
-        error={content.error && content.message}
+        error={error}
         className={className}
         dataIsLoading={dataIsLoading}
+        lockWhenDataIsLoading={lockWhenDataIsLoading}
+        locked={locked}
       >
         <div className={classBuilder()}>
           <FileUploader
             handleChange={handleChange}
-            name="file"
+            name={name}
             types={authorizedFiles}
             hoverTitle={"Déposer ici"}
-            multiple={true}
+            multiple={multiple}
+            required={required ?? false}
+            disabled={(disabled || locked?.value) ?? false}
           >
             <div className="windmillui-drop-zone">
               <p>
-                Déposez un ou plusieurs fichier(s) ici ({authorizedFiles.join(", ")})
+                Déposez un ou plusieurs fichier(s) ici (
+                {authorizedFiles.join(", ")})
               </p>
               <p>ou</p>
               <button className="windmillui cta level-secondary">
@@ -71,8 +82,8 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
             </div>
           </FileUploader>
           <p>
-            {files && files.length > 0
-              ? files.length > 1
+            {fileLabel.length > 0
+              ? fileLabel.length > 1
                 ? "Fichiers sélectionnés"
                 : "Fichier sélectionné"
               : "Déposez vos fichiers dans la zone pour les télécharger"}
@@ -80,7 +91,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
           {fileLabel.length > 0 && (
             <div className="windmillui tag-container as-pl24 as-pr24 as-pb24">
               {fileLabel.map((f, k) => (
-                <span key={k} className="teaui tag stroke color-brand">
+                <span key={k} className="tag stroke color-brand">
                   {f}
                 </span>
               ))}

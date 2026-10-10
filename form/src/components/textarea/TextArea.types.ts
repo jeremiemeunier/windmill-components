@@ -1,21 +1,18 @@
-import { InputContent } from "../input";
-
-export interface TextAreaContent extends InputContent {
-  value: string;
-}
+import React from "react";
 
 export interface TextAreaProps {
+  name: string;
   label?: string;
-  content: TextAreaContent;
-  setContent: React.Dispatch<React.SetStateAction<TextAreaContent>>;
-  maxLength?: number;
   size?: number;
-  tagline?: React.ReactNode;
   readOnly?: boolean;
-  placeHolder?: string;
+  tagline?: React.ReactNode;
+  maxLength?: number;
+  placeholder?: string;
   disabled?: boolean;
-  rows?: number;
+  required?: boolean;
   className?: string;
-  resizable?: boolean;
-  dataIsLoading?: boolean;
+  rows?: number;
+  defaultValue?: string;
+  error?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }

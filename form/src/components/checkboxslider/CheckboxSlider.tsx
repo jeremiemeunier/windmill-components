@@ -3,18 +3,19 @@ import { CheckboxSliderProps } from "./CheckboxSlider.types";
 
 const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
   label,
-  content,
-  setContent,
+  name,
   disabled,
   className,
   loading,
+  defaultValue,
+  onChange,
 }) => {
   const id = useId();
 
   const classBuilder = () => {
     const str = ["windmillui-slider"];
 
-    if (loading) str.push("state-loader");
+    if (loading) str.push("state-loading");
     if (className) str.push(className);
 
     return str.join(" ");
@@ -24,15 +25,13 @@ const CheckboxSlider: React.FC<CheckboxSliderProps> = ({
     <div className={classBuilder()}>
       <input
         type="checkbox"
-        name={id}
+        name={name ?? id}
         id={id}
-        onChange={(event) => {
-          setContent((p) => ({ ...p, value: event.target.checked }));
-        }}
-        checked={content.value}
+        defaultChecked={defaultValue}
         disabled={disabled ?? false}
+        onChange={(e) => onChange?.(e.target.checked)}
       />
-      <label htmlFor={id}>
+      <label htmlFor={id} className={loading ? "text state-loading" : ""}>
         <span>{label}</span>
       </label>
     </div>

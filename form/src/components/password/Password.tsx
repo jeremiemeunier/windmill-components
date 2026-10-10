@@ -1,11 +1,9 @@
-import { PasswordProps } from "./Password.types";
 import React, { useId, useState } from "react";
 import { BaseBlock, InputBlock } from "../base/Base";
+import type { PasswordProps } from "./Password.types";
 
 const Password: React.FC<PasswordProps> = ({
   label,
-  content,
-  setContent,
   size,
   readOnly,
   tagline,
@@ -13,26 +11,32 @@ const Password: React.FC<PasswordProps> = ({
   placeHolder,
   disabled,
   className,
+  error,
+  name,
 }) => {
   const id = useId();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [passwordVerifSize, setPasswordVerifSize] = useState<number>(0);
+  const [content, setContent] = useState<string>("");
 
   const uppercaseRegex = /[A-Z]/;
   const numberRegex = /[0-9]/;
   const specialRegex = /[!@#\$%\^\&*\)\(+=._-]/;
 
   const passwordHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setContent((p) => ({ ...p, value: evt.target.value }));
+    setContent(evt.target.value);
     setPasswordVerifSize(evt.target.value.length);
   };
 
   return (
-    <BaseBlock id={id} label={label} tagline={tagline} size={size}>
-      <InputBlock
-        error={content.error && content.message}
-        className={className}
-      >
+    <BaseBlock
+      id={id}
+      label={label}
+      size={size}
+      tagline={tagline}
+      required={false}
+    >
+      <InputBlock error={error} className={className}>
         <div
           className={`windmillui-password ${className}`}
           onMouseLeave={() => {
@@ -43,10 +47,9 @@ const Password: React.FC<PasswordProps> = ({
             disabled={disabled ?? false}
             type={passwordVisibility ? "text" : "password"}
             id={id}
-            name={id}
+            name={name}
             placeholder={placeHolder ? placeHolder : ""}
             onChange={passwordHandler}
-            value={content.value}
             autoComplete={isNew ? "new-password" : "current-password"}
             readOnly={readOnly ? readOnly : false}
           />
@@ -80,7 +83,7 @@ const Password: React.FC<PasswordProps> = ({
               Faire au moins 8 caractères
             </span>
             <span>
-              {uppercaseRegex.test(content.value) ? (
+              {uppercaseRegex.test(content) ? (
                 <i
                   className="icon color-positive s-xs ti ti-circle-check-filled
 "
@@ -91,7 +94,7 @@ const Password: React.FC<PasswordProps> = ({
               Avoir au moins une lettre majuscule
             </span>
             <span>
-              {numberRegex.test(content.value) ? (
+              {numberRegex.test(content) ? (
                 <i
                   className="icon color-positive s-xs ti ti-circle-check-filled
 "
@@ -102,7 +105,7 @@ const Password: React.FC<PasswordProps> = ({
               Avoir au moins 1 chiffre
             </span>
             <span>
-              {specialRegex.test(content.value) ? (
+              {specialRegex.test(content) ? (
                 <i
                   className="icon color-positive s-xs ti ti-circle-check-filled
 "

@@ -1,8 +1,4 @@
-import { InputContent } from "../input";
-
-export interface DatePickerContent extends InputContent {
-  value: string;
-}
+import { InputLocker } from "../base/Base.types";
 
 export interface DayArrayProps {
   day: number;
@@ -23,16 +19,22 @@ export type DisabledOption =
   | "futur";
 
 export interface DatePickerProps {
-  content: DatePickerContent;
-  setContent: React.Dispatch<React.SetStateAction<DatePickerContent>>;
+  name: string;
+  label?: string;
   size?: number;
   readOnly?: boolean;
   disabled?: boolean;
   required?: boolean;
-  label?: string;
+  defaultValue?: string;
+  error?: string;
   blockedDate?: string[];
+  rangeStart?: string;
+  blockType?: "past" | "futur";
   disabledOptions?: DisabledOption[];
   className?: string;
   disabledTodayButton?: boolean;
   dataIsLoading?: boolean;
+  lockWhenDataIsLoading?: boolean;
+  locked?: InputLocker;
+  onChange?: (value: string) => void;
 }

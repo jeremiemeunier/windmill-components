@@ -1,14 +1,13 @@
-import { InputContent } from "../input";
-
-export interface CheckboxSliderContent extends InputContent {
+export interface CheckboxSliderContent {
   value: boolean;
 }
 
 export interface CheckboxSliderProps {
   label: string;
-  content: CheckboxSliderContent;
-  setContent: React.Dispatch<React.SetStateAction<CheckboxSliderContent>>;
   disabled?: boolean;
   className?: string;
   loading?: boolean;
+  name?: string;
+  defaultValue?: boolean;
+  onChange?: (checked: boolean) => void;
 }

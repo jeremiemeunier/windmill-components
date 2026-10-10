@@ -1,9 +1,13 @@
 import React, { FormEvent } from "react";
-import { FormEncType } from "react-router-dom";
+
+export interface FormHandler {
+  (formData: FormData, event: FormEvent<HTMLFormElement>): void;
+}
 
 export interface FormProps {
   children: React.ReactNode;
-  handler: (event: FormEvent<HTMLFormElement>) => void;
-  encType?: FormEncType;
+  onSubmit: FormHandler;
   className?: string;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
 }

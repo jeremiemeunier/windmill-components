@@ -1,72 +1,69 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useId, useState } from "react";
 import { TextAreaProps } from "./TextArea.types";
 import { BaseBlock, InputBlock } from "../base/Base";
 
+/**
+ * TextArea component - FormData-compatible textarea field
+ * Uses native HTML textarea with name attribute for automatic FormData extraction
+ */
 const TextArea: React.FC<TextAreaProps> = ({
+  name,
   label,
-  content,
-  setContent,
-  maxLength,
   size,
-  tagline,
   readOnly,
-  placeHolder,
+  tagline,
+  maxLength,
+  placeholder,
   disabled,
-  rows,
+  required,
   className,
-  resizable,
-  dataIsLoading,
+  rows,
+  defaultValue,
+  error,
+  onChange,
 }) => {
   const id = useId();
-  const ref = useRef<HTMLTextAreaElement>(null);
-  const [actualContentSize, setActualContentSize] = useState(0);
-
-  const resize = () => {
-    if (resizable) {
-      const el = ref.current;
-      if (el) {
-        el.style.height = "auto";
-        el.style.height = `${el.scrollHeight}px`;
-      }
-    }
-  };
-
-  useEffect(() => {
-    resize();
-    setActualContentSize(content.value.length);
-  }, [content]);
+  const [currentLength, setCurrentLength] = useState(defaultValue?.length ?? 0);
 
   return (
-    <BaseBlock id={id} label={label} tagline={tagline} size={size}>
+    <BaseBlock
+      id={id}
+      label={label}
+      size={size}
+      tagline={tagline}
+      required={required ?? false}
+    >
       <InputBlock
-        error={content.error && content.message}
+        error={error}
+        maxLength={
+          maxLength
+            ? {
+                value: maxLength,
+                current: currentLength,
+              }
+            : undefined
+        }
         className={className}
-        dataIsLoading={dataIsLoading}
       >
         <textarea
-          ref={ref}
-          disabled={disabled ? disabled : false}
+          disabled={disabled ?? false}
+          name={name}
           id={id}
-          name={id}
-          value={content.value}
-          readOnly={readOnly ? readOnly : false}
-          maxLength={maxLength && maxLength}
-          placeholder={placeHolder ? placeHolder : ""}
-          rows={rows}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-            const target = event.target as HTMLTextAreaElement;
-            setContent((p) => ({ ...p, value: target.value }));
+          readOnly={readOnly ?? false}
+          maxLength={maxLength}
+          placeholder={placeholder ?? ""}
+          rows={rows ?? 4}
+          defaultValue={defaultValue}
+          required={required}
+          onChange={(evt) => {
+            if (maxLength) {
+              setCurrentLength(evt.target.value.length);
+            }
+            if (onChange) {
+              onChange(evt);
+            }
           }}
-          onKeyUp={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-            const target = event.target as HTMLTextAreaElement;
-            setActualContentSize(target.value.length);
-          }}
-        ></textarea>
-        {maxLength && (
-          <span className="windmillui-max-length">
-            {actualContentSize} / {maxLength}
-          </span>
-        )}
+        />
       </InputBlock>
     </BaseBlock>
   );

@@ -1,19 +1,27 @@
 import React, { useId } from "react";
+import type { RadioProps } from "./Radio.types";
 import { BaseBlock, RadioCheckboxBlock } from "../base/Base";
-import { RadioProps, RadioValues } from "./Radio.types";
 
+/**
+ * Radio component - FormData-compatible radio button group
+ * Uses native HTML radio inputs with name attribute for automatic FormData extraction
+ */
 const Radio: React.FC<RadioProps> = ({
-  viewBox = true,
+  name,
   label,
-  gridSize = 4,
+  options,
   size,
-  values,
-  content,
-  setContent,
-  className,
   disabled,
+  tagline,
+  required,
+  className,
+  defaultValue,
+  error,
+  gridSize = 2,
+  viewBox = true,
+  dataIsLoading,
 }) => {
-  const id = useId();
+  const groupId = useId();
 
   const classBuilder = (special?: string) => {
     const str = ["windmillui-radio"];
@@ -25,29 +33,33 @@ const Radio: React.FC<RadioProps> = ({
   };
 
   return (
-    <BaseBlock id={id} label={label} size={size}>
+    <BaseBlock
+      id={groupId}
+      label={label}
+      size={size}
+      tagline={tagline}
+      required={required ?? false}
+    >
       <RadioCheckboxBlock
-        className={className}
+        error={error}
         gridSize={gridSize}
-        error={content.error && content.message}
+        className={className}
+        dataIsLoading={dataIsLoading}
       >
-        {values.map((value: RadioValues, key) => {
-          const _id = useId();
-
+        {options.map((option, index) => {
+          const id = `${groupId}-${index}`;
           return (
-            <div key={key} className={classBuilder(value.classname)}>
+            <div key={id} className={classBuilder()}>
               <input
                 type="radio"
-                id={_id}
-                onChange={(evt) => {
-                  setContent((p) => ({ ...p, value: evt.target.value }));
-                }}
-                checked={content.value === value.id ? true : false}
-                disabled={disabled || value?.disabled ? true : false}
-                value={value.id}
-                name={_id}
+                name={name}
+                id={id}
+                value={option.value}
+                defaultChecked={defaultValue === option.value}
+                disabled={disabled ?? false}
+                required={required}
               />
-              <label htmlFor={_id}>{value.label}</label>
+              <label htmlFor={id}>{option.label}</label>
             </div>
           );
         })}

@@ -1,13 +1,6 @@
-import { InputContent } from "../input";
-
-export interface PasswordContent extends InputContent {
-  value: string;
-}
-
 export interface PasswordProps {
+  name: string;
   label: string;
-  content: PasswordContent;
-  setContent: React.Dispatch<React.SetStateAction<PasswordContent>>;
   size?: number;
   readOnly?: boolean;
   tagline?: React.ReactNode;
@@ -16,4 +9,5 @@ export interface PasswordProps {
   disabled?: boolean;
   className?: string;
   controls?: {};
+  error?: string;
 }

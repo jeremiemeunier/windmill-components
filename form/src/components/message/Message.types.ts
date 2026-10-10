@@ -30,4 +30,5 @@ export interface MessageContentTypes {
 export interface MessageProps {
   data: MessageState;
   className?: string;
+  children?: React.ReactNode;
 }

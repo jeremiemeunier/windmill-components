@@ -1,12 +1,5 @@
-import { InputContent } from "../input";
-
-export interface TagInputContent extends InputContent {
-  value: string[];
-}
-
 export interface TagInputProps {
-  content: TagInputContent;
-  setContent: React.Dispatch<React.SetStateAction<TagInputContent>>;
+  name: string;
   separator?: string[];
   label?: string;
   size?: number;
@@ -15,8 +8,10 @@ export interface TagInputProps {
   placeHolder?: string;
   disabled?: boolean;
   required?: boolean;
-  name?: string;
   autofocus?: boolean;
   className?: string;
   dataIsLoading?: boolean;
+  defaultValue?: string[];
+  error?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
