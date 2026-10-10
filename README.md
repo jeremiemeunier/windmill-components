@@ -12,10 +12,12 @@ Ce dépôt regroupe plusieurs librairies React publiées sous le scope `@jeremie
 | **drawer** | Panneau latéral coulissant. |
 | **editorparser** | Parser pour afficher le contenu d'un éditeur au format JSON. |
 | **form** | Large collection d’éléments de formulaire : `Input`, `Select`, `Checkbox`, `DatePicker`, etc. |
-| **x-form** | Fork FormData de form - composants de formulaire optimisés pour l'extraction automatique de FormData. |
+| **graph** | Moteur de rendu SVG et composants React pour visualiser des données. |
 | **hooks** | Hooks React réutilisables comme `useRefresh` et `useSeo`. |
 | **modal** | Système de modales complet avec de nombreux sous-composants. |
 | **navigation** | Provider et hook pour gérer l’état de navigation. |
+| **popover** | Composants de popover configurables. |
+| **table** | Tableau de données React avec colonnes personnalisables et actions par ligne. |
 | **theme** | Gestion des thèmes avec contexte et composants de sélection. |
 | **toast** | Bibliothèque de notifications toast. |
 
@@ -29,10 +31,12 @@ Chaque package possède un fichier `README.md` décrivant en détail son install
 - [`drawer`](drawer/README.md) : panneau latéral animé.
 - [`editorparser`](editorparser/README.md) : rendu d’un contenu JSON structuré.
 - [`form`](form/README.md) : ensemble complet de champs de formulaires.
-- [`x-form`](x-form/README.md) : composants de formulaire FormData-focused.
+- [`graph`](graph/README.md) : moteur de graphiques SVG et composants React.
 - [`hooks`](hooks/README.md) : hooks React partagés (`useRefresh`, `useSeo`, …).
 - [`modal`](modal/README.md) : système de modales modulaire.
 - [`navigation`](navigation/README.md) : provider et composants de pagination.
+- [`popover`](popover/README.md) : composants de popover.
+- [`table`](table/README.md) : tableau de données avec rendu de cellules et actions de ligne.
 - [`theme`](theme/README.md) : gestion de thèmes et sélecteurs associés.
 - [`toast`](toast/README.md) : notifications toast configurables.
 
@@ -63,7 +67,7 @@ Tous les packages partagent la même structure de scripts npm :
 | `npm run pub`     | Exécute le build puis publie la version courante sur GitHub Packages.       |
 | `npm run pubbeta` | (Uniquement dans `form`) publie une version marquée `beta` après le build.   |
 
-> ℹ️ Le package `@jeremiemeunier/toast` expose le script `npm run tsup` pour la compilation ; son comportement est équivalent à `npm run build`.
+> ℹ️ Le package `@jeremiemeunier/toast` expose `npm run tsup` comme script de compilation.
 
 Les scripts doivent être lancés dans le dossier du package concerné.
 
@@ -98,4 +102,3 @@ Pour publier une nouvelle version d’un package :
 1. Mettez à jour la version dans `package.json`.
 2. Générez les artefacts (`npm run build`).
 3. Publiez avec `npm run pub` (ou `npm run pubbeta` pour publier une préversion du package `form`). Assurez‑vous d’être authentifié sur le registre GitHub Packages (`npm login --registry=https://npm.pkg.github.com`).
-
