@@ -1,7 +1,7 @@
 import { DayArrayProps, DatePickerProps } from "./DatePicker.types";
 import React, { useState, useId, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import { Calendar } from "../../class/DatePicker.class";
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -311,8 +311,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   };
 
   return (
-    <BaseBlock id={id} size={size} label={label} required={required}>
-      <InputBlock
+    <Box.Root id={id} size={size} label={label} required={required}>
+      <Box.Input
         error={error}
         className={className}
         dataIsLoading={dataIsLoading}
@@ -461,8 +461,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

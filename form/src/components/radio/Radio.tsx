@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import type { RadioProps } from "./Radio.types";
-import { BaseBlock, RadioCheckboxBlock } from "../base/Base";
+import { Box, RadioCheckboxBlock } from "../base/Base";
 
 /**
  * Radio component - FormData-compatible radio button group
@@ -18,22 +18,23 @@ const Radio: React.FC<RadioProps> = ({
   defaultValue,
   error,
   gridSize = 2,
-  viewBox = true,
+  viewBox,
   dataIsLoading,
+  onChange,
 }) => {
   const groupId = useId();
 
   const classBuilder = (special?: string) => {
     const str = ["windmillui-radio"];
 
-    if (!viewBox) str.push("template-no-check");
+    if (viewBox) str.push("template-no-check");
     if (special) str.push(special);
 
     return str.join(" ");
   };
 
   return (
-    <BaseBlock
+    <Box.Root
       id={groupId}
       label={label}
       size={size}
@@ -56,7 +57,8 @@ const Radio: React.FC<RadioProps> = ({
                 id={id}
                 value={option.value}
                 defaultChecked={defaultValue === option.value}
-                disabled={disabled ?? false}
+                disabled={(disabled || option.disabled) ?? false}
+                onChange={(e) => onChange?.(e.target.value)}
                 required={required}
               />
               <label htmlFor={id}>{option.label}</label>
@@ -64,7 +66,7 @@ const Radio: React.FC<RadioProps> = ({
           );
         })}
       </RadioCheckboxBlock>
-    </BaseBlock>
+    </Box.Root>
   );
 };
 

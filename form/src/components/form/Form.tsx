@@ -5,7 +5,13 @@ import type { FormProps } from "./Form.types";
  * Form component - A FormData-focused form wrapper
  * Automatically extracts FormData from form submission and passes it to the onSubmit handler
  */
-const Form: React.FC<FormProps> = ({ children, onSubmit, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby }) => {
+const Form: React.FC<FormProps> = ({
+  children,
+  onSubmit,
+  className,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
+}) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);

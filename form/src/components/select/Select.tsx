@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import type { SelectProps } from "./Select.types";
-import { BaseBlock, SelectBlock } from "../base/Base";
+import { Box } from "../base/Base";
 
 /**
  * Select component - FormData-compatible select field
@@ -24,14 +24,14 @@ const Select: React.FC<SelectProps> = ({
   const id = useId();
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required ?? false}
     >
-      <SelectBlock error={error} className={className}>
+      <Box.Select error={error} className={className}>
         <select
           disabled={(disabled || dataIsLoading) ?? false}
           name={name}
@@ -47,8 +47,8 @@ const Select: React.FC<SelectProps> = ({
           )}
           {children}
         </select>
-      </SelectBlock>
-    </BaseBlock>
+      </Box.Select>
+    </Box.Root>
   );
 };
 

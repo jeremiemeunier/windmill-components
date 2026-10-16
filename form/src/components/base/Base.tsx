@@ -6,21 +6,22 @@ import type {
   SelectBlockProps,
 } from "./Base.types";
 
-export const BaseBlock: React.FC<BaseBlockProps> = ({
+export const Box = () => {};
+
+const Root: React.FC<BaseBlockProps> = ({
   id,
-  size,
   label,
   tagline,
-  children,
   required,
   className,
+  children,
 }) => {
   const classNameBuilder = () => {
-    const str: string[] = ["windmillui-form-container"];
+    const str: string[] = ["input-root"];
 
-    if (size) str.push(`gwc-${size}`);
     if (label) str.push("template-label");
-    else str.push("template-default");
+    if (tagline) str.push("template-tagline");
+    if (!label && !tagline) str.push("template-default");
 
     if (className) str.push(className);
 
@@ -30,15 +31,12 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
   return (
     <div className={classNameBuilder()}>
       {label ? (
-        <label htmlFor={id}>
+        <label htmlFor={id} className="input-label">
           {label}{" "}
           {required ? (
-            <>
-              <span className="windmillui-required" aria-hidden="true">
-                *
-              </span>
-              <span className="sr-only">required</span>
-            </>
+            <span className="input-required" aria-hidden="true">
+              *
+            </span>
           ) : null}
         </label>
       ) : null}
@@ -47,56 +45,7 @@ export const BaseBlock: React.FC<BaseBlockProps> = ({
     </div>
   );
 };
-
-export const InputBlock: React.FC<InputBlockProps> = ({
-  children,
-  error,
-  maxLength,
-  className,
-  dataIsLoading,
-  lockWhenDataIsLoading,
-  locked,
-  subContainer,
-}) => {
-  const classNameBuilder = () => {
-    const str: string[] = ["windmillui-input", "root"];
-
-    if (error) str.push("state-negative");
-    if (dataIsLoading) str.push("state-loading");
-    if (className) str.push(className);
-
-    return str.join(" ");
-  };
-
-  return (
-    <div className={classNameBuilder()}>
-      <div className="input-container">
-        {dataIsLoading && lockWhenDataIsLoading ? (
-          <div className="windmillui-input-placeholder"></div>
-        ) : (
-          children
-        )}
-        {maxLength && maxLength.value && (
-          <span className="windmillui-input-maxlength">
-            {maxLength.current} / {maxLength.value}
-          </span>
-        )}
-        {locked && locked.value && (
-          <span className="windmillui-input-locked">
-            <i className="icon ti ti-lock" />
-            <span>{locked.message}</span>
-          </span>
-        )}
-      </div>
-      {subContainer}
-      {error && typeof error === "string" && (
-        <p className="input-message" role="alert">
-          {error}
-        </p>
-      )}
-    </div>
-  );
-};
+Box.Root = Root;
 
 export const RadioCheckboxBlock: React.FC<RadioCheckboxBlockProps> = ({
   children,
@@ -150,14 +99,14 @@ export const RadioCheckboxBlock: React.FC<RadioCheckboxBlockProps> = ({
   );
 };
 
-export const SelectBlock: React.FC<SelectBlockProps> = ({
+const CheckboxRadioBox: React.FC<InputBlockProps> = ({
   children,
   error,
   className,
   dataIsLoading,
 }) => {
   const classNameBuilder = () => {
-    const str: string[] = ["windmillui-input", "windmillui-select"];
+    const str: string[] = ["input-dock", "input-box", "type-checkbox-radio"];
 
     if (error) str.push("state-negative");
     if (dataIsLoading) str.push("state-loading");
@@ -168,13 +117,60 @@ export const SelectBlock: React.FC<SelectBlockProps> = ({
 
   return (
     <div className={classNameBuilder()}>
-      {dataIsLoading ? (
-        <div className="windmillui-input-placeholder"></div>
-      ) : (
-        children
-      )}
-      <i className="icon ti ti-caret-down-filled"></i>
-      {error && <p className="windmillui-message">{error}</p>}
+      {dataIsLoading ? <div className="input-placeholder"></div> : children}
+      {error && <p className="input-message">{error}</p>}
     </div>
   );
 };
+Box.CheckboxRadio = CheckboxRadioBox;
+
+const InputBox: React.FC<InputBlockProps> = ({
+  children,
+  error,
+  className,
+  dataIsLoading,
+}) => {
+  const classNameBuilder = () => {
+    const str: string[] = ["input-dock", "input-box", "type-generic"];
+
+    if (error) str.push("state-negative");
+    if (dataIsLoading) str.push("state-loading");
+    if (className) str.push(className);
+
+    return str.join(" ");
+  };
+
+  return (
+    <div className={classNameBuilder()}>
+      {dataIsLoading ? <div className="input-placeholder"></div> : children}
+      {error && <p className="input-message">{error}</p>}
+    </div>
+  );
+};
+Box.Input = InputBox;
+
+const SelectBox: React.FC<SelectBlockProps> = ({
+  children,
+  error,
+  className,
+  dataIsLoading,
+}) => {
+  const classNameBuilder = () => {
+    const str: string[] = ["input-dock", "select-dock"];
+
+    if (error) str.push("state-negative");
+    if (dataIsLoading) str.push("state-loading");
+    if (className) str.push(className);
+
+    return str.join(" ");
+  };
+
+  return (
+    <div className={classNameBuilder()}>
+      {dataIsLoading ? <div className="input-placeholder"></div> : children}
+      <i className="icon ti ti-chevron-down"></i>
+      {error && <p className="input-message">{error}</p>}
+    </div>
+  );
+};
+Box.Select = SelectBox;

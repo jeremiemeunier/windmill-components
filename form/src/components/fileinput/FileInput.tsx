@@ -1,5 +1,5 @@
 import { FileInputProps } from "./FileInput.types";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import React, { useId, useState } from "react";
 
 const FileInput: React.FC<FileInputProps> = ({
@@ -17,14 +17,14 @@ const FileInput: React.FC<FileInputProps> = ({
   const [fileSelectedLabel, setFileSelectedLabel] = useState("");
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required}
     >
-      <InputBlock
+      <Box.Input
         error={error}
         className={className}
         dataIsLoading={dataIsLoading}
@@ -50,8 +50,8 @@ const FileInput: React.FC<FileInputProps> = ({
               : "Aucun fichier sélectionné"}
           </span>
         </div>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

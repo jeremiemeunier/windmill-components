@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
 import { DragAndDropProps } from "./DragAndDrop.type";
 import { FileUploader } from "react-drag-drop-files";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 
 const DragAndDrop: React.FC<DragAndDropProps> = ({
   name,
@@ -52,8 +52,8 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
   };
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
-      <InputBlock
+    <Box.Root id={id} label={label} size={size} required={required ?? false}>
+      <Box.Input
         error={error}
         className={className}
         dataIsLoading={dataIsLoading}
@@ -98,8 +98,8 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({
             </div>
           )}
         </div>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

@@ -3,6 +3,7 @@ import React from "react";
 export interface RadioOption {
   value: string;
   label: string;
+  disabled?: boolean;
 }
 
 export interface RadioProps {
@@ -19,4 +20,5 @@ export interface RadioProps {
   gridSize?: number;
   viewBox?: boolean;
   dataIsLoading?: boolean;
+  onChange?: (value: string) => void;
 }

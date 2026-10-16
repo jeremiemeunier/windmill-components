@@ -25,7 +25,7 @@ export interface AddressItems {
 
 export interface AddressProps {
   name: string;
-  error: string | undefined;
+  error?: string;
   data: AddressItems[] | [];
   label?: string;
   disabled?: boolean;

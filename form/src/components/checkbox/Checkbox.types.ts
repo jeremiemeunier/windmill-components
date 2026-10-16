@@ -10,4 +10,5 @@ export interface CheckboxProps {
   defaultChecked?: boolean;
   error?: string;
   children?: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

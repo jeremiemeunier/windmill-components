@@ -1,5 +1,5 @@
 import React, { useId, useState } from "react";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import type { PasswordProps } from "./Password.types";
 
 const Password: React.FC<PasswordProps> = ({
@@ -13,6 +13,8 @@ const Password: React.FC<PasswordProps> = ({
   className,
   error,
   name,
+  defaultValue,
+  onChange,
 }) => {
   const id = useId();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -29,14 +31,14 @@ const Password: React.FC<PasswordProps> = ({
   };
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={false}
     >
-      <InputBlock error={error} className={className}>
+      <Box.Input error={error} className={className}>
         <div
           className={`windmillui-password ${className}`}
           onMouseLeave={() => {
@@ -49,7 +51,11 @@ const Password: React.FC<PasswordProps> = ({
             id={id}
             name={name}
             placeholder={placeHolder ? placeHolder : ""}
-            onChange={passwordHandler}
+            defaultValue={defaultValue}
+            onChange={(event) => {
+              passwordHandler(event);
+              onChange?.(event);
+            }}
             autoComplete={isNew ? "new-password" : "current-password"}
             readOnly={readOnly ? readOnly : false}
           />
@@ -119,8 +125,8 @@ const Password: React.FC<PasswordProps> = ({
         ) : (
           ""
         )}
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

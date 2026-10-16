@@ -1,5 +1,5 @@
-import { BaseBlock, InputBlock } from "../base/Base";
-import React, { useEffect, useId, useRef, useState } from "react";
+import { Box } from "../base/Base";
+import React, { useEffect, useId, useState } from "react";
 import { TagInputProps } from "./TagInput.types";
 
 const TagInput: React.FC<TagInputProps> = ({
@@ -20,7 +20,6 @@ const TagInput: React.FC<TagInputProps> = ({
   onChange,
 }) => {
   const id = useId();
-  const onChangeRef = useRef(onChange);
 
   const [content, setContent] = useState<string[]>(
     defaultValue
@@ -36,9 +35,10 @@ const TagInput: React.FC<TagInputProps> = ({
 
     if (separator.indexOf(key) >= 0) {
       event.preventDefault();
-      const newValue = target.value.slice(0, -1).trim();
 
       setContent((prev) => {
+        const newValue = target.value.slice(0, -1).trim();
+
         if (newValue && prev.indexOf(newValue) === -1) {
           return [...prev, newValue];
         }
@@ -54,9 +54,10 @@ const TagInput: React.FC<TagInputProps> = ({
 
   const handleOut = (event: React.FocusEvent<HTMLInputElement, Element>) => {
     const target = event.target as HTMLInputElement;
-    const newValue = target.value.trim();
 
     setContent((prev) => {
+      const newValue = target.value.trim();
+
       if (newValue && prev.indexOf(newValue) === -1) {
         return [...prev, newValue];
       }
@@ -70,37 +71,33 @@ const TagInput: React.FC<TagInputProps> = ({
   };
 
   useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (onChangeRef.current) {
+    if (onChange) {
       const event = {
         target: {
           name,
           value: content.join(","),
         },
       } as React.ChangeEvent<HTMLInputElement>;
-      onChangeRef.current(event);
+      onChange(event);
     }
-  }, [content, name]);
+  }, [content, name, onChange]);
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required ?? false}
     >
-      <InputBlock
+      <Box.Input
         error={error}
         dataIsLoading={dataIsLoading}
         subContainer={
-          <div className={`windmillui-tag-root ${className}`}>
+          <div className={`tag-root ${className}`}>
             {content.map((tag, i) => (
               <span
-                className="windmillui-tag"
+                className="tag"
                 title="Remove from list"
                 key={i}
                 onClick={() => {
@@ -123,14 +120,9 @@ const TagInput: React.FC<TagInputProps> = ({
           onBlur={handleOut}
           onKeyUp={handleKey}
         />
-        <input
-          name={name}
-          type="hidden"
-          value={content.join(",")}
-          disabled={disabled ?? false}
-        />
-      </InputBlock>
-    </BaseBlock>
+        <input name={name} type="hidden" value={content.join(",")} />
+      </Box.Input>
+    </Box.Root>
   );
 };
 

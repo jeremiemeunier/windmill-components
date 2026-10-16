@@ -13,12 +13,15 @@ const Submit: React.FC<SubmitProps> = ({
   className,
   children,
   buttonSize,
+  orientation,
 }) => {
   const classNameBuilder = () => {
-    const str: string[] = ["grid cta-container ha-end"];
+    const str: string[] = ["grid", "cta-container"];
 
     if (size) str.push(`size-${size}x`);
     if (className) str.push(className);
+    if (orientation) str.push(`format-${orientation}`);
+    if (orientation === "col" || !orientation) str.push("ha-end");
 
     return className ? str.join(" ") + " " + className : str.join(" ");
   };
@@ -33,7 +36,7 @@ const Submit: React.FC<SubmitProps> = ({
         aria-busy={loading ? true : undefined}
         aria-disabled={locked ? true : undefined}
       >
-        <span>{label}</span>
+        <span>{label ?? "Submit"}</span>
         <i className="icon ti ti-arrow-right" aria-hidden="true"></i>
       </button>
     </div>

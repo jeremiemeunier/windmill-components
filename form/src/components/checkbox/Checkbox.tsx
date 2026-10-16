@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import type { CheckboxProps } from "./Checkbox.types";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 
 /**
  * Checkbox component - FormData-compatible checkbox field
@@ -16,12 +16,13 @@ const Checkbox: React.FC<CheckboxProps> = ({
   error,
   children,
   tagline,
+  onChange,
 }) => {
   const id = useId();
 
   return (
-    <BaseBlock id={id} label={label}>
-      <InputBlock error={error} className={className}>
+    <Box.Root id={id} tagline={tagline}>
+      <Box.CheckboxRadio error={error} className={className}>
         <div className="windmillui-checkbox">
           <input
             type="checkbox"
@@ -30,12 +31,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
             value={value ?? "on"}
             defaultChecked={defaultChecked}
             disabled={disabled ?? false}
+            onChange={onChange}
           />
           <label htmlFor={id}>{children || label}</label>
         </div>
-      </InputBlock>
-      {tagline ?? null}
-    </BaseBlock>
+      </Box.CheckboxRadio>
+    </Box.Root>
   );
 };
 

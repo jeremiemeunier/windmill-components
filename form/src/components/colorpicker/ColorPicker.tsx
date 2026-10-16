@@ -1,5 +1,5 @@
 import React, { useId, useState } from "react";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import type { ColorPickerProps } from "./ColorPicker.types";
 
 /**
@@ -29,36 +29,29 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   };
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required ?? false}
     >
-      <InputBlock error={error} className={className}>
+      <Box.Input error={error} className={className}>
         <div className={`windmillui-colorpicker ${className ?? ""}`}>
           <input
-            disabled={disabled || readOnly}
+            disabled={disabled ?? false}
             type="color"
-            name={readOnly ? undefined : name}
+            name={name}
             id={id}
+            readOnly={readOnly ?? false}
             defaultValue={colorValue}
             onChange={handleColorChange}
             className="windmillui-colorpicker-input"
           />
-          {readOnly && (
-            <input
-              type="hidden"
-              name={name}
-              value={colorValue}
-              disabled={disabled ?? false}
-            />
-          )}
           <span className="windmillui-colorpicker-value">{colorValue}</span>
         </div>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

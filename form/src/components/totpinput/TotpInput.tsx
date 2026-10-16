@@ -1,6 +1,6 @@
 import React, { useId, useRef, useState } from "react";
 import { TotpInputProps } from "./TotpInput.types";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 
 const TotpInput: React.FC<TotpInputProps> = ({
   name,
@@ -48,7 +48,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
   const handlePaste = (
     index: number,
-    evt: React.ClipboardEvent<HTMLInputElement>
+    evt: React.ClipboardEvent<HTMLInputElement>,
   ) => {
     evt.preventDefault();
     const pasteData = evt.clipboardData.getData("text");
@@ -59,7 +59,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
 
   const handleKeyDown = (
     index: number,
-    evt: React.KeyboardEvent<HTMLInputElement>
+    evt: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (evt.key === "Backspace" && !values[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
@@ -67,7 +67,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
   };
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
+    <Box.Root id={id} label={label} size={size} required={required ?? false}>
       <div
         className={`windmillui-totp-root ${
           error ? "state-negative" : ""
@@ -75,7 +75,7 @@ const TotpInput: React.FC<TotpInputProps> = ({
       >
         <div className="totp-fields">
           {Array.from({ length: totpSize }, (_, key) => (
-            <InputBlock key={key} error={error}>
+            <Box.Input key={key} error={error}>
               <input
                 ref={(element) => {
                   inputsRef.current[key] = element;
@@ -92,13 +92,13 @@ const TotpInput: React.FC<TotpInputProps> = ({
                 onKeyDown={(event) => handleKeyDown(key, event)}
                 onPaste={(event) => handlePaste(key, event)}
               />
-            </InputBlock>
+            </Box.Input>
           ))}
           <input type="hidden" name={name} value={content} />
         </div>
         {error && <p className="windmillui-message">{error}</p>}
       </div>
-    </BaseBlock>
+    </Box.Root>
   );
 };
 

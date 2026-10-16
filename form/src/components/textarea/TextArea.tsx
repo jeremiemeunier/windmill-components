@@ -1,6 +1,6 @@
 import React, { useId, useState } from "react";
 import { TextAreaProps } from "./TextArea.types";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 
 /**
  * TextArea component - FormData-compatible textarea field
@@ -26,14 +26,14 @@ const TextArea: React.FC<TextAreaProps> = ({
   const [currentLength, setCurrentLength] = useState(defaultValue?.length ?? 0);
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required ?? false}
     >
-      <InputBlock
+      <Box.Input
         error={error}
         maxLength={
           maxLength
@@ -64,8 +64,8 @@ const TextArea: React.FC<TextAreaProps> = ({
             }
           }}
         />
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

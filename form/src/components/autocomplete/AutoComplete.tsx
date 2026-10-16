@@ -1,7 +1,8 @@
 import React, { useEffect, useId, useRef, useState } from "react";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
+// @ts-ignore: pas de déclarations de type pour les fichiers CSS
 import "simplebar-react/dist/simplebar.min.css";
 import type {
   AutoCompleteDataItem,
@@ -115,14 +116,14 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   }, [isOpen]);
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       required={required ?? false}
       className="flourui-autocomplete"
     >
-      <InputBlock
+      <Box.Input
         error={error}
         className={buildClassname()}
         dataIsLoading={dataIsLoading}
@@ -325,8 +326,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

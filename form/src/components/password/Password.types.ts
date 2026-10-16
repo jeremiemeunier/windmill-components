@@ -10,4 +10,6 @@ export interface PasswordProps {
   className?: string;
   controls?: {};
   error?: string;
+  defaultValue?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

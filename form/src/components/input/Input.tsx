@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useState } from "react";
-import { BaseBlock, InputBlock } from "../base/Base";
+import { Box } from "../base/Base";
 import type { InputProps } from "./Input.types";
 
 /**
@@ -44,14 +44,14 @@ const Input: React.FC<InputProps> = ({
   }, [defaultValue]);
 
   return (
-    <BaseBlock
+    <Box.Root
       id={id}
       label={label}
       size={size}
       tagline={tagline}
       required={required ?? false}
     >
-      <InputBlock
+      <Box.Input
         error={internError || error}
         maxLength={
           maxLength
@@ -116,8 +116,8 @@ const Input: React.FC<InputProps> = ({
             }
           }}
         />
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

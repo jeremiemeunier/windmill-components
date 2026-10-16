@@ -1,12 +1,12 @@
-import React, { useId, useState } from "react";
-import { BaseBlock, InputBlock } from "../base/Base";
+import React, { useId, useState, useRef, useEffect } from "react";
+import { Box } from "../base/Base";
 import { AnimatePresence, motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
 import { AddressProps } from "./Address.types";
+// @ts-ignore: pas de déclarations de type pour les fichiers CSS
 import "simplebar-react/dist/simplebar.min.css";
 
 const Address: React.FC<AddressProps> = ({
-  name,
   required = false,
   error,
   label,
@@ -19,25 +19,72 @@ const Address: React.FC<AddressProps> = ({
   dataIsLoading = false,
   onChange,
   defaultValue = "",
+  className,
 }) => {
   const id = useId();
 
-  const [inputValueSize, setInputValueSize] = useState(0);
-  const [listVisibility, setListVisibility] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const [_, setInputValueSize] = useState(0);
   const [content, setContent] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => setIsOpen(!isOpen);
+  const closePopover = () => setIsOpen(false);
+
+  const buildClassname = () => {
+    const str: string[] = [];
+
+    if (className) {
+      str.push(className);
+    }
+
+    return str.join(" ");
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        contentRef.current &&
+        !contentRef.current.contains(event.target as Node) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(event.target as Node)
+      ) {
+        closePopover();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
-    <BaseBlock id={id} label={label} size={size} required={required ?? false}>
-      <InputBlock error={error} dataIsLoading={dataIsLoading ?? false}>
-        <div className={`windmillui-autocomplete-root-input`}>
+    <Box.Root
+      id={id}
+      label={label}
+      size={size}
+      required={required ?? false}
+      className="flourui-autocomplete"
+    >
+      <Box.Input
+        error={error}
+        dataIsLoading={dataIsLoading ?? false}
+        className={buildClassname()}
+      >
+        <div className={`autocomplete-root-input`}>
           <input
             disabled={disabled ?? false}
-            name={name ?? id}
+            name={id}
             id={id}
             readOnly={readOnly ? readOnly : false}
             maxLength={maxLength}
             placeholder={placeHolder ?? ""}
-            className="windmillui-autocomplete-root-filter"
+            className="autocomplete-root-filter"
             value={content}
             onChange={(event) => {
               const target = event.target as HTMLInputElement;
@@ -45,7 +92,7 @@ const Address: React.FC<AddressProps> = ({
               if (onChange) {
                 const event = {
                   target: {
-                    name: name ?? id,
+                    name: id,
                     value: target.value,
                   },
                 } as React.ChangeEvent<HTMLInputElement>;
@@ -55,46 +102,51 @@ const Address: React.FC<AddressProps> = ({
             onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => {
               const target = event.target as HTMLInputElement;
               setInputValueSize(target.value.length);
-
-              inputValueSize > 0
-                ? setListVisibility(true)
-                : setListVisibility(false);
+              setIsOpen(target.value.length > 0);
+            }}
+            onFocus={() => {
+              setIsOpen(true);
             }}
           />
           <i
             onClick={() => {
-              setListVisibility(!listVisibility);
+              toggleOpen();
             }}
             className={`icon ${
-              listVisibility ? "ti ti-chevron-up" : "ti ti-chevron-down"
+              isOpen ? "ti ti-chevron-up" : "ti ti-chevron-down"
             }`}
           ></i>
         </div>
         <AnimatePresence>
-          {data && data.length > 0 && listVisibility && (
+          {data && data.length > 0 && isOpen && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="windmillui-autocomplete-list-root"
-              id="windmillui_autocomplete_root_list"
+              className="autocomplete-list-root"
+              id="autocomplete_root_list"
             >
               <SimpleBar style={{ maxHeight: "240px" }}>
-                <div className="windmillui-autocomplete-list">
+                <div className="autocomplete-list">
                   <AnimatePresence>
                     {data.map((option) => {
                       return (
-                        <button
+                        <div
                           onClick={(event) => {
                             event.preventDefault();
                             setContent(option.properties.label);
                             setInputValueSize(0);
-                            setListVisibility(false);
+                            setIsOpen(false);
                           }}
+                          className="autocomplete-list-item-container"
                           key={option.properties.id}
                         >
-                          <span>{option.properties.label}</span>
-                        </button>
+                          <div className="autocomplete-list-item">
+                            <p className="as-ma0 as-pa0 autocomplete-item-label">
+                              {option.properties.label}
+                            </p>
+                          </div>
+                        </div>
                       );
                     })}
                   </AnimatePresence>
@@ -103,8 +155,8 @@ const Address: React.FC<AddressProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
-      </InputBlock>
-    </BaseBlock>
+      </Box.Input>
+    </Box.Root>
   );
 };
 

@@ -32,24 +32,29 @@
     "@jeremiemeunier/core": "^1.4.7",
     "framer-motion": "^12.25.0",
     "react-drag-drop-files": "^3.1.0",
+    "react-markdown": "^6.0.3",
     "react-router-dom": "^7.18.2",
-    "simplebar-react": "^3.3.2",
-    "react-markdown": "^6.0.3"
+    "simplebar-react": "^3.3.2"
   },
   "devDependencies": {
     "@swc/core": "^1.15.8",
+    "@types/node": "^26.6.5",
     "@types/react": "^19.2.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "sass": "^1.97.2",
-    "scss": "^0.2.4",
     "tslib": "^2.8.1",
     "tsup": "^8.5.1",
-    "typed-scss-modules": "^8.1.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "allowScripts": {
+    "@swc/core@1.15.8": true,
+    "esbuild@0.27.2": true,
+    "esbuild@0.17.19": true,
+    "fsevents@2.3.3": true,
+    "@parcel/watcher@2.6.0": true
   }
 }
