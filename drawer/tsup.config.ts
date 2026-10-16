@@ -1,4 +1,3 @@
-import { sassPlugin } from "esbuild-sass-plugin";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
@@ -7,9 +6,5 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  esbuildPlugins: [
-    sassPlugin({
-      type: "lit-css",
-    }),
-  ],
+  esbuildPlugins: [],
 });

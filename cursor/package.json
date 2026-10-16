@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/cursor",
-  "version": "1.5.0",
+  "version": "1.6.0-beta",
   "description": "Custom cursor component that frames links on hover",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -31,15 +31,22 @@
     "@jeremiemeunier/core": "^1.4.7"
   },
   "devDependencies": {
-    "@types/react": "^19.2.8",
-    "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^10.8.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "esbuild-sass-plugin": "^3.7.0",
+    "eslint": "^10.12.0",
+    "react": "^19.3.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.8.3",
-    "react": "^19.3.0"
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.3.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.27.7": true,
+    "fsevents@2.3.3": true
   }
 }

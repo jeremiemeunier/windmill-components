@@ -20,11 +20,11 @@ Composant React de carrousel permettant de faire défiler un ensemble de slides 
 
 ## Scripts npm
 
-| Commande        | Description                                              |
-| --------------- | -------------------------------------------------------- |
-| `npm run lint`  | Analyse statique via ESLint.                             |
-| `npm run build` | Génère les bundles du composant avec tsup dans `dist/`.  |
-| `npm run pub`   | Construit puis publie la version courante sur le registre|
+| Commande        | Description                                               |
+| --------------- | --------------------------------------------------------- |
+| `npm run lint`  | Analyse statique via ESLint.                              |
+| `npm run build` | Génère les bundles du composant avec tsup dans `dist/`.   |
+| `npm run pub`   | Construit puis publie la version courante sur le registre |
 
 Exécutez ces commandes depuis le dossier `carousel/`.
 
@@ -53,12 +53,10 @@ const slides = [<div>Slide 1</div>, <div>Slide 2</div>, <div>Slide 3</div>];
 
 ### Props
 
-| Nom            | Type                | Défaut | Description                                  |
-| -------------- | ------------------- | :----: | -------------------------------------------- |
-| `slides`       | `React.ReactNode[]` |   —    | Éléments à afficher dans le carrousel.       |
-| `slidesNumber` | `number`            |  `4`   | Nombre de slides visibles simultanément.     |
-| `className`    | `string`            |   —    | Classe(s) CSS supplémentaires optionnelles.  |
+| Nom            | Type                | Défaut | Description                                 |
+| -------------- | ------------------- | :----: | ------------------------------------------- |
+| `slides`       | `React.ReactNode[]` |   —    | Éléments à afficher dans le carrousel.      |
+| `slidesNumber` | `number`            |  `4`   | Nombre de slides visibles simultanément.    |
+| `className`    | `string`            |   —    | Classe(s) CSS supplémentaires optionnelles. |
 
 Le composant gère la pagination, le scroll fluide et ajoute des contrôles de navigation accessibles.
-
- 

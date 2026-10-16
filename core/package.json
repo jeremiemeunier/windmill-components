@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/core",
-  "version": "1.5.0",
+  "version": "1.6.0-beta",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -27,22 +27,29 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "framer-motion": "^12.25.0",
-    "react": "^19.2.3",
-    "react-router-dom": "^7.18.2",
-    "simplebar-react": "^3.3.2"
-  },
   "devDependencies": {
-    "@types/node": "^25.0.5",
-    "@types/react": "^19.2.8",
-    "@types/react-dom": "^19.2.3",
-    "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^10.8.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild-sass-plugin": "^3.7.0",
+    "eslint": "^10.12.0",
     "lit-element": "^4.2.2",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "sass": "^1.97.2",
-    "scss": "^0.2.4"
+    "tsup": "^8.5.1"
+  },
+  "dependencies": {
+    "framer-motion": "^14.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4",
+    "sass": "^1.105.1",
+    "scss": "^0.2.4",
+    "simplebar-react": "^3.3.2",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.27.7": true,
+    "fsevents@2.3.3": true
   }
 }

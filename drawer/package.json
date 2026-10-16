@@ -1,6 +1,6 @@
 {
   "name": "@jeremiemeunier/drawer",
-  "version": "1.5.0",
+  "version": "1.6.0-beta",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -28,26 +28,31 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "framer-motion": "^12.25.0",
-    "react-router-dom": "^7.18.2",
+    "framer-motion": "^12.43.0",
+    "react-router-dom": "^7.18.4",
     "simplebar-react": "^3.3.2"
   },
   "devDependencies": {
-    "@types/react": "^19.2.8",
-    "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^9.39.2",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
     "lit-element": "^4.2.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "sass": "^1.97.2",
-    "scss": "^0.2.4",
     "tslib": "^2.8.1",
     "tsup": "^8.5.1",
-    "typed-scss-modules": "^8.1.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.27.7": true,
+    "esbuild@0.17.19": true,
+    "@parcel/watcher@2.6.0": true
   }
 }
